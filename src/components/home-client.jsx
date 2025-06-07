@@ -5,11 +5,11 @@ import { ChevronDown, ChevronUp, Check, Star } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 
-export default function Home() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
+export default function HomeClient() {
+  const [openFaq, setOpenFaq] = useState(null)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
 
-  const toggleFaq = (index: number) => {
+  const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index)
   }
 
