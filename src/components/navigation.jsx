@@ -54,8 +54,12 @@ export function Navigation() {
               For Founders
             </Link>
             <Link
-              href="#"
-              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+              href="/community" // Updated href
+              className={`font-medium transition-colors ${
+                pathname === "/community" // Condition for active state
+                  ? "text-blue-600 dark:text-blue-400"
+                  : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              }`}
             >
               Community
             </Link>
@@ -127,9 +131,14 @@ export function Navigation() {
                 </Link>
 
                 <Link
-                  href="#"
-                  className="flex items-center px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
+                  href="/community" // Updated href
+                  className={`flex items-center px-4 py-3 rounded-xl font-medium transition-colors ${
+                    pathname === "/community" // Condition for active state
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
                 >
+                  {/* Consider using a different icon like MessageSquare or Globe if Users feels generic */}
                   <Users className="h-5 w-5 mr-3" />
                   Community
                 </Link>
