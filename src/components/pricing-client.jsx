@@ -5,11 +5,11 @@ import { ChevronDown, ChevronUp, Check, X } from "lucide-react"
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 
-export default function PricingPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly")
+export default function PricingClient() {
+  const [openFaq, setOpenFaq] = useState(null)
+  const [billingPeriod, setBillingPeriod] = useState("yearly")
 
-  const toggleFaq = (index: number) => {
+  const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index)
   }
 

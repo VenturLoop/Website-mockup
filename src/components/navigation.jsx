@@ -18,7 +18,7 @@ export function Navigation() {
 
   // Close menu on escape key
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleEscape = (e) => {
       if (e.key === "Escape") {
         setIsMenuOpen(false)
       }
