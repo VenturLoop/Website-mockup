@@ -43,10 +43,8 @@ export function LoopAgentModal({ isOpen, onClose }) {
         {/* Added px-6 sm:px-8 for horizontal padding, py-4 sm:py-6 for vertical padding */}
         <div className="flex-grow overflow-y-auto px-6 sm:px-8 py-4 sm:py-6 space-y-4 text-gray-700 dark:text-slate-300 text-sm sm:text-base">
           <p className="leading-relaxed">
-            Loop Agent Mini o1 is an AI-powered assistant designed to help startup founders and entrepreneurs with a variety of tasks, streamlining your journey from idea to impact. This section can now be longer and will scroll.
+            Loop Agent Mini o1 is an AI-powered assistant designed to help startup founders and entrepreneurs with a variety of tasks, streamlining your journey from idea to impact.
           </p>
-          {/* Example of potentially longer content */}
-          <p className="leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           <ul className="space-y-3 pt-2">
             <li className="flex items-start">
               <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-green-400 mr-3 mt-0.5 shrink-0" />
@@ -60,20 +58,10 @@ export function LoopAgentModal({ isOpen, onClose }) {
               <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-green-400 mr-3 mt-0.5 shrink-0" />
               <span><strong>Co-founder & Investor Matching:</strong> Ask the agent to find potential co-founders or investors tailored to your needs, right within the Venturloop platform.</span>
             </li>
-            {/* Adding more items to test scroll */}
-            <li className="flex items-start">
-              <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-green-400 mr-3 mt-0.5 shrink-0" />
-              <span><strong>Market Research:</strong> Leverage AI to gather and analyze market data efficiently.</span>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-green-400 mr-3 mt-0.5 shrink-0" />
-              <span><strong>Pitch Deck Refinement:</strong> Get suggestions and improvements for your investor pitch deck.</span>
-            </li>
           </ul>
           <p className="leading-relaxed pt-2">
-            Get early access and start leveraging the power of AI for your startup journey! Remember, this content area is now scrollable if it exceeds the available height.
+            Get early access and start leveraging the power of AI for your startup journey!
           </p>
-           <p className="leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
         </div>
 
