@@ -1,9 +1,38 @@
-// No special imports needed for this specific footer's JSX
+import { useEffect, useRef } from 'react';
 // import Link from 'next/link'; // Not needed here but example
 
 export default function Footer() {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    if (!footerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    // QuerySelectorAll can be used on the ref to scope the search
+    const elements = footerRef.current.querySelectorAll(".animate-on-scroll");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+      // No need to disconnect the observer if it's going to be re-used or if the component instance is unique.
+      // However, if multiple Footer instances could exist and be destroyed, disconnecting is safer.
+      // For a typical site-wide footer, this might not be strictly necessary if it's only mounted once.
+      observer.disconnect();
+    };
+  }, []); // Empty dependency array to run once on mount
+
   return (
-    <footer className="bg-white dark:bg-gray-950 pt-12 sm:pt-16 pb-8">
+    <footer ref={footerRef} className="bg-white dark:bg-gray-950 pt-12 sm:pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Company Info */}
