@@ -7,7 +7,7 @@ import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Added import
 import LoginModal from '@/components/LoginModal';
-import AppDownloadModal from '@/components/AppDownloadModal';
+import { AppDownloadModal } from '@/components/AppDownloadModal';
 
 export default function PricingClient() {
   // const [openFaq, setOpenFaq] = useState(null) // Removed
@@ -157,7 +157,10 @@ export default function PricingClient() {
                 <div className="text-4xl font-bold mb-2">$0</div>
                 <p className="text-gray-300">pricing for 1 year (for 1 user)</p>
               </div>
-              <ul className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow"> {/* Added classes and flex-grow */}
+              <ul
+                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide"
+                style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+              >
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
                   <span>3 daily profile connections</span>
@@ -212,7 +215,10 @@ export default function PricingClient() {
                 </p>
               </div>
 
-              <ul className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow"> {/* Added classes and flex-grow */}
+              <ul
+                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide"
+                style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+              >
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
                   <span>Everything in Free</span>
