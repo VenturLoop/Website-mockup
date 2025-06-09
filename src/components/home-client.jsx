@@ -459,8 +459,8 @@ export default function HomeClient() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 order-2 lg:order-1 animate-on-scroll">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Some Excellent Features For You
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10">
+                Some <span className="text-blue-600 dark:text-blue-400">Excellent Features</span> For You
               </h2>
 
               <div className="space-y-6">
@@ -469,12 +469,11 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">1.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                      Smart Fundraising Engine
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-left mb-3">
+                      AI Matchmaking Dashboard
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Our AI-powered matching system connects you with the perfect investors for your startup's stage
-                      and industry.
+                      Connect instantly with like-minded co-founders, investors, and collaborators. Intelligent filters make discovery effortless.
                     </p>
                   </div>
                 </div>
@@ -484,12 +483,11 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">2.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-left mb-3">
                       One-Click Investor Pitching
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Create your pitch once and share it with multiple investors with a single click, saving you time
-                      and effort.
+                      Upload your deck, tap your vertical, and instantly pitch to relevant investors. Built-in tracking and feedback tools included.
                     </p>
                   </div>
                 </div>
@@ -499,12 +497,11 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">3.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                      Investor Access Pathway
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-left mb-3">
+                      Incubator Access Gateway
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Get direct access to our network of verified investors who are actively looking for opportunities
-                      in your sector.
+                      Apply to top-tier incubators and accelerators in one place. No more endless forms and scattered applications.
                     </p>
                   </div>
                 </div>
