@@ -251,7 +251,7 @@ export default function HomeClient() {
             <div className="lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:w-full lg:h-full lg:relative justify-items-center">
                 {/* Quick Transfer - Top Left */}
-                <div className="lg:absolute lg:top-16 lg:left-8 xl:left-16 animate-on-scroll animate-delay-300">
+                <div className="lg:absolute lg:top-8 lg:left-8 xl:left-16 animate-on-scroll animate-delay-300">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mb-4">
                       <Users className="w-6 h-6 text-blue-600 dark:text-blue-500" />
@@ -264,7 +264,7 @@ export default function HomeClient() {
                 </div>
 
                 {/* Easy Management - Top Right */}
-                <div className="lg:absolute lg:top-16 lg:right-8 xl:right-16 animate-on-scroll animate-delay-400">
+                <div className="lg:absolute lg:top-8 lg:right-8 xl:right-16 animate-on-scroll animate-delay-400">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mb-4">
                       <Briefcase className="w-6 h-6 text-green-600 dark:text-green-500" />
@@ -277,7 +277,7 @@ export default function HomeClient() {
                 </div>
 
                 {/* Expense Tracking - Bottom Left */}
-                <div className="lg:absolute lg:bottom-16 lg:left-8 xl:left-16 animate-on-scroll animate-delay-500 lg:mt-6">
+                <div className="lg:absolute lg:bottom-8 lg:left-8 xl:left-16 animate-on-scroll animate-delay-500">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-4">
                       <GitFork className="w-6 h-6 text-purple-600 dark:text-purple-500" />
@@ -290,7 +290,7 @@ export default function HomeClient() {
                 </div>
 
                 {/* Track Your Investment - Bottom Right */}
-                <div className="lg:absolute lg:bottom-16 lg:right-8 xl:right-16 animate-on-scroll animate-delay-600 lg:mt-6">
+                <div className="lg:absolute lg:bottom-8 lg:right-8 xl:right-16 animate-on-scroll animate-delay-600">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center mb-4">
                       <Brain className="w-6 h-6 text-orange-600 dark:text-orange-500" />
