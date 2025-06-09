@@ -357,3 +357,130 @@ html.light {
 .btn-hover:hover::before {
   left: 100%;
 }
+
+/* Testimonial Section Styles */
+.testimonial-container {
+  overflow: hidden; /* Hides the duplicated content outside the viewport */
+  /* Vertical padding can remain if desired for spacing rows from container top/bottom */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  /* Ensure no horizontal padding */
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.testimonial-row {
+  display: flex;
+  width: fit-content; /* Allow the row to be wider than the container */
+}
+
+.testimonial-row:first-child {
+  animation: scroll-left-testimonial 40s linear infinite;
+}
+
+.testimonial-row:last-child {
+  animation: scroll-right-testimonial 40s linear infinite;
+}
+
+.testimonial-row:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left-testimonial {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(calc(-100% / 2)); /* Scroll by the width of the original set */
+  }
+}
+
+@keyframes scroll-right-testimonial {
+  0% {
+    transform: translateX(calc(-100% / 2)); /* Start with the duplicated content filling the view */
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.testimonial-card {
+  flex: 0 0 auto; /* Prevents shrinking, ensures fixed width respected */
+  width: 350px; /* Adjust width as needed */
+  margin-right: 1.5rem; /* Spacing between cards, Tailwind's space-x utility on the parent also works */
+  /* Tailwind classes from home-client.jsx for reference:
+    bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift
+  */
+}
+
+/* Ensure text within cards is styled appropriately if not already handled by Tailwind utilities */
+.testimonial-card h4 {
+  /* Example: text-lg font-semibold text-gray-900 dark:text-white */
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+}
+
+.testimonial-card p {
+  /* Example: text-sm text-gray-500 dark:text-gray-400 or text-gray-600 dark:text-gray-300 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+.testimonial-card .text-yellow-400 svg {
+  /* Ensure stars are visible, fill is handled by fill-current in JSX */
+  color: #FACC15; /* Tailwind yellow-400 */
+}
+
+.testimonial-card .text-gray-300 svg {
+    /* Ensure empty stars are visible, fill is handled by fill-current in JSX */
+    color: #D1D5DB; /* Tailwind gray-300 */
+}
+
+.dark .testimonial-card .text-gray-300 svg {
+    color: #4B5563; /* Tailwind gray-600 for dark mode empty stars */
+}
+
+/* Responsive adjustments for Testimonial Section */
+
+/* Tablet screens */
+@media (max-width: 768px) {
+  .testimonial-card {
+    width: 300px; /* Slightly smaller cards for tablets */
+  }
+
+  .testimonial-row:first-child,
+  .testimonial-row:last-child {
+    animation-duration: 60s; /* Slower scrolling on tablets */
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  .testimonial-container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    /* Ensure no horizontal padding on mobile either */
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .testimonial-card {
+    width: 280px; /* Even smaller cards for mobiles */
+    padding: 1rem; /* Reduce padding on smaller cards */
+  }
+
+  .testimonial-row:first-child {
+    animation-duration: 70s; /* Slower scrolling for single row */
+  }
+
+  .testimonial-row:last-child {
+    display: none; /* Hide the second row on very small screens to prevent clutter */
+  }
+
+  .testimonial-card h4 {
+    font-size: 1rem; /* Adjust font size for mobile */
+  }
+
+  .testimonial-card p {
+    font-size: 0.8125rem; /* Adjust font size for mobile */
+  }
+}
