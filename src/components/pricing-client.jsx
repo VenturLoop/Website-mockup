@@ -6,10 +6,14 @@ import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Added import
+import LoginModal from '@/components/LoginModal';
+import AppDownloadModal from '@/components/AppDownloadModal';
 
 export default function PricingClient() {
   // const [openFaq, setOpenFaq] = useState(null) // Removed
   const [billingPeriod, setBillingPeriod] = useState("monthly")
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
 
   // const toggleFaq = (index) => { // Removed
   //   setOpenFaq(openFaq === index ? null : index)
@@ -183,7 +187,10 @@ export default function PricingClient() {
                   <span>Join founder community</span>
                 </li>
               </ul>
-              <Button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg mt-auto"> {/* Added mt-auto */}
+              <Button
+                className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg mt-auto" // Added mt-auto
+                onClick={() => setIsLoginModalOpen(true)}
+              >
                 Sign up for free
               </Button>
             </div>
@@ -421,6 +428,15 @@ export default function PricingClient() {
 
       {/* Footer */}
       <Footer />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onOpenAppDownloadModal={() => setIsAppDownloadModalOpen(true)}
+      />
+      <AppDownloadModal
+        isOpen={isAppDownloadModalOpen}
+        onClose={() => setIsAppDownloadModalOpen(false)}
+      />
     </div>
   )
 }
