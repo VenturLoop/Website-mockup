@@ -1,8 +1,14 @@
-import FaqSection from "@/components/FaqSection";
+// Removed "use client" - This is now a Server Component
+// import { useState, useEffect } from 'react'; // Removed hooks
+// import FaqSection from "@/components/FaqSection"; // No longer directly used here
 import Head from 'next/head'; // For JSON-LD
+import { Navigation } from '@/components/navigation'; // Import Navigation
+import FaqPageClient from '@/components/FaqPageClient'; // Import the new client component
+import Footer from '@/components/Footer'; // Import Footer
 
 // Data can be imported from a shared location if it grows, for now, define it here
-const generalFaqData = [
+// These are now initial data, state will hold the filtered versions
+const initialGeneralFaqData = [
   {
     question: "What is VenturLoop and how does it work?",
     answer: "VenturLoop is a platform that helps founders connect with potential co-founders, investors, and collaborators. Simply create your profile, set your preferences, and start discovering like-minded people to build your startup with."
@@ -29,10 +35,40 @@ const generalFaqData = [
   }
 ];
 
+const initialPricingFaqData = [
+  {
+    question: "What is included in the free plan on VenturLoop?",
+    answer: "The free plan allows users to create a profile, explore the community, and send a limited number of connection requests to founders and investors. Micro-transactions are available for additional actions."
+  },
+  {
+    question: "What is the Founder Pass and what do I get with it?",
+    answer: "The Founder Pass is our premium subscription that unlocks unlimited connections, priority visibility, advanced filters, and exclusive access to premium features like featured listings and investor outreach boosts."
+  },
+  {
+    question: "Can I still connect with founders or pitch to investors without the Founder Pass?",
+    answer: "Yes! Free users can connect or pitch using our pay-as-you-go micro-transaction system, which allows flexible access to key features without a full subscription."
+  },
+  {
+    question: "What are micro-transactions on VenturLoop?",
+    answer: "Micro-transactions let you pay a small fee for specific actions, like sending extra pitch requests to investors, unlocking premium founder profiles, or featuring your startup temporarily."
+  },
+  {
+    question: "Is payment required to get started on VenturLoop?",
+    answer: "No. You can sign up and use the basic features for free. You only pay if you choose to upgrade to the Founder Pass or use micro-transactions for specific actions."
+  },
+  {
+    question: "How do I pay for a subscription or micro-transactions?",
+    answer: "VenturLoop supports multiple payment methods including UPI, credit/debit cards, and net banking. International payments are also accepted for global users."
+  }
+];
+
+// Update JSON-LD to use initial data as it's static metadata
+const allInitialFaqData = [...initialGeneralFaqData, ...initialPricingFaqData];
+
 const faqPageJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": generalFaqData.map(faq => ({
+  "mainEntity": allInitialFaqData.map(faq => ({
     "@type": "Question",
     "name": faq.question,
     "acceptedAnswer": {
@@ -43,25 +79,40 @@ const faqPageJsonLd = {
 };
 
 export const metadata = {
-  title: "VenturLoop FAQs | Connect with Co-Founders & Investors",
-  description: "Get answers to common questions about using VenturLoop to find co-founders, investors, and grow your startup.",
+  title: "VenturLoop FAQs | Find Co-Founders, Investors & Learn About Pricing",
+  description: "Explore answers to frequently asked questions about VenturLoop. Learn how to connect with co-founders and investors, and understand our pricing, Founder Pass, and micro-transactions.",
+  alternates: {
+    canonical: "https://venturloop.com/faq",
+  },
 };
 
-export default function GeneralFaqPage() {
+export default function FaqPage() {
+  // Client-side logic (useState, useEffect, event handlers, and related JSX)
+  // has been moved to FaqPageClient.
+  // This component now acts as a Server Component responsible for
+  // data fetching (if any, though here it's static) and rendering the overall page structure.
+
   return (
     <>
+      <Navigation />
       <Head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd) }}
         />
       </Head>
-      <FaqSection title="VenturLoop FAQs" faqData={generalFaqData} />
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white text-center mb-10 pb-6 border-b border-gray-300 dark:border-gray-700">
+          Frequently Asked Questions – VenturLoop
+        </h1>
+        {/* Render the client component and pass the initial data as props */}
+        <FaqPageClient
+          initialGeneralFaqData={initialGeneralFaqData}
+          initialPricingFaqData={initialPricingFaqData}
+        />
+      </div>
+      <Footer />
       {/* You might want to add Navigation and Footer components here if they are not part of a global layout */}
-      {/* For example: */}
-      {/* <Navigation /> */}
-      {/* <FaqSection title="VenturLoop FAQs" faqData={generalFaqData} /> */}
-      {/* <Footer /> */}
     </>
   );
 }

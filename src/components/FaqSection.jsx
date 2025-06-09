@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
-export default function FaqSection({ title, faqData }) {
+export default function FaqSection({ title, faqData, showContactCard = true }) { // Changed default to true
   const [openFaq, setOpenFaq] = useState(null)
 
   const toggleFaq = (index) => {
@@ -19,7 +19,8 @@ export default function FaqSection({ title, faqData }) {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Left side - FAQ List */}
-          <div className="w-full lg:w-2/3">
+          {/* Adjusted width class based on showContactCard */}
+          <div className={`w-full ${showContactCard ? 'lg:w-2/3' : 'lg:w-full'}`}>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
               {title}
             </h2>
@@ -60,30 +61,32 @@ export default function FaqSection({ title, faqData }) {
             </div>
           </div>
 
-          {/* Right side - Contact Card (Optional, can be removed or made conditional if not always needed) */}
-          <div className="w-full lg:w-1/3">
-            <div className="bg-blue-600 dark:bg-blue-700 rounded-2xl p-6 sm:p-8 text-white sticky top-8 hover-lift">
-              <div className="mb-6">
-                <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4 animate-pulse-slow">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+          {/* Right side - Contact Card: Conditionally rendered */}
+          {showContactCard && (
+            <div className="w-full lg:w-1/3">
+              <div className="bg-blue-600 dark:bg-blue-700 rounded-2xl p-6 sm:p-8 text-white sticky top-8 hover-lift">
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4 animate-pulse-slow">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">Do you have any questions?</h3>
+                  <p className="text-blue-100 leading-relaxed">
+                    Can't find the answer you're looking for? Please chat to our friendly team.
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Do you have any questions?</h3>
-                <p className="text-blue-100 leading-relaxed">
-                  Can't find the answer you're looking for? Please chat to our friendly team.
-                </p>
+                <button className="w-full bg-white text-blue-600 dark:text-blue-700 hover:bg-gray-100 font-semibold py-3 rounded-lg transition-colors btn-hover">
+                  Contact Us
+                </button>
               </div>
-              <button className="w-full bg-white text-blue-600 dark:text-blue-700 hover:bg-gray-100 font-semibold py-3 rounded-lg transition-colors btn-hover">
-                Contact Us
-              </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
