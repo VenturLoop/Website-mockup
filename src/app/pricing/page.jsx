@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/navigation" // Keep this if Navigation is a Server Component
 import PricingClient from "@/components/pricing-client" // Import the new client component
 
 export const metadata = {
@@ -22,7 +21,6 @@ export const metadata = {
 export default function PricingPage() {
   return (
     <>
-      {/* <Navigation /> */}
       <PricingClient />
     </>
   )
