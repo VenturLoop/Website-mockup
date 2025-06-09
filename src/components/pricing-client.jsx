@@ -207,7 +207,7 @@ export default function PricingClient() {
                 <span className="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Recommended</span>
               </div>
 
-              <div className="mb-8">
+              <div className="mb-4"> {/* Changed mb-8 to mb-4 */}
                 <h3 className="text-2xl font-bold mb-2">Founder's Pass</h3>
                 <p className="text-blue-100 mb-2">Everything you need to grow</p>
                 <div className="flex items-baseline mb-6">
