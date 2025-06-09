@@ -277,7 +277,7 @@ export default function HomeClient() {
                 </div>
 
                 {/* Expense Tracking - Bottom Left */}
-                <div className="lg:absolute lg:bottom-16 lg:left-8 xl:left-16 animate-on-scroll animate-delay-500">
+                <div className="lg:absolute lg:bottom-16 lg:left-8 xl:left-16 animate-on-scroll animate-delay-500 lg:mt-6">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-4">
                       <GitFork className="w-6 h-6 text-purple-600 dark:text-purple-500" />
@@ -290,7 +290,7 @@ export default function HomeClient() {
                 </div>
 
                 {/* Track Your Investment - Bottom Right */}
-                <div className="lg:absolute lg:bottom-16 lg:right-8 xl:right-16 animate-on-scroll animate-delay-600">
+                <div className="lg:absolute lg:bottom-16 lg:right-8 xl:right-16 animate-on-scroll animate-delay-600 lg:mt-6">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center mb-4">
                       <Brain className="w-6 h-6 text-orange-600 dark:text-orange-500" />
