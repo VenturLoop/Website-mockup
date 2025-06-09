@@ -360,7 +360,7 @@ export default function HomeClient() {
       </section>
 
       {/* Where Founders Meet Their Future Section */}
-      <section id="about-us" className="py-16 sm:py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="about-us" className="pt-16 pb-24 sm:pt-20 sm:pb-32 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 animate-on-scroll">
@@ -397,9 +397,11 @@ export default function HomeClient() {
                 </div>
               </div>
 
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift">
-                Get Started
-              </Button>
+              <div className="flex justify-center lg:justify-start">
+                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift">
+                  Get Started
+                </Button>
+              </div>
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center animate-on-scroll animate-delay-200">
