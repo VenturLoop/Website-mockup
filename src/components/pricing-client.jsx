@@ -160,7 +160,7 @@ export default function PricingClient() {
                 </div>
               </div>
               <ul
-                className="space-y-4 mb-8 max-h-80 overflow-y-auto flex-grow scrollbar-hide" {/* Changed max-h-60 to max-h-80 */}
+                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide" {/* Corrected to max-h-60 for Free Plan */}
                 style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
               >
                 <li className="flex items-center">
@@ -221,7 +221,7 @@ export default function PricingClient() {
               </div>
 
               <ul
-                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide"
+                className="space-y-4 mb-8 max-h-80 overflow-y-auto flex-grow scrollbar-hide" {/* Corrected to max-h-80 for Founder's Pass */}
                 style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
               >
                 <li className="flex items-center">
