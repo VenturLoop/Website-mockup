@@ -29,7 +29,6 @@ export function AppDownloadModal({ isOpen, onClose }) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         className="max-w-sm sm:max-w-md md:max-w-lg w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] mx-auto bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg max-h-[90vh] sm:max-h-[85vh] p-0"
-        hideClose
       >
         {/* Header with Close Button */}
         <div className="relative p-4 sm:p-5 border-b border-gray-200 dark:border-zinc-700">

@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react"
 import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { usePathname } from "next/navigation"
-import AppDownloadModal from "../components/AppDownloadModal" // Added import
+import { AppDownloadModal } from "../components/AppDownloadModal"; // Changed to named import
 import LoginModal from "../components/LoginModal" // Added import
 
 export function Navigation() {
