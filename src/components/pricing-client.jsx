@@ -10,16 +10,9 @@ import LoginModal from '@/components/LoginModal';
 import { AppDownloadModal } from '@/components/AppDownloadModal';
 
 export default function PricingClient() {
-  // const [openFaq, setOpenFaq] = useState(null) // Removed
   const [billingPeriod, setBillingPeriod] = useState("monthly")
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
-
-  // const toggleFaq = (index) => { // Removed
-  //   setOpenFaq(openFaq === index ? null : index)
-  // }
-
-  // const faqData = [] // Removed old faqData
 
   const pricingFaqData = [
     {
@@ -159,8 +152,9 @@ export default function PricingClient() {
                   <p className="text-gray-300 ml-2">pricing for 1 year (for 1 user)</p>
                 </div>
               </div>
+              {/* Corrected to max-h-60 for Free Plan */}
               <ul
-                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide" {/* Corrected to max-h-60 for Free Plan */}
+                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide"
                 style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
               >
                 <li className="flex items-center">
@@ -220,8 +214,9 @@ export default function PricingClient() {
                 </div>
               </div>
 
+              {/* Corrected to max-h-80 for Founder's Pass */}
               <ul
-                className="space-y-4 mb-8 max-h-80 overflow-y-auto flex-grow scrollbar-hide" {/* Corrected to max-h-80 for Founder's Pass */}
+                className="space-y-4 mb-8 max-h-80 overflow-y-auto flex-grow scrollbar-hide"
                 style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
               >
                 <li className="flex items-center">
