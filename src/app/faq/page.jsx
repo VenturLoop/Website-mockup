@@ -2,6 +2,7 @@
 // import { useState, useEffect } from 'react'; // Removed hooks
 // import FaqSection from "@/components/FaqSection"; // No longer directly used here
 import Head from 'next/head'; // For JSON-LD
+import { Navigation } from '@/components/navigation'; // Import Navigation
 import FaqPageClient from '@/components/FaqPageClient'; // Import the new client component
 import Footer from '@/components/Footer'; // Import Footer
 
@@ -93,6 +94,7 @@ export default function FaqPage() {
 
   return (
     <>
+      <Navigation />
       <Head>
         <script
           type="application/ld+json"
