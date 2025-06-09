@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/navigation" // Keep this if Navigation is a Server Component or used in Server Context here
 import HomeClient from "@/components/home-client"   // Import the new client component
 
 export const metadata = {
@@ -22,8 +21,6 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      {/* Navigation can be here if it's a server component or doesn't need to be inside HomeClient */}
-      {/* <Navigation /> */}
       <HomeClient />
     </>
   )
