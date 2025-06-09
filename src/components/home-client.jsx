@@ -364,12 +364,12 @@ export default function HomeClient() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 animate-on-scroll">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center lg:text-left">
                 Where <span className="text-blue-600 dark:text-blue-400">Founders</span> Meet
                 <br />
                 Their Future
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed text-center lg:text-left">
                 VenturLoop is where founders link up with co-founders, investors, and collaborators to turn ideas into real startups—fast and hassle-free.
               </p>
 
