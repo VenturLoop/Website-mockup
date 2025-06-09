@@ -6,13 +6,33 @@ import { useState, useEffect, useRef } from "react"
 import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { usePathname } from "next/navigation"
+import AppDownloadModal from "../components/AppDownloadModal" // Added import
+import LoginModal from "../components/LoginModal" // Added import
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false); // Added state
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Added state
   const [isFoundersOpen, setIsFoundersOpen] = useState(false)
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false)
   const pathname = usePathname()
   const foundersDropdownRef = useRef(null)
+
+  // Modal control functions
+  const openAppDownloadModal = () => {
+    if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
+    setIsAppDownloadModalOpen(true);
+  };
+  const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
+  const openLoginModal = () => {
+    if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
+    setIsLoginModalOpen(true);
+  };
+  const closeLoginModal = () => setIsLoginModalOpen(false);
+  const openAppDownloadFromLoginModal = () => {
+    closeLoginModal();
+    openAppDownloadModal(); // This will also close the menu due to the updated openAppDownloadModal
+  };
 
   // Close menu when route changes
   useEffect(() => {
@@ -27,11 +47,13 @@ export function Navigation() {
       if (e.key === "Escape") {
         setIsMenuOpen(false)
         setIsFoundersOpen(false) // Also close desktop founders dropdown on escape
+        closeAppDownloadModal(); // Close AppDownloadModal on escape
+        closeLoginModal(); // Close LoginModal on escape
       }
     }
     document.addEventListener("keydown", handleEscape)
     return () => document.removeEventListener("keydown", handleEscape)
-  }, [])
+  }, [closeAppDownloadModal, closeLoginModal]) // Added dependencies
 
   // Click outside to close desktop founders dropdown
   useEffect(() => {
@@ -119,10 +141,14 @@ export function Navigation() {
           {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center space-x-4">
             <ThemeToggle />
-            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-medium text-sm">
+            <Button
+              onClick={openAppDownloadModal} // Updated onClick
+              className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-medium text-sm"
+            >
               Download App
             </Button>
             <Button
+              onClick={openLoginModal} // Updated onClick
               variant="ghost"
               className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium"
             >
@@ -223,11 +249,15 @@ export function Navigation() {
 
               {/* Action Buttons */}
               <div className="px-2 space-y-2">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium rounded-xl py-3 flex items-center justify-center">
+                <Button
+                  onClick={openAppDownloadModal} // Updated onClick
+                  className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium rounded-xl py-3 flex items-center justify-center"
+                >
                   <Download className="h-4 w-4 mr-2" />
                   Download App
                 </Button>
                 <Button
+                  onClick={openLoginModal} // Updated onClick
                   variant="outline"
                   className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
                 >
@@ -244,6 +274,10 @@ export function Navigation() {
       {isMenuOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-25 lg:hidden z-30" onClick={() => setIsMenuOpen(false)} />
       )}
+
+      {/* Render Modals */}
+      <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadFromLoginModal} />
     </header>
   )
 }
