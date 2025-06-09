@@ -7,26 +7,32 @@ export default function FaqPageClient({ initialGeneralFaqData, initialPricingFaq
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredGeneralFaqs, setFilteredGeneralFaqs] = useState(initialGeneralFaqData);
   const [filteredPricingFaqs, setFilteredPricingFaqs] = useState(initialPricingFaqData);
+  const [combinedSearchResults, setCombinedSearchResults] = useState([]); // New state variable
 
   useEffect(() => {
     const lowerCaseQuery = searchQuery.toLowerCase();
     if (lowerCaseQuery === '') {
       setFilteredGeneralFaqs(initialGeneralFaqData);
       setFilteredPricingFaqs(initialPricingFaqData);
+      setCombinedSearchResults([]); // Clear combined results
     } else {
       const generalResults = initialGeneralFaqData.filter(faq =>
         faq.question.toLowerCase().includes(lowerCaseQuery) ||
         faq.answer.toLowerCase().includes(lowerCaseQuery)
       );
+      // Still update individual filtered lists
       setFilteredGeneralFaqs(generalResults);
 
       const pricingResults = initialPricingFaqData.filter(faq =>
         faq.question.toLowerCase().includes(lowerCaseQuery) ||
         faq.answer.toLowerCase().includes(lowerCaseQuery)
       );
+      // Still update individual filtered lists
       setFilteredPricingFaqs(pricingResults);
+
+      setCombinedSearchResults([...generalResults, ...pricingResults]); // Combine results
     }
-  }, [searchQuery, initialGeneralFaqData, initialPricingFaqData]); // Added props to dependency array
+  }, [searchQuery, initialGeneralFaqData, initialPricingFaqData]);
 
   return (
     <>
@@ -40,21 +46,25 @@ export default function FaqPageClient({ initialGeneralFaqData, initialPricingFaq
         />
       </div>
 
-      {searchQuery && filteredGeneralFaqs.length === 0 && (
-        <p className="text-center text-gray-600 dark:text-gray-400 mb-6">
-          No general questions match your search.
-        </p>
-      )}
-      {/* showContactCard={true} removed, as true is now the default in FaqSection */}
-      <FaqSection title="General Questions" faqData={filteredGeneralFaqs} />
+      {searchQuery.trim() !== '' ? (
+        // Search is active
+        combinedSearchResults.length > 0 ? (
+          <FaqSection title="Search Results" faqData={combinedSearchResults} showContactCard={true} />
+        ) : (
+          <p className="text-center text-gray-600 dark:text-gray-400 my-10">
+            No results found for your search.
+          </p>
+        )
+      ) : (
+        // Default view: No search query
+        <>
+          {/* General FAQs Section - relies on default showContactCard=true */}
+          <FaqSection title="General Questions" faqData={filteredGeneralFaqs} />
 
-      {searchQuery && filteredPricingFaqs.length === 0 && (
-        <p className="text-center text-gray-600 dark:text-gray-400 mt-10 mb-6">
-          No pricing questions match your search.
-        </p>
+          {/* Pricing FAQs Section - explicitly hide contact card */}
+          <FaqSection title="Pricing & Subscription" faqData={filteredPricingFaqs} showContactCard={false} />
+        </>
       )}
-      {/* Explicitly set showContactCard to false to override the new default */}
-      <FaqSection title="Pricing & Subscription" faqData={filteredPricingFaqs} showContactCard={false} />
     </>
   );
 }
