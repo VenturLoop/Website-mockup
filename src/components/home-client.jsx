@@ -1099,25 +1099,31 @@ export default function HomeClient() {
             <p className="text-gray-600 dark:text-gray-400 mb-4 md:mb-0">© 2024 Venturloop. All rights reserved.</p>
             <div className="flex flex-wrap justify-center md:justify-end space-x-6">
               <a
-                href="#"
+                href="/privacy-policy"
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
               >
                 Privacy Policy
               </a>
               <a
-                href="#"
+                href="/terms-conditions"
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
               >
                 Terms of Service
               </a>
               <a
-                href="#"
+                href="/community-guidelines"
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
               >
-                Cookie Policy
+                Community Guidelines
               </a>
               <a
-                href="#"
+                href="/refund-policy"
+                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+              >
+                Refund Policy
+              </a>
+              <a
+                href="/sitemap.xml"
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
               >
                 Sitemap
