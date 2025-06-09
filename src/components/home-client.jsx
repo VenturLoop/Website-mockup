@@ -459,7 +459,7 @@ export default function HomeClient() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 order-2 lg:order-1 animate-on-scroll">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10">
                 Some <span className="text-blue-600 dark:text-blue-400">Excellent Features</span> For You
               </h2>
 
