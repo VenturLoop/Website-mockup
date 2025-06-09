@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef } from 'react';
 // import Link from 'next/link'; // Not needed here but example
 
