@@ -318,9 +318,9 @@ export default function HomeClient() {
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row items-start md:gap-x-8 relative">
+            <div className="flex flex-col md:flex-row md:items-baseline md:gap-x-8 relative">
               {/* Connecting Lines */}
-              <div className="hidden md:block absolute top-6 left-1/6 right-1/6 h-0.5 border-t-2 border-dashed border-gray-300 dark:border-gray-700 z-0"></div>
+              <div className="hidden md:block absolute top-6 left-1/6 right-1/6 h-[2px] border-t-2 border-dashed border-blue-500 dark:border-blue-400 z-0"></div>
 
               {/* Step 1 */}
               <div className="w-full md:w-1/3 flex flex-col items-center mb-12 md:mb-0 relative z-10 animate-on-scroll animate-delay-200">
