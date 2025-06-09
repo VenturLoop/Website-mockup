@@ -361,8 +361,12 @@ html.light {
 /* Testimonial Section Styles */
 .testimonial-container {
   overflow: hidden; /* Hides the duplicated content outside the viewport */
-  padding-top: 1rem; /* Add some space if needed */
-  padding-bottom: 1rem; /* Add some space if needed */
+  /* Vertical padding can remain if desired for spacing rows from container top/bottom */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  /* Ensure no horizontal padding */
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .testimonial-row {
@@ -454,6 +458,9 @@ html.light {
   .testimonial-container {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    /* Ensure no horizontal padding on mobile either */
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .testimonial-card {
