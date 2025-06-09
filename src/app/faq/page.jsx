@@ -3,6 +3,7 @@
 // import FaqSection from "@/components/FaqSection"; // No longer directly used here
 import Head from 'next/head'; // For JSON-LD
 import FaqPageClient from '@/components/FaqPageClient'; // Import the new client component
+import Footer from '@/components/Footer'; // Import Footer
 
 // Data can be imported from a shared location if it grows, for now, define it here
 // These are now initial data, state will hold the filtered versions
@@ -99,7 +100,7 @@ export default function FaqPage() {
         />
       </Head>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8">
+        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white text-center mb-10 pb-6 border-b border-gray-300 dark:border-gray-700">
           Frequently Asked Questions – VenturLoop
         </h1>
         {/* Render the client component and pass the initial data as props */}
@@ -108,6 +109,7 @@ export default function FaqPage() {
           initialPricingFaqData={initialPricingFaqData}
         />
       </div>
+      <Footer />
       {/* You might want to add Navigation and Footer components here if they are not part of a global layout */}
     </>
   );

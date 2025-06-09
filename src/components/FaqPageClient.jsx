@@ -30,13 +30,13 @@ export default function FaqPageClient({ initialGeneralFaqData, initialPricingFaq
 
   return (
     <>
-      <div className="mb-10">
+      <div className="mb-12"> {/* Updated class for the container div */}
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search FAQs..."
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="w-full px-5 py-4 text-base sm:text-lg border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 transition-all duration-300 ease-in-out" // Updated classes for the input
         />
       </div>
 
