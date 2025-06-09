@@ -8,11 +8,13 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { usePathname } from "next/navigation"
 import { AppDownloadModal } from "../components/AppDownloadModal"; // Changed to named import
 import LoginModal from "../components/LoginModal" // Added import
+import { LoopAgentModal } from "../components/LoopAgentModal";
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false); // Added state
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Added state
+  const [isLoopAgentModalOpen, setIsLoopAgentModalOpen] = useState(false);
   const [isFoundersOpen, setIsFoundersOpen] = useState(false)
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false)
   const pathname = usePathname()
@@ -33,6 +35,13 @@ export function Navigation() {
     closeLoginModal();
     openAppDownloadModal(); // This will also close the menu due to the updated openAppDownloadModal
   };
+  const openLoopAgentModal = () => {
+    if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
+    if (isFoundersOpen) { setIsFoundersOpen(false); } // Close desktop dropdown if open
+    if (isMobileFoundersOpen) { setIsMobileFoundersOpen(false); } // Close mobile dropdown if open
+    setIsLoopAgentModalOpen(true);
+  };
+  const closeLoopAgentModal = () => setIsLoopAgentModalOpen(false);
 
   // Close menu when route changes
   useEffect(() => {
@@ -49,11 +58,12 @@ export function Navigation() {
         setIsFoundersOpen(false) // Also close desktop founders dropdown on escape
         closeAppDownloadModal(); // Close AppDownloadModal on escape
         closeLoginModal(); // Close LoginModal on escape
+        closeLoopAgentModal(); // Close LoopAgentModal on escape
       }
     }
     document.addEventListener("keydown", handleEscape)
     return () => document.removeEventListener("keydown", handleEscape)
-  }, [closeAppDownloadModal, closeLoginModal]) // Added dependencies
+  }, [closeAppDownloadModal, closeLoginModal, closeLoopAgentModal]) // Added dependencies
 
   // Click outside to close desktop founders dropdown
   useEffect(() => {
@@ -104,15 +114,12 @@ export function Navigation() {
               </button>
               {isFoundersOpen && (
                 <div className="absolute mt-2 w-auto min-w-max bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20">
-                  <Link
-                    href="https://loop.venturloop.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    onClick={() => setIsFoundersOpen(false)} // Close dropdown on click
+                  <button
+                    onClick={openLoopAgentModal}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     Loop Mini o1
-                  </Link>
+                  </button>
                 </div>
               )}
             </div>
@@ -202,18 +209,12 @@ export function Navigation() {
                   </button>
                   {isMobileFoundersOpen && (
                     <div className="pl-8 pr-4 py-1 space-y-1">
-                      <Link
-                        href="https://loop.venturloop.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
-                        onClick={() => {
-                          setIsMobileFoundersOpen(false)
-                          setIsMenuOpen(false) // Close main mobile menu
-                        }}
+                      <button
+                        onClick={openLoopAgentModal}
+                        className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         Loop Mini o1
-                      </Link>
+                      </button>
                     </div>
                   )}
                 </div>
@@ -278,6 +279,7 @@ export function Navigation() {
       {/* Render Modals */}
       <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadFromLoginModal} />
+      <LoopAgentModal isOpen={isLoopAgentModalOpen} onClose={closeLoopAgentModal} />
     </header>
   )
 }
