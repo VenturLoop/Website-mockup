@@ -7,9 +7,11 @@ import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Import the new component
 import LoginModal from '@/components/LoginModal';
+import AppDownloadModal from '@/components/AppDownloadModal';
 
 export default function HomeClient() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
   // openFaq, toggleFaq, and old faqData removed
 
   const generalFaqData = [
@@ -98,6 +100,9 @@ export default function HomeClient() {
 
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
+
+  const openAppDownloadModal = () => setIsAppDownloadModalOpen(true);
+  const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
 
   // Scroll animation observer
   useEffect(() => {
@@ -784,7 +789,8 @@ export default function HomeClient() {
 
       {/* Footer */}
       <Footer />
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadModal} />
+      <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
     </div>
   )
 }
