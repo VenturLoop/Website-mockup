@@ -1,7 +1,8 @@
-"use client"; // Convert to Client Component
-import { useState, useEffect } from 'react'; // Import hooks
-import FaqSection from "@/components/FaqSection";
+// Removed "use client" - This is now a Server Component
+// import { useState, useEffect } from 'react'; // Removed hooks
+// import FaqSection from "@/components/FaqSection"; // No longer directly used here
 import Head from 'next/head'; // For JSON-LD
+import FaqPageClient from '@/components/FaqPageClient'; // Import the new client component
 
 // Data can be imported from a shared location if it grows, for now, define it here
 // These are now initial data, state will hold the filtered versions
@@ -84,29 +85,10 @@ export const metadata = {
 };
 
 export default function FaqPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredGeneralFaqs, setFilteredGeneralFaqs] = useState(initialGeneralFaqData);
-  const [filteredPricingFaqs, setFilteredPricingFaqs] = useState(initialPricingFaqData);
-
-  useEffect(() => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
-    if (lowerCaseQuery === '') {
-      setFilteredGeneralFaqs(initialGeneralFaqData);
-      setFilteredPricingFaqs(initialPricingFaqData);
-    } else {
-      const generalResults = initialGeneralFaqData.filter(faq =>
-        faq.question.toLowerCase().includes(lowerCaseQuery) ||
-        faq.answer.toLowerCase().includes(lowerCaseQuery)
-      );
-      setFilteredGeneralFaqs(generalResults);
-
-      const pricingResults = initialPricingFaqData.filter(faq =>
-        faq.question.toLowerCase().includes(lowerCaseQuery) ||
-        faq.answer.toLowerCase().includes(lowerCaseQuery)
-      );
-      setFilteredPricingFaqs(pricingResults);
-    }
-  }, [searchQuery]);
+  // Client-side logic (useState, useEffect, event handlers, and related JSX)
+  // has been moved to FaqPageClient.
+  // This component now acts as a Server Component responsible for
+  // data fetching (if any, though here it's static) and rendering the overall page structure.
 
   return (
     <>
@@ -117,32 +99,14 @@ export default function FaqPage() {
         />
       </Head>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8"> {/* Reduced margin bottom for h1 */}
+        <h1 className="text-3xl font-bold text-center mb-8">
           Frequently Asked Questions – VenturLoop
         </h1>
-        <div className="mb-10"> {/* Increased margin bottom for search input container */}
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search FAQs..."
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-          />
-        </div>
-
-        {searchQuery && filteredGeneralFaqs.length === 0 && (
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-6">
-            No general questions match your search.
-          </p>
-        )}
-        <FaqSection title="General Questions" faqData={filteredGeneralFaqs} />
-
-        {searchQuery && filteredPricingFaqs.length === 0 && (
-          <p className="text-center text-gray-600 dark:text-gray-400 mt-10 mb-6"> {/* Added margin top for separation */}
-            No pricing questions match your search.
-          </p>
-        )}
-        <FaqSection title="Pricing & Subscription" faqData={filteredPricingFaqs} />
+        {/* Render the client component and pass the initial data as props */}
+        <FaqPageClient
+          initialGeneralFaqData={initialGeneralFaqData}
+          initialPricingFaqData={initialPricingFaqData}
+        />
       </div>
       {/* You might want to add Navigation and Footer components here if they are not part of a global layout */}
     </>
