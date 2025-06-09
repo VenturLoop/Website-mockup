@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Check, Star, Users, Briefcase, GitFork, Brain } from "lucide-react" // Add new icons
+import { Check, Star, Users, Briefcase, GitFork, Brain, Link, Rocket } from "lucide-react" // Add new icons
 import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
@@ -369,59 +369,35 @@ export default function HomeClient() {
                 <br />
                 Their Future
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-lg mb-8 leading-relaxed">
-                Connect with verified investors and get the resources you need to grow your startup. Join thousands of
-                founders who have found success on our platform.
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed">
+                VenturLoop is where founders link up with co-founders, investors, and collaborators to turn ideas into real startups—fast and hassle-free.
               </p>
 
-              <div className="space-y-6">
-                <div className="flex items-start animate-fade-in-left animate-delay-200">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      Smart Fundraising Engine
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Our AI-powered matching system connects you with the perfect investors for your startup's stage
-                      and industry.
-                    </p>
-                  </div>
+              {/* Statistical Highlights */}
+              <div className="mt-6 mb-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+                <div className="flex flex-col items-center text-center">
+                  <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">10,000+</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Founders</span>
                 </div>
-
-                <div className="flex items-start animate-fade-in-left animate-delay-300">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      One-Click Investor Pitching
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Create your pitch once and share it with multiple investors with a single click, saving you time
-                      and effort.
-                    </p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <Briefcase className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">500+</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Investors</span>
                 </div>
-
-                <div className="flex items-start animate-fade-in-left animate-delay-400">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      Investor Access Pathway
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Get direct access to our network of verified investors who are actively looking for opportunities
-                      in your sector.
-                    </p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <Link className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">1500+</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Total Matches</span>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <Rocket className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">2k</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Startup Pitched</span>
                 </div>
               </div>
 
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg mt-8 btn-hover hover-lift">
+              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift">
                 Get Started
               </Button>
             </div>
