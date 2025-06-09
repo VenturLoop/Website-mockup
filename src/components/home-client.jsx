@@ -318,7 +318,7 @@ export default function HomeClient() {
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-baseline md:gap-x-8 relative">
+            <div className="flex flex-col md:flex-row md:items-start md:gap-x-8 relative">
               {/* Connecting Lines */}
               <div className="hidden md:block absolute top-6 left-1/6 right-1/6 h-[2px] border-t-2 border-dashed border-blue-500 dark:border-blue-400 z-0"></div>
 
@@ -327,7 +327,7 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">1</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Create Your Profile</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Create Your Profile</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
                   Tell us about your startup goals, skills, and what you're looking for—whether it’s a co-founder, investor, or collaborators.
                 </p>
@@ -338,7 +338,7 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">2</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Get Matched Intelligently</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Get Matched Intelligently</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
                   Our smart algorithm and AI advisor Loop match you with like-minded founders, relevant investors, and real-time opportunities.
                 </p>
@@ -349,7 +349,7 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">3</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Build & Scale Together</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Build & Scale Together</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
                   Start meaningful conversations, collaborate on live projects, pitch your startup, and grow your venture—all in one platform.
                 </p>
