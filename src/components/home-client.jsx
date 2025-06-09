@@ -469,7 +469,7 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">1.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-2 text-center sm:text-left">
                       AI Matchmaking Dashboard
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
@@ -483,7 +483,7 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">2.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-2 text-center sm:text-left">
                       One-Click Investor Pitching
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
@@ -497,7 +497,7 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">3.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-2 text-center sm:text-left">
                       Incubator Access Gateway
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
