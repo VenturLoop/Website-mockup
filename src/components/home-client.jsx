@@ -318,19 +318,18 @@ export default function HomeClient() {
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row items-start justify-between relative">
+            <div className="flex flex-col md:flex-row md:items-start md:gap-x-8 relative">
               {/* Connecting Lines */}
-              <div className="hidden md:block absolute top-12 left-0 right-0 h-0.5 border-t-2 border-dashed border-gray-300 dark:border-gray-700 z-0"></div>
+              <div className="hidden md:block absolute top-6 left-1/6 right-1/6 h-[2px] border-t-2 border-dashed border-blue-500 dark:border-blue-400 z-0"></div>
 
               {/* Step 1 */}
               <div className="w-full md:w-1/3 flex flex-col items-center mb-12 md:mb-0 relative z-10 animate-on-scroll animate-delay-200">
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">1</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Install The App</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Create Your Profile</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla nisl, amet pretium pellentesque. Orci in
-                  elit.
+                  Tell us about your startup goals, skills, and what you're looking for—whether it’s a co-founder, investor, or collaborators.
                 </p>
               </div>
 
@@ -339,10 +338,9 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">2</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Smart Onboarding</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Get Matched Intelligently</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla nisl, amet pretium pellentesque. Orci in
-                  elit.
+                  Our smart algorithm and AI advisor Loop match you with like-minded founders, relevant investors, and real-time opportunities.
                 </p>
               </div>
 
@@ -351,10 +349,9 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">3</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">You Are All Set!</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Build & Scale Together</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla nisl, amet pretium pellentesque. Orci in
-                  elit.
+                  Start meaningful conversations, collaborate on live projects, pitch your startup, and grow your venture—all in one platform.
                 </p>
               </div>
             </div>
