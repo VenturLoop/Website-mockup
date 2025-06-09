@@ -9,7 +9,7 @@ import FaqSection from "@/components/FaqSection"; // Added import
 
 export default function PricingClient() {
   // const [openFaq, setOpenFaq] = useState(null) // Removed
-  const [billingPeriod, setBillingPeriod] = useState("yearly")
+  const [billingPeriod, setBillingPeriod] = useState("monthly")
 
   // const toggleFaq = (index) => { // Removed
   //   setOpenFaq(openFaq === index ? null : index)
@@ -147,13 +147,13 @@ export default function PricingClient() {
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
             {/* Free Plan */}
-            <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white">
+            <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white min-h-[520px] flex flex-col">
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-2">Free</h3>
                 <div className="text-4xl font-bold mb-2">$0</div>
                 <p className="text-gray-300">pricing for 1 year (for 1 user)</p>
               </div>
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow"> {/* Added classes and flex-grow */}
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
                   <span>3 daily profile connections</span>
@@ -183,13 +183,13 @@ export default function PricingClient() {
                   <span>Join founder community</span>
                 </li>
               </ul>
-              <Button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg">
+              <Button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg mt-auto"> {/* Added mt-auto */}
                 Sign up for free
               </Button>
             </div>
 
             {/* Founder's Pass - Featured */}
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden min-h-[520px] flex flex-col">
               <div className="absolute top-4 right-4">
                 <span className="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Recommended</span>
               </div>
@@ -205,7 +205,7 @@ export default function PricingClient() {
                 </p>
               </div>
 
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow"> {/* Added classes and flex-grow */}
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
                   <span>Everything in Free</span>
@@ -248,7 +248,7 @@ export default function PricingClient() {
                 </li>
               </ul>
 
-              <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4">
+              <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4 mt-auto"> {/* Added mt-auto */}
                 Choose plan ({billingPeriod === "yearly" ? "₹4999/year" : "₹499/month"})
               </Button>
 
