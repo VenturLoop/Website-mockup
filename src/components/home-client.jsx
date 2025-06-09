@@ -318,7 +318,7 @@ export default function HomeClient() {
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row items-start justify-between relative">
+            <div className="flex flex-col md:flex-row items-start md:gap-x-8 relative">
               {/* Connecting Lines */}
               <div className="hidden md:block absolute top-6 left-1/6 right-1/6 h-0.5 border-t-2 border-dashed border-gray-300 dark:border-gray-700 z-0"></div>
 
