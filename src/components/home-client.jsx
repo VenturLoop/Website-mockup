@@ -6,8 +6,10 @@ import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Import the new component
+import LoginModal from '@/components/LoginModal';
 
 export default function HomeClient() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   // openFaq, toggleFaq, and old faqData removed
 
   const generalFaqData = [
@@ -93,6 +95,9 @@ export default function HomeClient() {
     "Insight",
     "Lightspeed",
   ]
+
+  const openLoginModal = () => setIsLoginModalOpen(true);
+  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   // Scroll animation observer
   useEffect(() => {
@@ -398,7 +403,10 @@ export default function HomeClient() {
               </div>
 
               <div className="flex justify-center lg:justify-start">
-                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift">
+                <Button
+                  onClick={openLoginModal}
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                >
                   Get Started
                 </Button>
               </div>
@@ -776,6 +784,7 @@ export default function HomeClient() {
 
       {/* Footer */}
       <Footer />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </div>
   )
 }
