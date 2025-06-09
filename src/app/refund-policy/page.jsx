@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation";
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Refund Policy",
@@ -56,6 +57,7 @@ export default function RefundPolicyPage() {
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 }

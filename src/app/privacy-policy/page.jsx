@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation";
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Privacy Policy",
@@ -69,6 +70,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 }

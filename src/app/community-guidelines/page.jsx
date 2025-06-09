@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation";
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Community Guidelines",
@@ -65,6 +66,7 @@ export default function CommunityGuidelinesPage() {
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation";
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Terms & Conditions",
@@ -59,6 +60,7 @@ export default function TermsConditionsPage() {
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 }
