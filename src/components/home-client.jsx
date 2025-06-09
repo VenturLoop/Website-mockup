@@ -8,7 +8,6 @@ import Footer from '@/components/Footer';
 
 export default function HomeClient() {
   const [openFaq, setOpenFaq] = useState(null)
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index)
@@ -103,14 +102,6 @@ export default function HomeClient() {
     "Insight",
     "Lightspeed",
   ]
-
-  // Auto-advance testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [testimonials.length])
 
   // Scroll animation observer
   useEffect(() => {
@@ -662,64 +653,12 @@ export default function HomeClient() {
             </h2>
           </div>
 
-          {/* Auto-advancing testimonial carousel */}
-          <div className="max-w-4xl mx-auto">
-            <div className="relative overflow-hidden rounded-2xl">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentTestimonial * 100}%)` }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-4">
-                    <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-center hover-lift">
-                      <div className="flex justify-center mb-6">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                          <span className="text-white font-bold text-2xl">{testimonial.name.charAt(0)}</span>
-                        </div>
-                      </div>
-                      <div className="flex justify-center items-center mb-4">
-                        <div className="flex text-yellow-400">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star key={star} className="w-5 h-5 fill-current" />
-                          ))}
-                        </div>
-                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">{testimonial.rating}.0</span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300 text-lg mb-6 leading-relaxed">
-                        "{testimonial.text}"
-                      </p>
-                      <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white text-lg">{testimonial.name}</h4>
-                        <p className="text-gray-500 dark:text-gray-400">{testimonial.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Testimonial indicators */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    index === currentTestimonial ? "bg-blue-600 dark:bg-blue-500" : "bg-gray-300 dark:bg-gray-600"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Static testimonials grid for larger screens */}
-          <div className="hidden lg:grid grid-cols-3 gap-8 mt-16">
-            {testimonials.slice(0, 3).map((testimonial, index) => (
-              <div
-                key={index}
-                className={`bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover-lift animate-on-scroll animate-delay-${(index + 2) * 100}`}
-              >
-                <div className="flex items-center mb-4">
+          {/* New Testimonial Scrolling Rows */}
+          <div className="testimonial-container">
+            <div className="testimonial-row flex overflow-x-auto space-x-4 pb-4">
+              {[...testimonials, ...testimonials].map((testimonial, index) => (
+                <div key={`row1-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
+                  <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 mr-4 flex items-center justify-center">
                     <span className="text-white font-bold text-lg">{testimonial.name.charAt(0)}</span>
                   </div>
@@ -730,15 +669,47 @@ export default function HomeClient() {
                 </div>
                 <div className="flex items-center mb-4">
                   <div className="flex text-yellow-400">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-4 h-4 fill-current" />
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                    {[...Array(5 - testimonial.rating)].map((_, i) => (
+                      <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current" />
                     ))}
                   </div>
                   <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">{testimonial.rating}.0</span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">"{testimonial.text}"</p>
-              </div>
-            ))}
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">"{testimonial.text}"</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="testimonial-row flex overflow-x-auto space-x-4 pt-4 pb-4">
+              {[...testimonials.slice(Math.ceil(testimonials.length / 2)), ...testimonials.slice(0, Math.ceil(testimonials.length / 2)), ...testimonials.slice(Math.ceil(testimonials.length / 2)), ...testimonials.slice(0, Math.ceil(testimonials.length / 2))].map((testimonial, index) => (
+                <div key={`row2-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
+                  <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-teal-500 mr-4 flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">{testimonial.name.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
+                  </div>
+                </div>
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                    {[...Array(5 - testimonial.rating)].map((_, i) => (
+                      <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current" />
+                    ))}
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">{testimonial.rating}.0</span>
+                </div>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">"{testimonial.text}"</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
