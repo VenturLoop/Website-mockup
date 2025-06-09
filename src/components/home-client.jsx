@@ -7,7 +7,7 @@ import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Import the new component
 import LoginModal from '@/components/LoginModal';
-import AppDownloadModal from '@/components/AppDownloadModal';
+import { AppDownloadModal } from '@/components/AppDownloadModal';
 
 export default function HomeClient() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
