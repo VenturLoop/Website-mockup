@@ -1,51 +1,48 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp, Check, X } from "lucide-react"
+import { Check, X } from "lucide-react" // ChevronDown, ChevronUp removed
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
+import FaqSection from "@/components/FaqSection"; // Added import
 
 export default function PricingClient() {
-  const [openFaq, setOpenFaq] = useState(null)
+  // const [openFaq, setOpenFaq] = useState(null) // Removed
   const [billingPeriod, setBillingPeriod] = useState("yearly")
 
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
+  // const toggleFaq = (index) => { // Removed
+  //   setOpenFaq(openFaq === index ? null : index)
+  // }
 
-  const faqData = [
+  // const faqData = [] // Removed old faqData
+
+  const pricingFaqData = [
     {
-      question: "What is startup and how does it help businesses?",
-      answer:
-        "Startup is a comprehensive platform that connects entrepreneurs with verified investors, providing tools and resources to help startups grow and scale their businesses effectively.",
+      question: "What is included in the free plan on VenturLoop?",
+      answer: "The free plan allows users to create a profile, explore the community, and send a limited number of connection requests to founders and investors. Micro-transactions are available for additional actions."
     },
     {
-      question: "How do I find my Startup on marketplace?",
-      answer:
-        "You can easily find and showcase your startup on our marketplace by creating a detailed profile, highlighting your unique value proposition, and connecting with relevant investors in your industry.",
+      question: "What is the Founder Pass and what do I get with it?",
+      answer: "The Founder Pass is our premium subscription that unlocks unlimited connections, priority visibility, advanced filters, and exclusive access to premium features like featured listings and investor outreach boosts."
     },
     {
-      question: "How do I find my Startup on marketplace?",
-      answer:
-        "Navigate to the marketplace section, use our advanced search filters to find startups by industry, stage, or location, and browse through verified startup profiles.",
+      question: "Can I still connect with founders or pitch to investors without the Founder Pass?",
+      answer: "Yes! Free users can connect or pitch using our pay-as-you-go micro-transaction system, which allows flexible access to key features without a full subscription."
     },
     {
-      question: "What happens if I need to change my startup name?",
-      answer:
-        "You can update your startup name through your account settings. Our support team will review the change and update your profile accordingly within 24-48 hours.",
+      question: "What are micro-transactions on VenturLoop?",
+      answer: "Micro-transactions let you pay a small fee for specific actions, like sending extra pitch requests to investors, unlocking premium founder profiles, or featuring your startup temporarily."
     },
     {
-      question: "Is my startup ready for sale?",
-      answer:
-        "Our platform provides assessment tools and expert guidance to help you determine if your startup is ready for investment or acquisition opportunities.",
+      question: "Is payment required to get started on VenturLoop?",
+      answer: "No. You can sign up and use the basic features for free. You only pay if you choose to upgrade to the Founder Pass or use micro-transactions for specific actions."
     },
     {
-      question: "Can I use Startup on my client? How to setup them up?",
-      answer:
-        "Yes, you can set up client accounts through our enterprise dashboard. Contact our support team for detailed setup instructions and client management tools.",
-    },
-  ]
+      question: "How do I pay for a subscription or micro-transactions?",
+      answer: "VenturLoop supports multiple payment methods including UPI, credit/debit cards, and net banking. International payments are also accepted for global users."
+    }
+  ];
 
   const pricingFeatures = [
     {
@@ -287,77 +284,8 @@ export default function PricingClient() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-            {/* Left side - FAQ List */}
-            <div className="w-full lg:w-2/3">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
-                Frequently asked questions
-              </h2>
-              <div className="space-y-4">
-                {faqData.map((faq, index) => (
-                  <div
-                    key={index}
-                    className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md"
-                  >
-                    <button
-                      onClick={() => toggleFaq(index)}
-                      className="w-full px-4 sm:px-6 py-4 text-left flex justify-between items-center focus:outline-none"
-                    >
-                      <span className="font-medium text-gray-900 dark:text-white pr-4 text-sm sm:text-base">
-                        {faq.question}
-                      </span>
-                      {openFaq === index ? (
-                        <ChevronUp className="h-5 w-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-                      ) : (
-                        <ChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-                      )}
-                    </button>
-                    <div
-                      className={`overflow-hidden transition-all duration-300 ${
-                        openFaq === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                      }`}
-                    >
-                      <div className="px-4 sm:px-6 pb-4">
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right side - Contact Card */}
-            <div className="w-full lg:w-1/3">
-              <div className="bg-blue-600 dark:bg-blue-700 rounded-2xl p-6 sm:p-8 text-white sticky top-8">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3">Do you have any questions?</h3>
-                  <p className="text-blue-100 leading-relaxed text-sm sm:text-base">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-                  </p>
-                </div>
-                <Button className="w-full bg-white text-blue-600 dark:text-blue-700 hover:bg-gray-100 font-semibold py-3 rounded-lg">
-                  Contact Us
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* FAQ Section - Replaced with new component */}
+      <FaqSection title="Pricing Frequently Asked Questions" faqData={pricingFaqData} />
 
       {/* Newsletter Section with 3D Effect */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 dark:from-blue-800 dark:via-blue-900 dark:to-purple-900 relative overflow-hidden">

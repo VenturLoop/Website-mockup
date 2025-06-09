@@ -113,6 +113,22 @@ export default function Footer() {
                   Testimonial
                 </a>
               </li>
+              <li>
+                <a
+                  href="/faq"
+                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/pricing-faq"
+                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
+                  Pricing FAQ
+                </a>
+              </li>
             </ul>
           </div>
 
