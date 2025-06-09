@@ -45,15 +45,16 @@ export default function FaqPageClient({ initialGeneralFaqData, initialPricingFaq
           No general questions match your search.
         </p>
       )}
-      <FaqSection title="General Questions" faqData={filteredGeneralFaqs} showContactCard={true} />
+      {/* showContactCard={true} removed, as true is now the default in FaqSection */}
+      <FaqSection title="General Questions" faqData={filteredGeneralFaqs} />
 
       {searchQuery && filteredPricingFaqs.length === 0 && (
         <p className="text-center text-gray-600 dark:text-gray-400 mt-10 mb-6">
           No pricing questions match your search.
         </p>
       )}
-      {/* No showContactCard prop for the second one, so it defaults to false */}
-      <FaqSection title="Pricing & Subscription" faqData={filteredPricingFaqs} />
+      {/* Explicitly set showContactCard to false to override the new default */}
+      <FaqSection title="Pricing & Subscription" faqData={filteredPricingFaqs} showContactCard={false} />
     </>
   );
 }

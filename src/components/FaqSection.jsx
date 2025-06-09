@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
-export default function FaqSection({ title, faqData, showContactCard = false }) { // Added showContactCard prop with default
+export default function FaqSection({ title, faqData, showContactCard = true }) { // Changed default to true
   const [openFaq, setOpenFaq] = useState(null)
 
   const toggleFaq = (index) => {
