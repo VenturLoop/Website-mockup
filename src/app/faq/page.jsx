@@ -1,8 +1,11 @@
+"use client"; // Convert to Client Component
+import { useState, useEffect } from 'react'; // Import hooks
 import FaqSection from "@/components/FaqSection";
 import Head from 'next/head'; // For JSON-LD
 
 // Data can be imported from a shared location if it grows, for now, define it here
-const generalFaqData = [
+// These are now initial data, state will hold the filtered versions
+const initialGeneralFaqData = [
   {
     question: "What is VenturLoop and how does it work?",
     answer: "VenturLoop is a platform that helps founders connect with potential co-founders, investors, and collaborators. Simply create your profile, set your preferences, and start discovering like-minded people to build your startup with."
@@ -29,7 +32,7 @@ const generalFaqData = [
   }
 ];
 
-const pricingFaqData = [
+const initialPricingFaqData = [
   {
     question: "What is included in the free plan on VenturLoop?",
     answer: "The free plan allows users to create a profile, explore the community, and send a limited number of connection requests to founders and investors. Micro-transactions are available for additional actions."
@@ -56,12 +59,13 @@ const pricingFaqData = [
   }
 ];
 
-const allFaqData = [...generalFaqData, ...pricingFaqData];
+// Update JSON-LD to use initial data as it's static metadata
+const allInitialFaqData = [...initialGeneralFaqData, ...initialPricingFaqData];
 
 const faqPageJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": allFaqData.map(faq => ({
+  "mainEntity": allInitialFaqData.map(faq => ({
     "@type": "Question",
     "name": faq.question,
     "acceptedAnswer": {
@@ -79,7 +83,31 @@ export const metadata = {
   },
 };
 
-export default function FaqPage() { // Renamed from GeneralFaqPage
+export default function FaqPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredGeneralFaqs, setFilteredGeneralFaqs] = useState(initialGeneralFaqData);
+  const [filteredPricingFaqs, setFilteredPricingFaqs] = useState(initialPricingFaqData);
+
+  useEffect(() => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    if (lowerCaseQuery === '') {
+      setFilteredGeneralFaqs(initialGeneralFaqData);
+      setFilteredPricingFaqs(initialPricingFaqData);
+    } else {
+      const generalResults = initialGeneralFaqData.filter(faq =>
+        faq.question.toLowerCase().includes(lowerCaseQuery) ||
+        faq.answer.toLowerCase().includes(lowerCaseQuery)
+      );
+      setFilteredGeneralFaqs(generalResults);
+
+      const pricingResults = initialPricingFaqData.filter(faq =>
+        faq.question.toLowerCase().includes(lowerCaseQuery) ||
+        faq.answer.toLowerCase().includes(lowerCaseQuery)
+      );
+      setFilteredPricingFaqs(pricingResults);
+    }
+  }, [searchQuery]);
+
   return (
     <>
       <Head>
@@ -89,16 +117,34 @@ export default function FaqPage() { // Renamed from GeneralFaqPage
         />
       </Head>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-12">
+        <h1 className="text-3xl font-bold text-center mb-8"> {/* Reduced margin bottom for h1 */}
           Frequently Asked Questions – VenturLoop
         </h1>
-        <FaqSection title="General Questions" faqData={generalFaqData} />
-        <FaqSection title="Pricing & Subscription" faqData={pricingFaqData} />
+        <div className="mb-10"> {/* Increased margin bottom for search input container */}
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search FAQs..."
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          />
+        </div>
+
+        {searchQuery && filteredGeneralFaqs.length === 0 && (
+          <p className="text-center text-gray-600 dark:text-gray-400 mb-6">
+            No general questions match your search.
+          </p>
+        )}
+        <FaqSection title="General Questions" faqData={filteredGeneralFaqs} />
+
+        {searchQuery && filteredPricingFaqs.length === 0 && (
+          <p className="text-center text-gray-600 dark:text-gray-400 mt-10 mb-6"> {/* Added margin top for separation */}
+            No pricing questions match your search.
+          </p>
+        )}
+        <FaqSection title="Pricing & Subscription" faqData={filteredPricingFaqs} />
       </div>
       {/* You might want to add Navigation and Footer components here if they are not part of a global layout */}
-      {/* For example: */}
-      {/* <Navigation /> */}
-      {/* <Footer /> */}
     </>
   );
 }
