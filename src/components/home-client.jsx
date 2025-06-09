@@ -460,7 +460,7 @@ export default function HomeClient() {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 order-2 lg:order-1 animate-on-scroll">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Some Excellent Features For You
+                Some <span className="text-blue-600 dark:text-blue-400">Excellent Features</span> For You
               </h2>
 
               <div className="space-y-6">
@@ -469,7 +469,7 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">1.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-2 text-center sm:text-left">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center sm:text-left mb-3">
                       AI Matchmaking Dashboard
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
@@ -483,7 +483,7 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">2.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-2 text-center sm:text-left">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center sm:text-left mb-3">
                       One-Click Investor Pitching
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
@@ -497,7 +497,7 @@ export default function HomeClient() {
                     <span className="text-blue-600 dark:text-blue-400 font-bold">3.</span>
                   </div>
                   <div>
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-2 text-center sm:text-left">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center sm:text-left mb-3">
                       Incubator Access Gateway
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
