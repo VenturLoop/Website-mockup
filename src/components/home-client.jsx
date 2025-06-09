@@ -470,11 +470,10 @@ export default function HomeClient() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                      Smart Fundraising Engine
+                      AI Matchmaking Dashboard
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Our AI-powered matching system connects you with the perfect investors for your startup's stage
-                      and industry.
+                      Connect instantly with like-minded co-founders, investors, and collaborators. Intelligent filters make discovery effortless.
                     </p>
                   </div>
                 </div>
@@ -488,8 +487,7 @@ export default function HomeClient() {
                       One-Click Investor Pitching
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Create your pitch once and share it with multiple investors with a single click, saving you time
-                      and effort.
+                      Upload your deck, tap your vertical, and instantly pitch to relevant investors. Built-in tracking and feedback tools included.
                     </p>
                   </div>
                 </div>
@@ -500,11 +498,10 @@ export default function HomeClient() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                      Investor Access Pathway
+                      Incubator Access Gateway
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Get direct access to our network of verified investors who are actively looking for opportunities
-                      in your sector.
+                      Apply to top-tier incubators and accelerators in one place. No more endless forms and scattered applications.
                     </p>
                   </div>
                 </div>
