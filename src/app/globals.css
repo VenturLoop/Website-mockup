@@ -387,13 +387,13 @@ html.light {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%); /* Scrolls the entire duplicated content */
+    transform: translateX(calc(-100% / 2)); /* Scroll by the width of the original set */
   }
 }
 
 @keyframes scroll-right-testimonial {
   0% {
-    transform: translateX(-100%); /* Starts from the fully scrolled position */
+    transform: translateX(calc(-100% / 2)); /* Start with the duplicated content filling the view */
   }
   100% {
     transform: translateX(0%);

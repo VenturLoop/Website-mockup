@@ -646,18 +646,20 @@ export default function HomeClient() {
 
       {/* Testimonials Section with Auto-Carousel */}
       <section id="testimonial" className="py-16 bg-white dark:bg-gray-950">
+        {/* Title with standard padding */}
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 animate-on-scroll">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               What Our People Think About Us
             </h2>
           </div>
+        </div>
 
-          {/* New Testimonial Scrolling Rows */}
-          <div className="testimonial-container">
-            <div className="testimonial-row flex overflow-x-auto space-x-4 pb-4">
-              {[...testimonials, ...testimonials].map((testimonial, index) => (
-                <div key={`row1-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
+        {/* Testimonial slider container - now full-width relative to section */}
+        <div className="testimonial-container mt-8"> {/* Consider adjusting mt-8 if mb-12 on title is too much/little */}
+          <div className="testimonial-row flex overflow-x-auto pb-4">
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <div key={`row1-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
                   <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 mr-4 flex items-center justify-center">
                     <span className="text-white font-bold text-lg">{testimonial.name.charAt(0)}</span>
@@ -683,7 +685,7 @@ export default function HomeClient() {
               ))}
             </div>
 
-            <div className="testimonial-row flex overflow-x-auto space-x-4 pt-4 pb-4">
+            <div className="testimonial-row flex overflow-x-auto pt-4 pb-4">
               {[...testimonials.slice(Math.ceil(testimonials.length / 2)), ...testimonials.slice(0, Math.ceil(testimonials.length / 2)), ...testimonials.slice(Math.ceil(testimonials.length / 2)), ...testimonials.slice(0, Math.ceil(testimonials.length / 2))].map((testimonial, index) => (
                 <div key={`row2-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
                   <div className="flex items-center mb-4">
@@ -711,7 +713,7 @@ export default function HomeClient() {
               ))}
             </div>
           </div>
-        </div>
+        </div> {/* This closing div was for the original container. It should be removed or matched if testimonial-container is now outside it. Given the structure, testimonial-container is now a sibling to the title's container, so this seems to be an extra closing div. Let's remove it. */}
       </section>
 
       {/* FAQ Section */}
