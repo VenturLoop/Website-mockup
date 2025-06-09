@@ -197,7 +197,7 @@ export default function HomeClient() {
       </section>
 
       {/* Our Offerings - Enhanced */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="services" className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 lg:mb-16 animate-on-scroll">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Offering</h2>
@@ -381,7 +381,7 @@ export default function HomeClient() {
       </section>
 
       {/* Where Founders Meet Their Future Section */}
-      <section className="py-16 sm:py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="about-us" className="py-16 sm:py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 animate-on-scroll">
@@ -654,7 +654,7 @@ export default function HomeClient() {
       </section>
 
       {/* Testimonials Section with Auto-Carousel */}
-      <section className="py-16 bg-white dark:bg-gray-950">
+      <section id="testimonial" className="py-16 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 animate-on-scroll">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">

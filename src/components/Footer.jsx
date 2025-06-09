@@ -91,42 +91,26 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="#"
+                  href="/#about-us"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  About Us
+                  About us
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/#services"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  Our Team
+                  Services
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/#testimonial"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Press
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Blog
+                  Testimonial
                 </a>
               </li>
             </ul>
@@ -134,46 +118,32 @@ export default function Footer() {
 
           {/* Our Company Links */}
           <div className="animate-on-scroll animate-delay-200">
-            <h3 className="font-semibold mb-6 text-gray-900 dark:text-white">Our Company</h3>
+            <h3 className="font-semibold mb-6 text-gray-900 dark:text-white">Our communities</h3>
             <ul className="space-y-4">
               <li>
                 <a
-                  href="#"
+                  href="/community"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  For Startups
+                  Our Community
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://instagram.com/venturloop"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  For Investors
+                  Instagram Community
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://linkedin.com/company/venturloop"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Marketplace
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Success Stories
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Resources
+                  LinkedIn Community
                 </a>
               </li>
             </ul>
@@ -181,46 +151,19 @@ export default function Footer() {
 
           {/* Support Links */}
           <div className="animate-on-scroll animate-delay-300">
-            <h3 className="font-semibold mb-6 text-gray-900 dark:text-white">Support</h3>
+            <h3 className="font-semibold mb-6 text-gray-900 dark:text-white">Contact</h3>
             <ul className="space-y-4">
               <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Help Center
-                </a>
+                <span className="text-gray-600 dark:text-gray-400">
+                  +91 7603037718
+                </span>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="mailto:Connect@venturloop.com"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  Contact Us
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  API Reference
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Status
+                  Connect@venturloop.com
                 </a>
               </li>
             </ul>
