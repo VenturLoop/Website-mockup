@@ -154,8 +154,10 @@ export default function PricingClient() {
             <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white min-h-[520px] flex flex-col">
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-2">Free</h3>
-                <div className="text-4xl font-bold mb-2">$0</div>
-                <p className="text-gray-300">pricing for 1 year (for 1 user)</p>
+                <div className="flex items-baseline">
+                  <div className="text-4xl font-bold">₹0</div>
+                  <p className="text-gray-300 ml-2">pricing for 1 year (for 1 user)</p>
+                </div>
               </div>
               <ul
                 className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide"
@@ -190,6 +192,7 @@ export default function PricingClient() {
                   <span>Join founder community</span>
                 </li>
               </ul>
+              <hr className="my-4 border-gray-500 dark:border-gray-700" />
               <Button
                 className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg mt-auto" // Added mt-auto
                 onClick={() => setIsLoginModalOpen(true)}
@@ -206,13 +209,15 @@ export default function PricingClient() {
 
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-2">Founder's Pass</h3>
-                <p className="text-blue-100 mb-2">Everything you need to grow</p> {/* Adjusted mb from mb-6 to mb-2 to make space for price */}
-                <div className="text-4xl font-bold mb-2">
-                  {billingPeriod === "yearly" ? "₹4999" : "₹499"}
+                <p className="text-blue-100 mb-2">Everything you need to grow</p>
+                <div className="flex items-baseline mb-6">
+                  <div className="text-4xl font-bold">
+                    {billingPeriod === "yearly" ? "₹4999" : "₹499"}
+                  </div>
+                  <p className="text-blue-100 ml-2">
+                    {billingPeriod === "yearly" ? "per year" : "per month"}
+                  </p>
                 </div>
-                <p className="text-blue-100 mb-6"> {/* Added mb-6 here */}
-                  {billingPeriod === "yearly" ? "per year" : "per month"}
-                </p>
               </div>
 
               <ul
@@ -260,7 +265,7 @@ export default function PricingClient() {
                   <span>Priority support</span>
                 </li>
               </ul>
-
+              <hr className="my-4 border-blue-300/70 dark:border-blue-400/70" />
               <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4 mt-auto"> {/* Added mt-auto */}
                 Choose plan ({billingPeriod === "yearly" ? "₹4999/year" : "₹499/month"})
               </Button>
