@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { usePathname } from "next/navigation"
@@ -12,11 +12,13 @@ export function Navigation() {
   const [isFoundersOpen, setIsFoundersOpen] = useState(false)
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false)
   const pathname = usePathname()
+  const foundersDropdownRef = useRef(null)
 
   // Close menu when route changes
   useEffect(() => {
     setIsMenuOpen(false)
     setIsMobileFoundersOpen(false) // Also close mobile founders dropdown
+    setIsFoundersOpen(false) // Also close desktop founders dropdown
   }, [pathname])
 
   // Close menu on escape key
@@ -24,11 +26,31 @@ export function Navigation() {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         setIsMenuOpen(false)
+        setIsFoundersOpen(false) // Also close desktop founders dropdown on escape
       }
     }
     document.addEventListener("keydown", handleEscape)
     return () => document.removeEventListener("keydown", handleEscape)
   }, [])
+
+  // Click outside to close desktop founders dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (foundersDropdownRef.current && !foundersDropdownRef.current.contains(event.target)) {
+        setIsFoundersOpen(false)
+      }
+    }
+
+    if (isFoundersOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isFoundersOpen])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -50,7 +72,7 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <div className="relative">
+            <div className="relative" ref={foundersDropdownRef}>
               <button
                 onClick={() => setIsFoundersOpen(!isFoundersOpen)}
                 className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
@@ -64,7 +86,7 @@ export function Navigation() {
                     href="https://loop.venturloop.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-500/30 hover:text-blue-700 dark:hover:text-blue-300"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                     onClick={() => setIsFoundersOpen(false)} // Close dropdown on click
                   >
                     Loop Mini o1
@@ -158,7 +180,7 @@ export function Navigation() {
                         href="https://loop.venturloop.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-blue-500/30 hover:text-blue-700 dark:hover:text-blue-300"
+                        className="block px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                         onClick={() => {
                           setIsMobileFoundersOpen(false)
                           setIsMenuOpen(false) // Close main mobile menu
