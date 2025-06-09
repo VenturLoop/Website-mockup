@@ -713,7 +713,7 @@ export default function HomeClient() {
               ))}
             </div>
           </div>
-        </div> {/* This closing div was for the original container. It should be removed or matched if testimonial-container is now outside it. Given the structure, testimonial-container is now a sibling to the title's container, so this seems to be an extra closing div. Let's remove it. */}
+        {/* The extraneous div and its comment are removed here. */}
       </section>
 
       {/* FAQ Section */}
