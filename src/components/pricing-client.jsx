@@ -6,10 +6,14 @@ import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Added import
+import LoginModal from '@/components/LoginModal';
+import { AppDownloadModal } from '@/components/AppDownloadModal';
 
 export default function PricingClient() {
   // const [openFaq, setOpenFaq] = useState(null) // Removed
-  const [billingPeriod, setBillingPeriod] = useState("yearly")
+  const [billingPeriod, setBillingPeriod] = useState("monthly")
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
 
   // const toggleFaq = (index) => { // Removed
   //   setOpenFaq(openFaq === index ? null : index)
@@ -46,54 +50,66 @@ export default function PricingClient() {
 
   const pricingFeatures = [
     {
-      feature: "Access to investor network",
-      free: false,
-      premium: true,
-      enterprise: true,
+      feature: "Daily profile connections",
+      free: "3",
+      premium: "Unlimited",
     },
     {
-      feature: "Basic profile creation",
+      feature: "Message requests/day",
+      free: "1",
+      premium: "Unlimited",
+    },
+    {
+      feature: "Save investors/day",
+      free: "Up to 3",
+      premium: "Unlimited",
+    },
+    {
+      feature: "Send pitch decks",
+      free: "1/day (to 1 investor)",
+      premium: "60/month",
+    },
+    {
+      feature: "Access active investors",
       free: true,
       premium: true,
-      enterprise: true,
     },
     {
-      feature: "Advanced analytics",
+      feature: "Access Loop AI chatbot",
+      free: true,
+      premium: true,
+    },
+    {
+      feature: "Join founder community",
+      free: true,
+      premium: true,
+    },
+    {
+      feature: "Edit & use pitch deck templates",
       free: false,
       premium: true,
-      enterprise: true,
+    },
+    {
+      feature: "Verified Member badge",
+      free: false,
+      premium: true,
+    },
+    {
+      feature: "Profile analytics",
+      free: false,
+      premium: true,
+    },
+    {
+      feature: "Indian incubator/accelerator list",
+      free: false,
+      premium: true,
     },
     {
       feature: "Priority support",
       free: false,
-      premium: false,
-      enterprise: true,
-    },
-    {
-      feature: "Custom integrations",
-      free: false,
-      premium: false,
-      enterprise: true,
-    },
-    {
-      feature: "Team collaboration",
-      free: false,
       premium: true,
-      enterprise: true,
     },
-    {
-      feature: "API access",
-      free: false,
-      premium: false,
-      enterprise: true,
-    },
-    {
-      feature: "White-label solution",
-      free: false,
-      premium: false,
-      enterprise: true,
-    },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -101,14 +117,14 @@ export default function PricingClient() {
       <Navigation />
 
       {/* Pricing Hero Section */}
-      <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-900">
+      <section className="py-8 sm:py-12 bg-gray-50 dark:bg-gray-900"> {/* Reduced padding */}
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12"> {/* mb-12 on this div seems to be for space between this block and cards, might be okay */}
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">Transparent Pricing</h1>
             <p className="text-gray-600 dark:text-gray-400 text-lg mb-8">Pricing built for people just like you.</p>
 
             {/* Billing Toggle */}
-            <div className="inline-flex bg-gray-200 dark:bg-gray-800 rounded-lg p-1 mb-12">
+            <div className="inline-flex bg-gray-200 dark:bg-gray-800 rounded-lg p-1 mb-8"> {/* Reduced mb from mb-12 to mb-8 */}
               <button
                 onClick={() => setBillingPeriod("yearly")}
                 className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all ${
@@ -135,63 +151,123 @@ export default function PricingClient() {
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
             {/* Free Plan */}
-            <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white">
+            <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white h-[480px] flex flex-col"> {/* Changed min-h-[520px] to h-[480px] */}
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-2">Free</h3>
-                <div className="text-4xl font-bold mb-2">$0</div>
-                <p className="text-gray-300">pricing for 1 year (for 1 user)</p>
+                <div className="flex items-baseline">
+                  <div className="text-4xl font-bold">₹0</div>
+                  <p className="text-gray-300 ml-2">pricing for 1 year (for 1 user)</p>
+                </div>
               </div>
-              <ul className="space-y-4 mb-8">
+              <ul
+                className="space-y-4 mb-8 max-h-60 overflow-y-auto flex-grow scrollbar-hide" {/* Corrected to max-h-60 for Free Plan */}
+                style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+              >
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>3 daily profile connections</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>1 message request/day</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>Save up to 3 investors/day</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                  <span>Send 1 pitch deck/day to 1 investor</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                  <span>Access active investors</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                  <span>Access Loop AI chatbot</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                  <span>Join founder community</span>
                 </li>
               </ul>
-              <Button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg">
+              <hr className="my-4 border-gray-500 dark:border-gray-700" />
+              <Button
+                className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg mt-auto" // Added mt-auto
+                onClick={() => setIsLoginModalOpen(true)}
+              >
                 Sign up for free
               </Button>
             </div>
 
             {/* Founder's Pass - Featured */}
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden h-[480px] flex flex-col"> {/* Changed min-h-[520px] to h-[480px] */}
               <div className="absolute top-4 right-4">
                 <span className="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Recommended</span>
               </div>
 
-              <div className="mb-8">
+              <div className="mb-4"> {/* Changed mb-8 to mb-4 */}
                 <h3 className="text-2xl font-bold mb-2">Founder's Pass</h3>
-                <p className="text-blue-100 mb-6">Everything you need to grow</p>
+                <p className="text-blue-100 mb-2">Everything you need to grow</p>
+                <div className="flex items-baseline mb-6">
+                  <div className="text-4xl font-bold">
+                    {billingPeriod === "yearly" ? "₹4999" : "₹499"}
+                  </div>
+                  <p className="text-blue-100 ml-2">
+                    {billingPeriod === "yearly" ? "per year" : "per month"}
+                  </p>
+                </div>
               </div>
 
-              <ul className="space-y-4 mb-8">
+              <ul
+                className="space-y-4 mb-8 max-h-80 overflow-y-auto flex-grow scrollbar-hide" {/* Corrected to max-h-80 for Founder's Pass */}
+                style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+              >
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>Everything in Free</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>Unlimited connections</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>Unlimited message requests</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
-                  <span>Feature label goes here</span>
+                  <span>Unlimited investor saving</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  <span>Send 60 pitch decks/month</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  <span>Edit & use pitch deck templates</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  <span>Verified Member badge</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  <span>Profile analytics</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  <span>Indian incubator/accelerator list</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  <span>Priority support</span>
                 </li>
               </ul>
-
-              <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4">
-                Choose plan ($49)
+              <hr className="my-4 border-blue-300/70 dark:border-blue-400/70" />
+              <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4 mt-auto"> {/* Added mt-auto */}
+                Choose plan ({billingPeriod === "yearly" ? "₹4999/year" : "₹499/month"})
               </Button>
 
               {/* Illustration */}
@@ -236,14 +312,11 @@ export default function PricingClient() {
           <div className="max-w-5xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
               {/* Table Header */}
-              <div className="grid grid-cols-4 gap-2 sm:gap-4 p-4 sm:p-6 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 p-4 sm:p-6 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                 <div className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base">Features</div>
                 <div className="text-center font-semibold text-gray-900 dark:text-white text-sm sm:text-base">Free</div>
                 <div className="text-center font-semibold text-blue-600 dark:text-blue-400 text-sm sm:text-base">
-                  Premium
-                </div>
-                <div className="text-center font-semibold text-gray-900 dark:text-white text-sm sm:text-base">
-                  Enterprise
+                  Founder Pass
                 </div>
               </div>
 
@@ -252,28 +325,21 @@ export default function PricingClient() {
                 {pricingFeatures.map((item, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-4 gap-2 sm:gap-4 p-4 sm:p-6 hover:bg-gray-50 dark:hover:bg-gray-900/50"
+                    className="grid grid-cols-3 gap-2 sm:gap-4 p-4 sm:p-6 hover:bg-gray-50 dark:hover:bg-gray-900/50"
                   >
                     <div className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{item.feature}</div>
-                    <div className="text-center">
-                      {item.free ? (
-                        <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mx-auto" />
+                    <div className="text-center text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                      {typeof item.free === 'boolean' ? (
+                        item.free ? <Check className="h-5 w-5 text-green-500 mx-auto" /> : <X className="h-5 w-5 text-gray-400 mx-auto" />
                       ) : (
-                        <X className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 mx-auto" />
+                        item.free
                       )}
                     </div>
-                    <div className="text-center">
-                      {item.premium ? (
-                        <Check className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500 mx-auto" />
+                    <div className="text-center text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                      {typeof item.premium === 'boolean' ? (
+                        item.premium ? <Check className="h-5 w-5 text-blue-500 mx-auto" /> : <X className="h-5 w-5 text-gray-400 mx-auto" />
                       ) : (
-                        <X className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 mx-auto" />
-                      )}
-                    </div>
-                    <div className="text-center">
-                      {item.enterprise ? (
-                        <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mx-auto" />
-                      ) : (
-                        <X className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 mx-auto" />
+                        item.premium
                       )}
                     </div>
                   </div>
@@ -373,6 +439,15 @@ export default function PricingClient() {
 
       {/* Footer */}
       <Footer />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onOpenAppDownloadModal={() => setIsAppDownloadModalOpen(true)}
+      />
+      <AppDownloadModal
+        isOpen={isAppDownloadModalOpen}
+        onClose={() => setIsAppDownloadModalOpen(false)}
+      />
     </div>
   )
 }
