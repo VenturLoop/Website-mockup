@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Check, Star } from "lucide-react" // ChevronDown, ChevronUp removed
+import { Check, Star, Users, Briefcase, GitFork, Brain } from "lucide-react" // Add new icons
 import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
@@ -182,9 +182,9 @@ export default function HomeClient() {
       <section id="services" className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 lg:mb-16 animate-on-scroll">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Offering</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Offerings</h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-              Discover powerful features designed to help your startup succeed and grow in today's competitive market.
+              Explore VenturLoop's core features, designed to empower your startup journey, from finding the right partners to securing investment and getting expert advice.
             </p>
           </div>
 
@@ -249,16 +249,16 @@ export default function HomeClient() {
 
             {/* Feature Cards - Positioned around phone */}
             <div className="lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:w-full lg:h-full lg:relative">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:w-full lg:h-full lg:relative justify-items-center">
                 {/* Quick Transfer - Top Left */}
                 <div className="lg:absolute lg:top-16 lg:left-8 xl:left-16 animate-on-scroll animate-delay-300">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mb-4">
-                      <div className="w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded"></div>
+                      <Users className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Quick Transfer</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Find a Co-Founder</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      Send money instantly to anyone, anywhere with just a few taps on your device.
+                      🔄 Discover like-minded co-founders based on goals, skills, and interests to build your dream startup team. Use our platform to find a co-founder who complements your vision.
                     </p>
                   </div>
                 </div>
@@ -267,11 +267,11 @@ export default function HomeClient() {
                 <div className="lg:absolute lg:top-16 lg:right-8 xl:right-16 animate-on-scroll animate-delay-400">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mb-4">
-                      <div className="w-6 h-6 bg-green-600 dark:bg-green-500 rounded"></div>
+                      <Briefcase className="w-6 h-6 text-green-600 dark:text-green-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Easy Management</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Connect with Investors</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      Manage all your finances in one place with our intuitive dashboard and tools.
+                      📈 Pitch your idea directly to curated investors and incubators who align with your startup’s mission. Easily connect with investors to fund your venture.
                     </p>
                   </div>
                 </div>
@@ -280,11 +280,11 @@ export default function HomeClient() {
                 <div className="lg:absolute lg:bottom-16 lg:left-8 xl:left-16 animate-on-scroll animate-delay-500">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-4">
-                      <div className="w-6 h-6 bg-purple-600 dark:bg-purple-500 rounded"></div>
+                      <GitFork className="w-6 h-6 text-purple-600 dark:text-purple-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Expense Tracking</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Collaborate on Projects</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      Track your spending patterns and get insights to make better financial decisions.
+                      🤝 Join or start real-time projects with other founders for startup collaboration to gain traction, feedback, and visibility.
                     </p>
                   </div>
                 </div>
@@ -293,11 +293,11 @@ export default function HomeClient() {
                 <div className="lg:absolute lg:bottom-16 lg:right-8 xl:right-16 animate-on-scroll animate-delay-600">
                   <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg max-w-xs hover-lift">
                     <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center mb-4">
-                      <div className="w-6 h-6 bg-orange-600 dark:bg-orange-500 rounded"></div>
+                      <Brain className="w-6 h-6 text-orange-600 dark:text-orange-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Track Your Investment</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Get Startup Advice (AI)</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      Monitor your portfolio performance and make informed investment choices.
+                      🧠 Leverage our AI startup advisor, Loop, to get instant answers, strategies, and mentorship tailored to your startup journey.
                     </p>
                   </div>
                 </div>
