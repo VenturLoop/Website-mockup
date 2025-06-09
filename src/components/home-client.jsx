@@ -1,13 +1,17 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Check, Star, Users, Briefcase, GitFork, Brain } from "lucide-react" // Add new icons
+import { Check, Star, Users, Briefcase, GitFork, Brain, Link, Rocket } from "lucide-react" // Add new icons
 import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Import the new component
+import LoginModal from '@/components/LoginModal';
+import { AppDownloadModal } from '@/components/AppDownloadModal';
 
 export default function HomeClient() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
   // openFaq, toggleFaq, and old faqData removed
 
   const generalFaqData = [
@@ -93,6 +97,12 @@ export default function HomeClient() {
     "Insight",
     "Lightspeed",
   ]
+
+  const openLoginModal = () => setIsLoginModalOpen(true);
+  const closeLoginModal = () => setIsLoginModalOpen(false);
+
+  const openAppDownloadModal = () => setIsAppDownloadModalOpen(true);
+  const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
 
   // Scroll animation observer
   useEffect(() => {
@@ -360,70 +370,51 @@ export default function HomeClient() {
       </section>
 
       {/* Where Founders Meet Their Future Section */}
-      <section id="about-us" className="py-16 sm:py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="about-us" className="pt-16 pb-24 sm:pt-20 sm:pb-32 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 animate-on-scroll">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center lg:text-left">
                 Where <span className="text-blue-600 dark:text-blue-400">Founders</span> Meet
                 <br />
                 Their Future
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-lg mb-8 leading-relaxed">
-                Connect with verified investors and get the resources you need to grow your startup. Join thousands of
-                founders who have found success on our platform.
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed text-center lg:text-left">
+                VenturLoop is where founders link up with co-founders, investors, and collaborators to turn ideas into real startups—fast and hassle-free.
               </p>
 
-              <div className="space-y-6">
-                <div className="flex items-start animate-fade-in-left animate-delay-200">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      Smart Fundraising Engine
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Our AI-powered matching system connects you with the perfect investors for your startup's stage
-                      and industry.
-                    </p>
-                  </div>
+              {/* Statistical Highlights */}
+              <div className="mt-6 mb-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+                <div className="flex flex-col items-center text-center">
+                  <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">10,000+</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Founders</span>
                 </div>
-
-                <div className="flex items-start animate-fade-in-left animate-delay-300">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      One-Click Investor Pitching
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Create your pitch once and share it with multiple investors with a single click, saving you time
-                      and effort.
-                    </p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <Briefcase className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">500+</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Investors</span>
                 </div>
-
-                <div className="flex items-start animate-fade-in-left animate-delay-400">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      Investor Access Pathway
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Get direct access to our network of verified investors who are actively looking for opportunities
-                      in your sector.
-                    </p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <Link className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">1500+</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Total Matches</span>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <Rocket className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">2k</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Startup Pitched</span>
                 </div>
               </div>
 
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg mt-8 btn-hover hover-lift">
-                Get Started
-              </Button>
+              <div className="flex justify-center lg:justify-start">
+                <Button
+                  onClick={openLoginModal}
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                >
+                  Get Started
+                </Button>
+              </div>
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center animate-on-scroll animate-delay-200">
@@ -798,6 +789,8 @@ export default function HomeClient() {
 
       {/* Footer */}
       <Footer />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadModal} />
+      <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
     </div>
   )
 }
