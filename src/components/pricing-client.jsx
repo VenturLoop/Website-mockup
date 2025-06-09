@@ -151,7 +151,7 @@ export default function PricingClient() {
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
             {/* Free Plan */}
-            <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white min-h-[520px] flex flex-col">
+            <div className="bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 text-white h-[480px] flex flex-col"> {/* Changed min-h-[520px] to h-[480px] */}
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-2">Free</h3>
                 <div className="flex items-baseline">
@@ -202,7 +202,7 @@ export default function PricingClient() {
             </div>
 
             {/* Founder's Pass - Featured */}
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden min-h-[520px] flex flex-col">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden h-[480px] flex flex-col"> {/* Changed min-h-[520px] to h-[480px] */}
               <div className="absolute top-4 right-4">
                 <span className="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Recommended</span>
               </div>
