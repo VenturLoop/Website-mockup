@@ -26,10 +26,37 @@ const mockPosts = [
     comments: 12,
     shares: 6,
   },
+  {
+    name: 'John Doe',
+    time: '2 hours ago',
+    content: 'Just shared a new blog post about the future of AI. Check it out!',
+    image: 'https://via.placeholder.com/800x400?text=AI+Future',
+    likes: '1.5K',
+    comments: 45,
+    shares: 10,
+  },
+  {
+    name: 'Jane Smith',
+    time: '5 minutes ago',
+    content: 'Enjoying a beautiful day at the park. #nature #sunnyday',
+    image: 'https://via.placeholder.com/800x400?text=Park+Scene',
+    likes: '300',
+    comments: 5,
+    shares: 2,
+  },
+  {
+    name: 'Alex Johnson',
+    time: 'Yesterday',
+    content: 'Excited to announce my new project. More details coming soon!',
+    // No image for this one to test variability
+    likes: '2.1K',
+    comments: 102,
+    shares: 25,
+  }
 ];
 
 const SidebarLeft = () => (
-  <aside className="lg:col-span-3 hidden lg:block space-y-6 h-full overflow-y-auto">
+  <aside className="lg:col-span-3 hidden lg:block space-y-6 h-full overflow-y-auto hide-scrollbar">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">People to Connect</h2>
       <ul className="space-y-3">
@@ -54,7 +81,7 @@ const SidebarLeft = () => (
 );
 
 const Feed = () => (
-  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto">
+  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto hide-scrollbar">
     {/* NEW: Add the CreateArticleCard component here */}
     <div className="hidden md:block"> {/* Ensures it's hidden on mobile */}
       <CreateArticleCard />
@@ -102,7 +129,7 @@ const Feed = () => (
 );
 
 const SidebarRight = ({ onAddNewArticleClick }) => (
-  <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6 h-full overflow-y-auto">
+  <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6 h-full overflow-y-auto hide-scrollbar">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Community Articles</h2>
       <ul className="space-y-2.5 text-sm">
@@ -154,7 +181,7 @@ export default function CommunityScreen() {
     <>
       <Navigation />
       <div style={{ height: 'calc(100vh - 4rem)' }} className="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
-        <main className="max-w-screen-xl mx-auto px-4 pb-4 sm:px-6 sm:pb-6 pt-0 grid grid-cols-12 gap-4 h-full">
+        <main className="max-w-screen-xl mx-auto px-4 pb-4 sm:px-6 sm:pb-6 pt-4 grid grid-cols-12 gap-4 h-full">
           <SidebarLeft />
           <Feed />
           <SidebarRight onAddNewArticleClick={() => setIsModalOpen(true)} />
