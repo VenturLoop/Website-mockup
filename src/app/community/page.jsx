@@ -3,7 +3,9 @@
 import { Navigation } from "@/components/navigation";
 // Assuming lucide-react is already a project dependency.
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
-// import { useState } from 'react'; // Not needed as theme is global
+import { useState } from 'react';
+import CreateArticleModal from '@/components/CreateArticleModal';
+import CreateArticleCard from '@/components/CreateArticleCard'; // New import
 
 const mockPosts = [
   {
@@ -53,28 +55,12 @@ const SidebarLeft = () => (
 
 const Feed = () => (
   <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6">
-    <div className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg">
-      <textarea
-        className="w-full p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-colors"
-        placeholder="What's on your mind, Venturer?"
-        rows="3"
-      />
-      <div className="flex justify-between items-center mt-3">
-        <div className="flex gap-2">
-          <button className="text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 p-1.5 rounded-full hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-          </button>
-          <button className="text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 p-1.5 rounded-full hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          </button>
-           <button className="text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 p-1.5 rounded-full hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-          </button>
-        </div>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors transform hover:scale-105">Post</button>
-      </div>
+    {/* NEW: Add the CreateArticleCard component here */}
+    <div className="hidden md:block"> {/* Ensures it's hidden on mobile */}
+      <CreateArticleCard />
     </div>
 
+    {/* mockPosts mapping starts here, the old "What's on your mind" box is removed */}
     {mockPosts.map((post, i) => (
       <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg">
         <div className="flex items-start justify-between mb-3">
@@ -115,10 +101,10 @@ const Feed = () => (
   </section>
 );
 
-const SidebarRight = () => (
+const SidebarRight = ({ onAddNewArticleClick }) => (
   <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Trending Articles</h2>
+      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Community Articles</h2>
       <ul className="space-y-2.5 text-sm">
         {[
           { title: "Omicron: Most dangerous time of the pandemic", id:1 },
@@ -128,6 +114,7 @@ const SidebarRight = () => (
           <li key={article.id} className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors leading-normal">{article.title}</li>
         ))}
         <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-3.5 inline-block">Show more</a>
+        {/* "Add New Article" button removed from here */}
       </ul>
     </div>
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
@@ -161,16 +148,30 @@ const SidebarRight = () => (
 );
 
 export default function CommunityScreen() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <Navigation />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 pt-16">
-        <main className="max-w-screen-xl mx-auto p-4 sm:p-6 grid grid-cols-12 gap-6">
+        <main className="max-w-screen-xl mx-auto p-4 sm:p-6 grid grid-cols-12 gap-4">
           <SidebarLeft />
           <Feed />
-          <SidebarRight />
+          <SidebarRight onAddNewArticleClick={() => setIsModalOpen(true)} />
         </main>
       </div>
+      <CreateArticleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* Floating Action Button for Mobile */}
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="md:hidden fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg z-40 transition-transform transform hover:scale-110"
+        aria-label="Add New Article"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
     </>
   );
 }
