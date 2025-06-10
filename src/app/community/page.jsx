@@ -183,7 +183,7 @@ export default function CommunityScreen() {
           - overflow-hidden: Prevents the container itself from scrolling; scrolling is handled by inner sections.
       */}
       <div className="h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 pt-16 overflow-hidden">
-        <main className="max-w-screen-xl mx-auto p-4 sm:p-6 grid grid-cols-12 gap-6">
+        <main className="max-w-screen-xl mx-auto grid grid-cols-12 gap-6 pt-2 px-4 pb-4 sm:pt-4 sm:px-6 sm:pb-6">
           <SidebarLeft />
           <Feed />
           <SidebarRight />
