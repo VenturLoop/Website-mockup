@@ -178,11 +178,11 @@ export default function CommunityScreen() {
     <>
       <Navigation />
       {/* Main container for the community screen.
-          - h-screen: Makes the container take the full viewport height.
+          - h-full: Makes the container take the full height of its parent (which is body, set to 100% viewport height).
           - pt-16: Provides padding at the top, presumably for a fixed navbar (4rem).
           - overflow-hidden: Prevents the container itself from scrolling; scrolling is handled by inner sections.
       */}
-      <div className="h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 pt-16 overflow-hidden">
+      <div className="h-full bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 pt-16 overflow-hidden">
         <main className="max-w-screen-xl mx-auto grid grid-cols-12 gap-6 pt-2 px-4 pb-4 sm:pt-4 sm:px-6 sm:pb-6">
           <SidebarLeft />
           <Feed />

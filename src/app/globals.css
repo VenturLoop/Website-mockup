@@ -67,11 +67,16 @@
   html {
     transition: none !important;
     scroll-behavior: smooth;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Keep existing */
+    height: 100%;
+    overflow-y: hidden;
   }
 
   /* Synchronized theme transitions */
