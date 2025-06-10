@@ -19,14 +19,6 @@ export const metadata = {
     description: "A modern startup landing page with dark mode support",
     type: "website",
     url: "/",
-    images: [
-      {
-        url: "/placeholder-og.png", // Replace with your actual OG image URL
-        width: 1200,
-        height: 630,
-        alt: "Startup Landing Page Open Graph Image",
-      },
-    ],
   },
 }
 
