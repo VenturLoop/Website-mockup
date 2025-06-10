@@ -71,6 +71,7 @@
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
 
   /* Synchronized theme transitions */
@@ -482,5 +483,15 @@ html.light {
 
   .testimonial-card p {
     font-size: 0.8125rem; /* Adjust font size for mobile */
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }

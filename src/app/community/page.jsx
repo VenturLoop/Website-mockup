@@ -32,7 +32,7 @@ const SidebarLeft = () => (
   //     - sticky top-16: Makes the sidebar stick to the top of the viewport, below the 4rem top padding (pt-16) of the parent.
   //     - h-[calc(100vh-4rem)]: Sets the height to the viewport height minus the top padding, allowing it to fill the vertical space.
   //     - overflow-y-auto: Enables vertical scrolling within the sidebar if its content overflows.
-  <aside className="lg:col-span-3 hidden lg:block space-y-6 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+  <aside className="lg:col-span-3 hidden lg:block space-y-6 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto no-scrollbar">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">People to Connect</h2>
       <ul className="space-y-3">
@@ -61,7 +61,7 @@ const Feed = () => (
   //     - col-span-12 md:col-span-8 lg:col-span-6: Responsive column spanning.
   //     - h-[calc(100vh-4rem)]: Sets the height to the viewport height minus the 4rem top padding of the grandparent container, allowing it to fill the vertical space.
   //     - overflow-y-auto: Enables vertical scrolling within the feed if its content overflows.
-  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-[calc(100vh-4rem)] overflow-y-auto">
+  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-[calc(100vh-4rem)] overflow-y-auto no-scrollbar">
     <div className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg">
       <textarea
         className="w-full p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-colors"
@@ -129,7 +129,7 @@ const SidebarRight = () => (
   //     - md:col-span-4 lg:col-span-3 hidden md:block: Responsive column spanning and visibility.
   //     - h-[calc(100vh-4rem)]: Sets the height to the viewport height minus the 4rem top padding of the grandparent container, allowing it to fill the vertical space.
   //     - overflow-y-auto: Enables vertical scrolling within the sidebar if its content overflows.
-  <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6 h-[calc(100vh-4rem)] overflow-y-auto">
+  <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6 h-[calc(100vh-4rem)] overflow-y-auto no-scrollbar">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Trending Articles</h2>
       <ul className="space-y-2.5 text-sm">
