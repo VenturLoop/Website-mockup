@@ -29,7 +29,7 @@ const mockPosts = [
 ];
 
 const SidebarLeft = () => (
-  <aside className="lg:col-span-3 hidden lg:block space-y-6">
+  <aside className="lg:col-span-3 hidden lg:block space-y-6 h-full overflow-y-auto">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">People to Connect</h2>
       <ul className="space-y-3">
@@ -54,7 +54,7 @@ const SidebarLeft = () => (
 );
 
 const Feed = () => (
-  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6">
+  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto">
     {/* NEW: Add the CreateArticleCard component here */}
     <div className="hidden md:block"> {/* Ensures it's hidden on mobile */}
       <CreateArticleCard />
@@ -102,7 +102,7 @@ const Feed = () => (
 );
 
 const SidebarRight = ({ onAddNewArticleClick }) => (
-  <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6">
+  <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6 h-full overflow-y-auto">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Community Articles</h2>
       <ul className="space-y-2.5 text-sm">
@@ -153,8 +153,8 @@ export default function CommunityScreen() {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 pt-16">
-        <main className="max-w-screen-xl mx-auto p-4 sm:p-6 grid grid-cols-12 gap-4">
+      <div style={{ height: 'calc(100vh - 4rem)' }} className="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
+        <main className="max-w-screen-xl mx-auto px-4 pb-4 sm:px-6 sm:pb-6 pt-0 grid grid-cols-12 gap-4 h-full">
           <SidebarLeft />
           <Feed />
           <SidebarRight onAddNewArticleClick={() => setIsModalOpen(true)} />
