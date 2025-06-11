@@ -1,11 +1,14 @@
 "use client";
 
 import { Navigation } from "@/components/navigation";
+import { useRouter } from 'next/navigation'; // Import useRouter
 // Assuming lucide-react is already a project dependency.
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
 import { useState } from 'react';
 import CreateArticleModal from '@/components/CreateArticleModal';
 import CreateArticleCard from '@/components/CreateArticleCard'; // New import
+import { AppDownloadModal } from '@/components/AppDownloadModal'; // Changed to named import
+import LoginModal from '@/components/LoginModal'; // Added import
 
 const mockPosts = [
   {
@@ -55,30 +58,70 @@ const mockPosts = [
   }
 ];
 
-const SidebarLeft = () => (
-  <aside className="lg:col-span-3 hidden lg:block space-y-6 h-full overflow-y-auto hide-scrollbar">
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">People to Connect</h2>
-      <ul className="space-y-3">
-        {['Steve Jobs', 'Ryan Roslansky', 'Dylan Field', 'Ada Lovelace'].map((name, i) => (
-          <li key={i} className="flex justify-between items-center">
-            <div className="flex items-center">
-              <img src={`https://i.pravatar.cc/32?u=${name.replace(/\s/g, '')}`} alt={name} className="w-8 h-8 rounded-full mr-2.5" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">{name}</span>
-            </div>
-            <button className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 text-xs font-medium px-2.5 py-1 rounded-md border border-blue-500 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">Connect</button>
-          </li>
-        ))}
-      </ul>
-      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block">See All</a>
-    </div>
+const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // Added onTryNowClick prop
+  const usersToConnect = [
+    { name: 'Alice Wonderland', bio: 'Curious explorer of digital realms.' },
+    { name: 'Bob The Builder', bio: 'Constructing software solutions.' },
+    { name: 'Charlie Brown', bio: 'Good grief, learning to code.' },
+    { name: 'Diana Prince', bio: 'Championing user-centric design.' },
+    { name: 'Edward Scissorhands', bio: 'Crafting elegant interfaces.' },
+    { name: 'Fiona Gallagher', bio: 'Managing complex projects.' },
+    // Removed George Jetson, Hannah Montana, Ian Malcolm, Julia Child
+  ];
+
+  return (
+    <aside className="lg:col-span-3 hidden lg:block space-y-6 h-full overflow-y-auto hide-scrollbar">
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+        <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">People to Connect</h2>
+        <ul className="space-y-3">
+          {usersToConnect.map((user, i) => (
+            <li key={i} className="flex justify-between items-center py-2"> {/* Added py-2 */}
+              <div className="flex items-center">
+                <img src={`https://i.pravatar.cc/32?u=${user.name.replace(/\s/g, '')}`} alt={user.name} className="w-8 h-8 rounded-full mr-2.5" />
+                <div> {/* New div to group name and bio */}
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{user.name}</span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{user.bio}</p> {/* New bio element */}
+                </div>
+              </div>
+              <button
+                onClick={onConnectClick} // Use the passed prop
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 text-sm font-medium px-3 py-1.5 rounded-md border border-blue-500 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">Connect</button> {/* Changed text-xs to text-sm, px-2.5 py-1 to px-3 py-1.5 */}
+            </li>
+          ))}
+        </ul>
+        <button
+          onClick={onSeeAllClick} // Use the passed prop
+          className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block w-full text-center" // Added w-full and text-center for button appearance
+        >
+          See All
+        </button>
+      </div>
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Try Founder Pass</h2>
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Unlock premium features and grow your startup journey.</p>
-      <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium w-full transition-all duration-300 ease-in-out transform hover:scale-105">Try Now</button>
+      <ul className="space-y-2 my-4 text-sm text-gray-700 dark:text-gray-300">
+        <li className="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 mr-2"><path d="M20 6L9 17l-5-5"></path></svg>
+          Unlimited connections
+        </li>
+        <li className="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 mr-2"><path d="M20 6L9 17l-5-5"></path></svg>
+          Verified Member badge
+        </li>
+        <li className="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 mr-2"><path d="M20 6L9 17l-5-5"></path></svg>
+          Send 60 pitch decks/month
+        </li>
+      </ul>
+      <button
+        onClick={onTryNowClick} // Call the passed-in handler
+        className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium w-full transition-all duration-300 ease-in-out transform hover:scale-105">
+        Try Now
+      </button>
     </div>
   </aside>
-);
+  );
+};
 
 const Feed = () => (
   <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto hide-scrollbar">
@@ -176,18 +219,31 @@ const SidebarRight = ({ onAddNewArticleClick }) => (
 
 export default function CommunityScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const router = useRouter(); // Initialize router
+
+  const handleTryNowClick = () => {
+    router.push('/pricing');
+  };
 
   return (
     <>
       <Navigation />
       <div style={{ height: 'calc(100vh - 4rem)' }} className="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
         <main className="max-w-screen-xl mx-auto px-4 pb-4 sm:px-6 sm:pb-6 pt-4 grid grid-cols-12 gap-4 h-full">
-          <SidebarLeft />
+          <SidebarLeft
+            onSeeAllClick={() => setIsAppDownloadModalOpen(true)}
+            onConnectClick={() => setIsLoginModalOpen(true)}
+            onTryNowClick={handleTryNowClick} // Pass the new handler
+          />
           <Feed />
           <SidebarRight onAddNewArticleClick={() => setIsModalOpen(true)} />
         </main>
       </div>
       <CreateArticleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={() => setIsAppDownloadModalOpen(false)} /> {/* Rendered AppDownloadModal */}
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} /> {/* Rendered LoginModal */}
       {/* Floating Action Button for Mobile */}
       <button
         onClick={() => setIsModalOpen(true)}
