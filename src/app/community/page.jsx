@@ -6,7 +6,7 @@ import { Navigation } from "@/components/navigation";
 import { useState } from 'react';
 import CreateArticleModal from '@/components/CreateArticleModal';
 import CreateArticleCard from '@/components/CreateArticleCard'; // New import
-import AppDownloadModal from '@/components/AppDownloadModal'; // Added import
+import { AppDownloadModal } from '@/components/AppDownloadModal'; // Changed to named import
 import LoginModal from '@/components/LoginModal'; // Added import
 
 const mockPosts = [
