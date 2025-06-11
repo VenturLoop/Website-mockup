@@ -1,6 +1,7 @@
 "use client";
 
 import { Navigation } from "@/components/navigation";
+import { useRouter } from 'next/navigation'; // Import useRouter
 // Assuming lucide-react is already a project dependency.
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
 import { useState } from 'react';
@@ -57,7 +58,7 @@ const mockPosts = [
   }
 ];
 
-const SidebarLeft = ({ onSeeAllClick, onConnectClick }) => { // Added onSeeAllClick and onConnectClick props
+const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // Added onTryNowClick prop
   const usersToConnect = [
     { name: 'Alice Wonderland', bio: 'Curious explorer of digital realms.' },
     { name: 'Bob The Builder', bio: 'Constructing software solutions.' },
@@ -112,7 +113,11 @@ const SidebarLeft = ({ onSeeAllClick, onConnectClick }) => { // Added onSeeAllCl
           Send 60 pitch decks/month
         </li>
       </ul>
-      <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium w-full transition-all duration-300 ease-in-out transform hover:scale-105">Try Now</button>
+      <button
+        onClick={onTryNowClick} // Call the passed-in handler
+        className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium w-full transition-all duration-300 ease-in-out transform hover:scale-105">
+        Try Now
+      </button>
     </div>
   </aside>
   );
@@ -214,8 +219,13 @@ const SidebarRight = ({ onAddNewArticleClick }) => (
 
 export default function CommunityScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false); // Added state for AppDownloadModal
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Added state for LoginModal
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const router = useRouter(); // Initialize router
+
+  const handleTryNowClick = () => {
+    router.push('/pricing');
+  };
 
   return (
     <>
@@ -224,7 +234,8 @@ export default function CommunityScreen() {
         <main className="max-w-screen-xl mx-auto px-4 pb-4 sm:px-6 sm:pb-6 pt-4 grid grid-cols-12 gap-4 h-full">
           <SidebarLeft
             onSeeAllClick={() => setIsAppDownloadModalOpen(true)}
-            onConnectClick={() => setIsLoginModalOpen(true)} // Passed onConnectClick handler
+            onConnectClick={() => setIsLoginModalOpen(true)}
+            onTryNowClick={handleTryNowClick} // Pass the new handler
           />
           <Feed />
           <SidebarRight onAddNewArticleClick={() => setIsModalOpen(true)} />
