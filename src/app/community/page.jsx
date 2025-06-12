@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'; // Import useRouter
 // Assuming lucide-react is already a project dependency.
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
 import { useState } from 'react';
+import Link from 'next/link'; // Make sure this import is added
 import CreateArticleModal from '@/components/CreateArticleModal';
 import CreateArticleCard from '@/components/CreateArticleCard'; // New import
 import { AppDownloadModal } from '@/components/AppDownloadModal'; // Changed to named import
@@ -60,13 +61,13 @@ const mockPosts = [
 
 const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // Added onTryNowClick prop
   const usersToConnect = [
-    { name: 'Alice Wonderland', bio: 'Curious explorer of digital realms.' },
-    { name: 'Bob The Builder', bio: 'Constructing software solutions.' },
-    { name: 'Charlie Brown', bio: 'Good grief, learning to code.' },
-    { name: 'Diana Prince', bio: 'Championing user-centric design.' },
-    { name: 'Edward Scissorhands', bio: 'Crafting elegant interfaces.' },
-    { name: 'Fiona Gallagher', bio: 'Managing complex projects.' },
-    // Removed George Jetson, Hannah Montana, Ian Malcolm, Julia Child
+    { name: 'Alice Wonderland', bio: 'Curious explorer of digital realms.', userId: 'user1' },
+    { name: 'Mohammed Azgar (Test)', bio: 'Test profile link', userId: '682de28d858fff4521c35b29' }, // Matching ID
+    { name: 'Bob The Builder', bio: 'Constructing software solutions.', userId: 'user2' },
+    { name: 'Charlie Brown', bio: 'Good grief, learning to code.', userId: 'user3' },
+    { name: 'Diana Prince', bio: 'Championing user-centric design.', userId: 'user4' },
+    { name: 'Edward Scissorhands', bio: 'Crafting elegant interfaces.', userId: 'user5' },
+    { name: 'Fiona Gallagher', bio: 'Managing complex projects.', userId: 'user6' },
   ];
 
   return (
@@ -75,23 +76,29 @@ const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // A
         <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">People to Connect</h2>
         <ul className="space-y-3">
           {usersToConnect.map((user, i) => (
-            <li key={i} className="flex justify-between items-center py-2"> {/* Added py-2 */}
-              <div className="flex items-center">
-                <img src={`https://i.pravatar.cc/32?u=${user.name.replace(/\s/g, '')}`} alt={user.name} className="w-8 h-8 rounded-full mr-2.5" />
-                <div> {/* New div to group name and bio */}
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{user.name}</span>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{user.bio}</p> {/* New bio element */}
+            <li key={i} className="flex justify-between items-center py-2">
+              <Link href={`/profile/${user.userId}`} className="flex items-center group"> {/* Wrap image and name div */}
+                <img
+                  src={`https://i.pravatar.cc/32?u=${user.name.replace(/\s/g, '')}`}
+                  alt={user.name}
+                  className="w-8 h-8 rounded-full mr-2.5 group-hover:ring-2 group-hover:ring-blue-500 transition-all"
+                />
+                <div>
+                  <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{user.name}</span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{user.bio}</p>
                 </div>
-              </div>
+              </Link>
               <button
-                onClick={onConnectClick} // Use the passed prop
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 text-sm font-medium px-3 py-1.5 rounded-md border border-blue-500 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">Connect</button> {/* Changed text-xs to text-sm, px-2.5 py-1 to px-3 py-1.5 */}
+                onClick={onConnectClick} // This should correctly open the login modal
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 text-sm font-medium px-3 py-1.5 rounded-md border border-blue-500 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
+                Connect
+              </button>
             </li>
           ))}
         </ul>
         <button
-          onClick={onSeeAllClick} // Use the passed prop
-          className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block w-full text-center" // Added w-full and text-center for button appearance
+          onClick={onSeeAllClick}
+          className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block w-full text-center"
         >
           See All
         </button>
