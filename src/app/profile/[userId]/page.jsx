@@ -198,10 +198,11 @@ export default function UserProfilePage() {
                   {priorStartupExperience && <p><Briefcase size={16} className="inline mr-2" /><strong>Experience:</strong> {priorStartupExperience}</p>}
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div> {/* End of Right Column */}
+            </div> {/* End of Div4 (Grid Container) */}
+          </div> {/* End of Div3 (White Background Container) */}
+        </div> {/* End of Div2 (Container mx-auto) */}
+      </div> {/* End of Div1 (Main Background Div) */}
+    </>
   );
 }
