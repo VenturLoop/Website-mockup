@@ -171,48 +171,112 @@ const Feed = () => (
   </section>
 );
 
-const SidebarRight = ({ onAddNewArticleClick }) => (
+const mockArticles = [
+  { id: 1, title: "Omicron: Most dangerous time of the pandemic", postedDate: "Oct 20, 2023", image: "https://via.placeholder.com/40x40" },
+  { id: 2, title: "Parler may go offline following suspensions", postedDate: "Oct 22, 2023", image: "https://via.placeholder.com/40x40" },
+  { id: 3, title: "India to Australia: Sydney Test ends in a draw", postedDate: "Oct 25, 2023", image: "https://via.placeholder.com/40x40" },
+  { id: 4, title: "New breakthroughs in AI research", postedDate: "Oct 28, 2023", image: "https://via.placeholder.com/40x40" },
+  { id: 5, title: "The future of remote work", postedDate: "Oct 30, 2023", image: "https://via.placeholder.com/40x40" },
+];
+
+const mockInvestors = [
+  { id: 1, name: "Bessie Cooper", location: "New York, USA", avatarSeed: "BessieCooper" },
+  { id: 2, name: "Jenny Wilson", location: "San Francisco, USA", avatarSeed: "JennyWilson" },
+  { id: 3, name: "Robert Fox", location: "London, UK", avatarSeed: "RobertFox" },
+  { id: 4, name: "Jacob Jones", location: "Berlin, Germany", avatarSeed: "JacobJones" },
+  { id: 5, name: "Kristin Watson", location: "Paris, France", avatarSeed: "KristinWatson" },
+];
+
+const mockProjects = [
+  { id: 1, name: "Blinkit Clone", description: "A clone of the Blinkit app for grocery delivery.", image: "https://via.placeholder.com/40x40" },
+  { id: 2, name: "Zepto Clone", description: "A clone of the Zepto app for quick commerce.", image: "https://via.placeholder.com/40x40" },
+  { id: 3, name: "Zenauto Clone", description: "A clone of the Zenauto app for car leasing.", image: "https://via.placeholder.com/40x40" },
+  { id: 4, name: "AI Cover Letter Generator", description: "An AI-powered tool to generate cover letters.", image: "https://via.placeholder.com/40x40" },
+  { id: 5, name: "Project Phoenix", description: "A revolutionary new platform for project management with advanced collaboration features and AI-powered insights. This project aims to redefine productivity.", image: "https://via.placeholder.com/40x40" },
+];
+
+const SidebarRight = ({ onAddNewArticleClick, setIsAppDownloadModalOpen, setIsLoginModalOpen }) => (
   <aside className="md:col-span-4 lg:col-span-3 hidden md:block space-y-6 h-full overflow-y-auto hide-scrollbar">
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Community Articles</h2>
-      <ul className="space-y-2.5 text-sm">
-        {[
-          { title: "Omicron: Most dangerous time of the pandemic", id:1 },
-          { title: "Parler may go offline following suspensions", id:2 },
-          { title: "India to Australia: Sydney Test ends in a draw", id:3 }
-        ].map(article => (
-          <li key={article.id} className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors leading-normal">{article.title}</li>
-        ))}
-        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-3.5 inline-block">Show more</a>
-        {/* "Add New Article" button removed from here */}
-      </ul>
-    </div>
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Active Investors</h2>
-      <ul className="space-y-3 text-sm">
-        {[
-          { name: "Bessie Cooper", id:1, avatarSeed: "BessieCooper"},
-          { name: "Jenny Wilson", id:2, avatarSeed: "JennyWilson"}
-        ].map(investor =>(
-          <li key={investor.id} className="flex justify-between items-center">
-            <div className="flex items-center">
-              <img src={`https://i.pravatar.cc/32?u=${investor.avatarSeed}`} alt={investor.name} className="w-8 h-8 rounded-full mr-2.5" />
-              <span className="text-gray-700 dark:text-gray-300">{investor.name}</span>
+      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Trending Articles</h2>
+      <ul className="space-y-3">
+        {mockArticles.slice(0, 5).map((article, index) => (
+          <li key={article.id} className="py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+            <div className="flex items-start space-x-3">
+              <img src={article.image} alt={article.title} className="w-10 h-10 rounded-md object-cover" />
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-gray-900 dark:text-white leading-snug hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">{article.title}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{article.postedDate}</p>
+              </div>
             </div>
-            <button className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-500 text-xs font-medium border border-green-500 dark:border-green-400 px-2.5 py-1 rounded-md hover:bg-green-50 dark:hover:bg-gray-700 transition-colors">Pitch</button>
           </li>
         ))}
       </ul>
-       <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block">See all</a>
+      <button
+        onClick={() => setIsAppDownloadModalOpen(true)}
+        className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block w-full text-center"
+      >
+        See more
+      </button>
     </div>
-     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Trending Projects</h2>
-      <ul className="space-y-2.5 text-sm">
-        {["Blinkit Clone", "Zepto Clone", "Zenauto Clone", "AI Cover Letter Generator"].map((project, i) => (
-            <li key={i} className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">{project}</li>
+    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+      <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Active Investors</h2>
+      <ul className="space-y-3">
+        {mockInvestors.slice(0, 5).map(investor =>(
+          <li key={investor.id} className="py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-3">
+                <img src={`https://i.pravatar.cc/40?u=${investor.avatarSeed}`} alt={investor.name} className="w-10 h-10 rounded-full" />
+                <div>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{investor.name}</span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{investor.location}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsLoginModalOpen(true)}
+                className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-500 text-sm font-medium px-3 py-1.5 rounded-md border border-green-500 dark:border-green-400 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors">
+                Pitch now
+              </button>
+            </div>
+          </li>
         ))}
       </ul>
-      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-3.5 inline-block">See all</a>
+      <button
+        onClick={() => setIsAppDownloadModalOpen(true)}
+        className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block w-full text-center"
+      >
+        See more
+      </button>
+    </div>
+     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="font-semibold text-lg text-gray-900 dark:text-white">Trending Projects</h2>
+        <button
+          onClick={() => setIsAppDownloadModalOpen(true)}
+          className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium"
+        >
+          Add project
+        </button>
+      </div>
+      <ul className="space-y-3">
+        {mockProjects.slice(0, 5).map(project => (
+          <li key={project.id} className="py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+            <div className="flex items-start space-x-3">
+              <img src={project.image} alt={project.name} className="w-10 h-10 rounded-md object-cover" />
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors leading-snug">{project.name}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">{project.description}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <button
+        onClick={() => setIsAppDownloadModalOpen(true)}
+        className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium mt-4 inline-block w-full text-center"
+      >
+        See more
+      </button>
     </div>
   </aside>
 );
@@ -238,7 +302,11 @@ export default function CommunityScreen() {
             onTryNowClick={handleTryNowClick} // Pass the new handler
           />
           <Feed />
-          <SidebarRight onAddNewArticleClick={() => setIsModalOpen(true)} />
+          <SidebarRight
+            onAddNewArticleClick={() => setIsModalOpen(true)}
+            setIsAppDownloadModalOpen={setIsAppDownloadModalOpen}
+            setIsLoginModalOpen={setIsLoginModalOpen}
+          />
         </main>
       </div>
       <CreateArticleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
