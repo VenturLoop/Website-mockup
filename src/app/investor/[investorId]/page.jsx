@@ -133,7 +133,7 @@ export default function InvestorProfilePage() {
   return (
     <>
       <Navigation />
-      <div className="bg-gray-100 dark:bg-gray-950 h-[calc(100vh-4rem)] overflow-y-auto px-2 py-4 md:p-8 transition-colors duration-300 hide-scrollbar">
+      <div className="bg-gray-100 dark:bg-gray-950 h-[calc(100vh-4rem)] overflow-y-auto px-1 py-4 sm:p-4 md:p-8 transition-colors duration-300 hide-scrollbar">
         <div className="container mx-auto max-w-screen-lg">
           <div className="bg-white dark:bg-gray-900 shadow-xl rounded-lg p-6 md:p-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
