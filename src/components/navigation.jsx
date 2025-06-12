@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef } from "react"
 import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation" // Added useRouter
 import { AppDownloadModal } from "../components/AppDownloadModal"; // Changed to named import
 import LoginModal from "../components/LoginModal" // Added import
 import { LoopAgentModal } from "../components/LoopAgentModal";
@@ -17,16 +17,21 @@ export function Navigation() {
   const [isLoopAgentModalOpen, setIsLoopAgentModalOpen] = useState(false);
   const [isFoundersOpen, setIsFoundersOpen] = useState(false)
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false)
+  const router = useRouter() // Added router instance
   const pathname = usePathname()
   const foundersDropdownRef = useRef(null)
 
   // Scroll to Our Offerings
   const handleScrollToOurOfferings = () => {
-    if (typeof window !== 'undefined') {
-      const element = document.getElementById('services');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    if (pathname === '/') {
+      if (typeof window !== 'undefined') {
+        const element = document.getElementById('services');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
+    } else {
+      router.push('/#services');
     }
     setIsMenuOpen(false);
     setIsMobileFoundersOpen(false);
