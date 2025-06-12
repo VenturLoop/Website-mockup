@@ -212,7 +212,9 @@ const SidebarRight = ({ onAddNewArticleClick, setIsAppDownloadModalOpen, setIsLo
             <div className="flex items-start space-x-3">
               <img src={article.image} alt={article.title} className="w-10 h-10 rounded-md object-cover" />
               <div className="flex-1">
-                <h3 className="text-sm font-medium text-gray-900 dark:text-white leading-snug hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">{article.title}</h3>
+                <Link href={`/article/${article.id}`} className="group">
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{article.title}</h3>
+                </Link>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{article.postedDate}</p>
               </div>
             </div>
