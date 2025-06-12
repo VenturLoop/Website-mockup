@@ -2,6 +2,7 @@
 "use client";
 
 import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/Footer"; // Added import
 import Link from "next/link";
 import { useParams } from "next/navigation"; // To get articleId if needed for fetching later
 
@@ -44,8 +45,8 @@ export default function ArticlePage() {
   return (
     <>
       <Navigation />
-      <div className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white min-h-screen transition-colors duration-300">
-        <main className="container mx-auto px-4 py-8">
+      <div className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white min-h-screen transition-colors duration-300 flex flex-col">
+        <main className="container mx-auto px-4 py-8 flex-grow">
           <div className="grid grid-cols-12 gap-8">
             {/* Main Article Content Area */}
             <div className="col-span-12 lg:col-span-9">
@@ -75,28 +76,31 @@ export default function ArticlePage() {
 
             {/* People Also Read Sidebar */}
             <aside className="col-span-12 lg:col-span-3 space-y-6">
-              <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl shadow-lg">
-                <h2 className="font-semibold text-xl mb-4 text-gray-900 dark:text-white">
+              <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl shadow-lg flex flex-col max-h-[calc(100vh-8rem)]">
+                <h2 className="font-semibold text-xl mb-4 text-gray-900 dark:text-white flex-shrink-0">
                   People also read
                 </h2>
-                <ul className="space-y-4">
-                  {mockOtherArticles.map((otherArticle) => (
-                    <li key={otherArticle.id} className="pb-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
-                      <Link href={`/article/${otherArticle.id}`} className="group">
-                        <h3 className="text-md font-medium text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
-                          {otherArticle.title}
-                        </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                          {otherArticle.category}
-                        </p>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <div className="overflow-y-auto hide-scrollbar flex-grow">
+                  <ul className="space-y-4">
+                    {mockOtherArticles.map((otherArticle) => (
+                      <li key={otherArticle.id} className="pb-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+                        <Link href={`/article/${otherArticle.id}`} className="group">
+                          <h3 className="text-md font-medium text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
+                            {otherArticle.title}
+                          </h3>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {otherArticle.category}
+                          </p>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </aside>
           </div>
         </main>
+        <Footer /> {/* Added Footer component here */}
       </div>
     </>
   );
