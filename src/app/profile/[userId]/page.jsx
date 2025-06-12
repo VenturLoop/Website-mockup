@@ -4,7 +4,7 @@
 import { useParams } from 'next/navigation';
 import { Button } from "@/components/ui/button"; // Import the button
 import { Mail, MapPin, Briefcase, Users, Eye, Save, UserPlus, Image as ImageIcon } from 'lucide-react'; // Import icons
-// import { Navigation } from "@/components/navigation"; // Assuming handled by a layout
+import { Navigation } from "@/components/navigation"; // Import Navigation
 
 // Mock data - will be replaced or fetched based on userId
 const mockUserProfile = {
@@ -76,10 +76,12 @@ export default function UserProfilePage() {
 
   if (!userProfileData) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
-        {/* <Navigation /> */}
-        <p className="text-2xl text-gray-700 dark:text-gray-300 p-10">User not found.</p>
-      </div>
+      <>
+        <Navigation /> {/* Add Navigation here */}
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 pt-16"> {/* Added pt-16 for navbar height */}
+          <p className="text-2xl text-gray-700 dark:text-gray-300 p-10">User not found.</p>
+        </div>
+      </>
     );
   }
 
@@ -99,17 +101,19 @@ export default function UserProfilePage() {
   const handleConnectRequest = () => console.log("Send Connection Request clicked for user:", userId);
 
   return (
-    // Assuming Navigation is handled by a root layout or similar
-    // <Navigation />
-    <div className="bg-gray-100 dark:bg-gray-950 min-h-screen py-8 transition-colors duration-300">
-      <div className="container mx-auto px-4">
-        <div className="bg-white dark:bg-gray-900 shadow-xl rounded-lg p-6 md:p-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Left Column (Profile Pic, Actions) */}
-            <div className="md:col-span-1 flex flex-col items-center space-y-6">
-              {profilePhoto ? (
-                <img
-                  src={profilePhoto}
+    <>
+      <Navigation /> {/* Add Navigation here */}
+      <div className="bg-gray-100 dark:bg-gray-950 min-h-screen py-8 pt-24 transition-colors duration-300"> {/* Adjusted pt-24 for navbar height + some padding */}
+        <div className="container mx-auto px-4">
+          <div className="bg-white dark:bg-gray-900 shadow-xl rounded-lg p-6 md:p-8">
+            {/* This is the grid container */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> {/* Increased gap slightly for better visual separation */}
+
+              {/* Left Column (Profile Pic, Actions, Stats) - Make this sticky */}
+              <div className="md:col-span-1 flex flex-col items-center space-y-6 md:sticky md:top-28 md:self-start"> {/* Adjusted md:top-28 (7rem) to give a bit more space from navbar */}
+                {profilePhoto ? (
+                  <img
+                    src={profilePhoto}
                   alt={name}
                   className="w-40 h-40 rounded-full object-cover border-4 border-blue-500 dark:border-blue-400"
                 />
