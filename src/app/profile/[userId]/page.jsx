@@ -77,8 +77,9 @@ export default function UserProfilePage() {
   if (!userProfileData) {
     return (
       <>
-        <Navigation /> {/* Add Navigation here */}
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 pt-16"> {/* Added pt-16 for navbar height */}
+        <Navigation />
+        {/* Adjusted container for "User not found" - it also needs to respect navbar height */}
+        <div className="flex justify-center items-center h-[calc(100vh-4rem)] bg-gray-100 dark:bg-gray-900">
           <p className="text-2xl text-gray-700 dark:text-gray-300 p-10">User not found.</p>
         </div>
       </>
@@ -102,15 +103,15 @@ export default function UserProfilePage() {
 
   return (
     <>
-      <Navigation /> {/* Add Navigation here */}
-      <div className="bg-gray-100 dark:bg-gray-950 min-h-screen py-8 pt-24 transition-colors duration-300"> {/* Adjusted pt-24 for navbar height + some padding */}
-        <div className="container mx-auto px-4">
+      <Navigation />
+      {/* Main content wrapper: adjusted height, overflow, and padding */}
+      <div className="bg-gray-100 dark:bg-gray-950 h-[calc(100vh-4rem)] overflow-y-auto p-8 transition-colors duration-300">
+        <div className="container mx-auto px-0"> {/* Adjusted px-0 as parent now has p-8. */}
           <div className="bg-white dark:bg-gray-900 shadow-xl rounded-lg p-6 md:p-8">
-            {/* This is the grid container */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> {/* Increased gap slightly for better visual separation */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-              {/* Left Column (Profile Pic, Actions, Stats) - Make this sticky */}
-              <div className="md:col-span-1 flex flex-col items-center space-y-6 md:sticky md:top-28 md:self-start"> {/* Adjusted md:top-28 (7rem) to give a bit more space from navbar */}
+              {/* Left Column: Adjusted md:top-8 */}
+              <div className="md:col-span-1 flex flex-col items-center space-y-6 md:sticky md:top-8 md:self-start">
                 {profilePhoto ? (
                   <img
                     src={profilePhoto}
