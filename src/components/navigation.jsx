@@ -20,6 +20,19 @@ export function Navigation() {
   const pathname = usePathname()
   const foundersDropdownRef = useRef(null)
 
+  // Scroll to Our Offerings
+  const handleScrollToOurOfferings = () => {
+    if (typeof window !== 'undefined') {
+      const element = document.getElementById('services');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMenuOpen(false);
+    setIsMobileFoundersOpen(false);
+    setIsFoundersOpen(false);
+  };
+
   // Modal control functions
   const openAppDownloadModal = () => {
     if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
@@ -120,6 +133,12 @@ export function Navigation() {
                   >
                     Loop Mini o1
                   </button>
+                  <button
+                    onClick={handleScrollToOurOfferings}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    Our Offerings
+                  </button>
                 </div>
               )}
             </div>
@@ -214,6 +233,12 @@ export function Navigation() {
                         className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         Loop Mini o1
+                      </button>
+                      <button
+                        onClick={handleScrollToOurOfferings}
+                        className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
+                      >
+                        Our Offerings
                       </button>
                     </div>
                   )}
