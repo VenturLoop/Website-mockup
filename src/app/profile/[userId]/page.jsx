@@ -105,7 +105,7 @@ export default function UserProfilePage() {
     <>
       <Navigation />
       {/* Main content wrapper: adjusted height, overflow, and padding */}
-      <div className="bg-gray-100 dark:bg-gray-950 h-[calc(100vh-4rem)] overflow-y-auto p-8 transition-colors duration-300 hide-scrollbar">
+      <div className="bg-gray-100 dark:bg-gray-950 h-[calc(100vh-4rem)] overflow-y-auto px-2 py-4 sm:p-6 md:p-8 transition-colors duration-300 hide-scrollbar">
         <div className="container mx-auto px-0"> {/* Adjusted px-0 as parent now has p-8. */}
           <div className="bg-white dark:bg-gray-900 shadow-xl rounded-lg p-6 md:p-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
