@@ -2,7 +2,7 @@
 "use client";
 
 import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/Footer"; // Added import
+import Footer from "@/components/Footer"; // Corrected import
 import Link from "next/link";
 import { useParams } from "next/navigation"; // To get articleId if needed for fetching later
 
