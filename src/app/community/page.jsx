@@ -231,19 +231,21 @@ const SidebarRight = ({ onAddNewArticleClick, setIsAppDownloadModalOpen, setIsLo
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
       <h2 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">Active Investors</h2>
       <ul className="space-y-3">
-        {mockInvestors.slice(0, 5).map(investor =>(
+        {mockInvestors.slice(0, 5).map(investor => (
           <li key={investor.id} className="py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
             <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-3">
-                <img src={`https://i.pravatar.cc/40?u=${investor.avatarSeed}`} alt={investor.name} className="w-10 h-10 rounded-full" />
-                <div>
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">{investor.name}</span>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{investor.location}</p>
+              <Link href={`/investor/${investor.id}`} className="group flex-1 min-w-0 mr-2">
+                <div className="flex items-center space-x-3">
+                  <img src={`https://i.pravatar.cc/40?u=${investor.avatarSeed}`} alt={investor.name} className="w-10 h-10 rounded-full group-hover:ring-2 group-hover:ring-blue-500 transition-all" />
+                  <div>
+                    <span className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{investor.name}</span>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">{investor.location}</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
               <button
                 onClick={() => setIsLoginModalOpen(true)}
-                className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-500 text-sm font-medium px-3 py-1.5 rounded-md border border-green-500 dark:border-green-400 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors">
+                className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-500 text-sm font-medium px-3 py-1.5 rounded-md border border-green-500 dark:border-green-400 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors flex-shrink-0">
                 Pitch now
               </button>
             </div>
