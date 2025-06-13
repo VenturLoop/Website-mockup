@@ -8,6 +8,10 @@ import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Import the new component
 import LoginModal from '@/components/LoginModal';
 import { AppDownloadModal } from '@/components/AppDownloadModal';
+import PhoneMockup1 from "@/components/phone-mockups/PhoneMockup1"; // Import the new component
+import PhoneMockup2 from "@/components/phone-mockups/PhoneMockup2"; // Import the new component
+import PhoneMockup3 from "@/components/phone-mockups/PhoneMockup3"; // Import the new component
+import PhoneMockup4 from "@/components/phone-mockups/PhoneMockup4"; // Import the new component
 
 export default function HomeClient() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -158,34 +162,7 @@ export default function HomeClient() {
               </div>
             </div>
             <div className="w-full md:w-1/2 lg:w-1/2 flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
-              <div className="relative">
-                <div className="w-72 sm:w-80 h-[500px] sm:h-[600px] bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-[3rem] p-2 animate-phone-float">
-                  <div className="w-full h-full bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-2xl overflow-hidden">
-                    <div className="h-full w-full bg-gray-50 dark:bg-gray-800 relative">
-                      {/* Phone mockup content */}
-                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black dark:bg-gray-700 rounded-full"></div>
-                      <div className="pt-12 px-6">
-                        <div className="bg-blue-600 dark:bg-blue-700 h-20 rounded-xl mb-4 animate-pulse-slow"></div>
-                        <div className="space-y-3">
-                          <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-3/4 animate-fade-in animate-delay-300"></div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-1/2 animate-fade-in animate-delay-400"></div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-2/3 animate-fade-in animate-delay-500"></div>
-                        </div>
-                        <div className="mt-8 space-y-4">
-                          <div className="bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-700 rounded-xl p-4 hover-lift">
-                            <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-1/2 mb-2"></div>
-                            <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-3/4"></div>
-                          </div>
-                          <div className="bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-700 rounded-xl p-4 hover-lift">
-                            <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-1/2 mb-2"></div>
-                            <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-3/4"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <PhoneMockup1 />
             </div>
           </div>
         </div>
@@ -204,60 +181,7 @@ export default function HomeClient() {
           <div className="relative max-w-6xl mx-auto">
             {/* Central Phone Mockup */}
             <div className="flex justify-center mb-8 lg:mb-0 animate-on-scroll animate-delay-200">
-              <div className="relative z-10">
-                <div className="w-72 sm:w-80 h-[500px] sm:h-[600px] bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800 rounded-[3rem] p-3 shadow-2xl animate-phone-float">
-                  <div className="w-full h-full bg-white dark:bg-gray-900 rounded-[2.5rem] overflow-hidden">
-                    <div className="h-full w-full bg-gray-50 dark:bg-gray-800 relative">
-                      {/* Phone UI */}
-                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black dark:bg-gray-700 rounded-full"></div>
-                      <div className="pt-12 px-6">
-                        {/* Header */}
-                        <div className="flex justify-between items-center mb-6">
-                          <div className="bg-gray-200 dark:bg-gray-700 h-8 w-24 rounded"></div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-8 w-8 rounded-full"></div>
-                        </div>
-
-                        {/* Balance Card */}
-                        <div className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700 rounded-2xl p-6 mb-6 text-white animate-pulse-slow">
-                          <div className="bg-white/20 h-4 w-20 rounded mb-2"></div>
-                          <div className="bg-white/30 h-8 w-32 rounded mb-4"></div>
-                          <div className="flex justify-between">
-                            <div className="bg-white/20 h-3 w-16 rounded"></div>
-                            <div className="bg-white/20 h-3 w-12 rounded"></div>
-                          </div>
-                        </div>
-
-                        {/* Quick Actions */}
-                        <div className="grid grid-cols-4 gap-4 mb-6">
-                          {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="bg-white dark:bg-gray-900 rounded-xl p-3 shadow-sm hover-lift">
-                              <div className="bg-blue-100 dark:bg-blue-900 h-8 w-8 rounded-lg mb-2 mx-auto"></div>
-                              <div className="bg-gray-200 dark:bg-gray-700 h-2 w-full rounded"></div>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Transaction List */}
-                        <div className="space-y-3">
-                          {[1, 2, 3].map((i) => (
-                            <div
-                              key={i}
-                              className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-sm flex items-center hover-lift"
-                            >
-                              <div className="bg-gray-200 dark:bg-gray-700 h-10 w-10 rounded-full mr-3"></div>
-                              <div className="flex-1">
-                                <div className="bg-gray-200 dark:bg-gray-700 h-3 w-20 rounded mb-1"></div>
-                                <div className="bg-gray-200 dark:bg-gray-700 h-2 w-16 rounded"></div>
-                              </div>
-                              <div className="bg-gray-200 dark:bg-gray-700 h-4 w-12 rounded"></div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <PhoneMockup2 />
             </div>
 
             {/* Feature Cards - Positioned around phone */}
@@ -421,37 +345,7 @@ export default function HomeClient() {
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center animate-on-scroll animate-delay-200">
-              <div className="relative">
-                {/* Pink background blob */}
-                <div className="absolute -z-10 w-[350px] h-[350px] bg-pink-200 dark:bg-pink-900/30 rounded-full -bottom-10 -left-10 animate-pulse-slow"></div>
-                {/* Yellow decoration */}
-                <div className="absolute top-0 right-0 w-10 h-10 bg-yellow-300 dark:bg-yellow-500/70 rounded-full z-10 animate-float"></div>
-
-                {/* Phone mockup */}
-                <div className="w-72 sm:w-80 h-[500px] sm:h-[600px] bg-white dark:bg-gray-900 rounded-[3rem] p-2 shadow-xl relative z-0 animate-phone-float">
-                  <div className="w-full h-full bg-gray-50 dark:bg-gray-800 rounded-[2.5rem] overflow-hidden">
-                    {/* Phone mockup content */}
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black dark:bg-gray-700 rounded-full"></div>
-                    <div className="pt-12 px-6">
-                      <div className="bg-blue-600 dark:bg-blue-700 h-20 rounded-xl mb-4 flex items-center justify-center animate-pulse-slow">
-                        <span className="text-white font-bold">SIGN UP</span>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-3/4"></div>
-                        <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-1/2"></div>
-                      </div>
-                      <div className="mt-8 flex justify-center">
-                        <div className="flex -space-x-2">
-                          <div className="w-8 h-8 rounded-full bg-blue-400 border-2 border-white dark:border-gray-800 animate-pulse-slow"></div>
-                          <div className="w-8 h-8 rounded-full bg-green-400 border-2 border-white dark:border-gray-800 animate-pulse-slow animate-delay-100"></div>
-                          <div className="w-8 h-8 rounded-full bg-yellow-400 border-2 border-white dark:border-gray-800 animate-pulse-slow animate-delay-200"></div>
-                          <div className="w-8 h-8 rounded-full bg-red-400 border-2 border-white dark:border-gray-800 animate-pulse-slow animate-delay-300"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <PhoneMockup3 />
             </div>
           </div>
         </div>
@@ -512,45 +406,7 @@ export default function HomeClient() {
             </div>
 
             <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center animate-on-scroll animate-delay-200">
-              <div className="relative">
-                {/* Pink background blob */}
-                <div className="absolute -z-10 w-[350px] h-[350px] bg-pink-200 dark:bg-pink-900/30 rounded-full -bottom-10 -left-10 animate-pulse-slow"></div>
-                {/* Red decoration */}
-                <div className="absolute top-0 right-0 w-12 h-12 bg-red-300 dark:bg-red-500/70 transform rotate-45 animate-float-delayed"></div>
-
-                {/* Phone mockup */}
-                <div className="w-72 sm:w-80 h-[500px] sm:h-[600px] bg-white dark:bg-gray-900 rounded-[3rem] p-2 shadow-xl relative z-0 animate-phone-float">
-                  <div className="w-full h-full bg-gray-50 dark:bg-gray-800 rounded-[2.5rem] overflow-hidden">
-                    {/* Phone mockup content */}
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black dark:bg-gray-700 rounded-full"></div>
-                    <div className="pt-12 px-6">
-                      <div className="bg-gray-200 dark:bg-gray-700 h-8 rounded-lg w-1/2 mb-4"></div>
-                      <div className="space-y-4 mb-6">
-                        <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm hover-lift">
-                          <div className="flex items-center mb-2">
-                            <div className="w-8 h-8 rounded-full bg-blue-400 mr-2"></div>
-                            <div className="bg-gray-200 dark:bg-gray-700 h-4 w-24 rounded"></div>
-                          </div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-full mb-1"></div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-3/4"></div>
-                        </div>
-                        <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm hover-lift">
-                          <div className="flex items-center mb-2">
-                            <div className="w-8 h-8 rounded-full bg-green-400 mr-2"></div>
-                            <div className="bg-gray-200 dark:bg-gray-700 h-4 w-24 rounded"></div>
-                          </div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-full mb-1"></div>
-                          <div className="bg-gray-200 dark:bg-gray-700 h-3 rounded w-3/4"></div>
-                        </div>
-                      </div>
-                      <div className="bg-gray-200 dark:bg-gray-700 h-6 rounded-lg w-1/3 mx-auto"></div>
-                      <div className="mt-4 text-center">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">1/28</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <PhoneMockup4 />
             </div>
           </div>
         </div>
