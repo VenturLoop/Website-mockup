@@ -441,11 +441,11 @@ html.light { color-scheme: light; }
 }
 
 .animated-background-hero {
-  background-size: 400% 400%;
-  background-image: linear-gradient(to right, var(--brand-blue-light), #ffffff, var(--brand-blue-light));
+  background-size: 200% 200%;
+  background-image: linear-gradient(to right, #7dd3fc, #f9a8d4, #fde68a, #f9a8d4, #7dd3fc);
   animation: animated-gradient 15s ease infinite;
 }
 
 .dark .animated-background-hero {
-  background-image: linear-gradient(to right, var(--brand-blue-dark), var(--background), var(--brand-blue-dark));
+  background-image: linear-gradient(to right, #3b82f6, #a855f7, #ec4899, #a855f7, #3b82f6);
 }
