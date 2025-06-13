@@ -50,7 +50,10 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        coral: {
+        'brand-blue': 'var(--brand-blue)',
+        'brand-blue-light': 'var(--brand-blue-light)',
+        'brand-blue-dark': 'var(--brand-blue-dark)',
+        coral: { // Retaining existing custom color
           400: "#FF7F50",
           900: "#8B3E2F",
         },

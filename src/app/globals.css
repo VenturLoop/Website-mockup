@@ -441,7 +441,11 @@ html.light { color-scheme: light; }
 }
 
 .animated-background-hero {
-  background-size: 200% 200%;
-  background-image: linear-gradient(to right, #a855f7, #ec4899, #f97316, #ec4899, #a855f7);
+  background-size: 400% 400%;
+  background-image: linear-gradient(to right, var(--brand-blue-light), #ffffff, var(--brand-blue-light));
   animation: animated-gradient 15s ease infinite;
+}
+
+.dark .animated-background-hero {
+  background-image: linear-gradient(to right, var(--brand-blue-dark), var(--background), var(--brand-blue-dark));
 }
