@@ -230,7 +230,7 @@ export default function HomeClient() {
       <section className="py-12 sm:py-16 lg:py-20 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row lg:flex-row items-center">
-            <div className="w-full md:w-1/2 lg:w-1/2 mb-8 lg:mb-0 animate-on-scroll text-center md:text-left">
+            <div className="w-full md:w-1/2 lg:w-3/5 mb-8 lg:mb-0 animate-on-scroll text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-white">
                 Your <span className="text-blue-600 dark:text-blue-400">Startup</span>
                 <br />
@@ -255,7 +255,7 @@ export default function HomeClient() {
                 </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 lg:w-1/2 flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
+            <div className="w-full md:w-1/2 lg:w-2/5 flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
               <PhoneMockup1 />
             </div>
           </div>
