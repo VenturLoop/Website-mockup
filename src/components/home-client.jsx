@@ -575,7 +575,7 @@ export default function HomeClient() {
                   {/* Laptop Base */}
                   <div className="w-80 h-48 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 rounded-2xl shadow-2xl transform rotate-x-12 animate-pulse-slow">
                     {/* Laptop Screen */}
-                    <div className="absolute -top-40 left-4 right-4 h-48 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-black rounded-t-2xl border-4 border-gray-700 dark:border-gray-800">
+                    <div className="absolute -top-10 left-4 right-4 h-48 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-black rounded-t-2xl border-4 border-gray-700 dark:border-gray-800">
                       {/* Screen Content */}
                       <div className="p-6 h-full bg-gradient-to-br from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700 rounded-t-xl">
                         <div className="bg-white/20 h-4 w-3/4 rounded mb-4"></div>
@@ -590,19 +590,19 @@ export default function HomeClient() {
                   </div>
 
                   {/* Floating Email Icons */}
-                  <div className="absolute -top-20 -left-8 w-12 h-12 bg-white dark:bg-gray-100 rounded-lg shadow-lg flex items-center justify-center animate-float">
+                  <div className="absolute -top-5 -left-2 w-12 h-12 bg-white dark:bg-gray-100 rounded-lg shadow-lg flex items-center justify-center animate-float">
                     <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                   </div>
-                  <div className="absolute -top-16 -right-12 w-10 h-10 bg-yellow-400 rounded-lg shadow-lg flex items-center justify-center animate-float-delayed">
+                  <div className="absolute -top-4 -right-3 w-10 h-10 bg-yellow-400 rounded-lg shadow-lg flex items-center justify-center animate-float-delayed">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                   </div>
-                  <div className="absolute -bottom-8 -left-6 w-8 h-8 bg-green-400 rounded-full shadow-lg flex items-center justify-center animate-float">
+                  <div className="absolute -bottom-2 -left-1 w-8 h-8 bg-green-400 rounded-full shadow-lg flex items-center justify-center animate-float">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path
                         fillRule="evenodd"
