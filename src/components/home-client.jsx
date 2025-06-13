@@ -236,20 +236,20 @@ export default function HomeClient() {
                 <br />
                 Journey Starts Here
               </h1>
-              <p className="text-gray-700 dark:text-gray-300 text-lg md:text-xl mb-8 max-w-md leading-relaxed animate-on-scroll animate-fade-in-up animate-delay-200">
+              <p className="text-gray-700 dark:text-gray-100 text-lg md:text-xl mb-8 max-w-md leading-relaxed animate-on-scroll animate-fade-in-up animate-delay-200">
                 VenturLoop connects you with co-founders, investors, and collaborators — so you can focus on building, not searching.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-on-scroll animate-fade-in-up animate-delay-300">
                 <Button
                   onClick={openAppDownloadModal}
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-brand-blue dark:hover:bg-brand-blue-dark text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-brand-blue dark:hover:bg-brand-blue-dark text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border dark:border-white/75"
                 >
                   Download Now
                 </Button>
                 <Button
                   onClick={openLoginModal}
                   variant="outline"
-                  className="border-2 border-blue-600 dark:border-brand-blue text-blue-600 dark:text-brand-blue hover:bg-blue-50 dark:hover:bg-white/10 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                  className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
                 >
                   Start for Free
                 </Button>
