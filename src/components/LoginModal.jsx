@@ -9,13 +9,11 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
 
   // TODO: Implement actual Login, Create Account, and App Download functionalities
   const handleLogin = () => {
-    console.log("Login action triggered");
-    // onClose(); // Potentially close modal on action
+    window.location.href = 'https://auth.venturloop.com/login';
   };
 
   const handleCreateAccount = () => {
-    console.log("Create Account action triggered");
-    // onClose(); // Potentially close modal on action
+    window.location.href = 'https://auth.venturloop.com/auth/signup';
   };
 
   const handleDownloadApp = () => {
