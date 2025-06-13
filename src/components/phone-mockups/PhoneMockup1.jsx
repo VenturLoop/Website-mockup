@@ -290,27 +290,27 @@ const PhoneMockup1 = () => {
         {/* Bottom Navigation Bar */}
         <div className="flex justify-around items-center py-2 px-2 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 mt-auto">
           {/* Nav Item 1: Launch (Active) */}
-          <button className="flex flex-col items-center text-brand-blue dark:text-brand-blue hover:opacity-75 transition-opacity px-1">
-            <LaunchIcon className="w-5 h-5 mb-0.5" isActive={true} />
-            <span className="text-xs font-medium">Launch</span>
+          <button className="flex flex-col items-center text-brand-blue dark:text-brand-blue hover:opacity-75 transition-opacity px-1 flex-shrink-0">
+            <LaunchIcon className="w-4 h-4 mb-px" isActive={true} />
+            <span className="text-[10px] leading-tight font-medium">Launch</span>
           </button>
 
           {/* Nav Item 2: Community */}
-          <button className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1">
-            <CommunityNavIcon className="w-5 h-5 mb-0.5" />
-            <span className="text-xs font-medium">Community</span>
+          <button className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1 flex-shrink-0">
+            <CommunityNavIcon className="w-4 h-4 mb-px" />
+            <span className="text-[10px] leading-tight font-medium">Community</span>
           </button>
 
           {/* Nav Item 3: Find */}
-          <button className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1">
-            <FindNavIcon className="w-5 h-5 mb-0.5" />
-            <span className="text-xs font-medium">Find</span>
+          <button className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1 flex-shrink-0">
+            <FindNavIcon className="w-4 h-4 mb-px" />
+            <span className="text-[10px] leading-tight font-medium">Find</span>
           </button>
 
           {/* Nav Item 4: Message */}
-          <button className="relative flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1">
-            <MessageIcon className="w-5 h-5 mb-0.5" />
-            <span className="text-xs font-medium">Message</span>
+          <button className="relative flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1 flex-shrink-0">
+            <MessageIcon className="w-4 h-4 mb-px" />
+            <span className="text-[10px] leading-tight font-medium">Message</span>
             {/* Notification Badge */}
             <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 text-white text-[0.5rem] leading-none flex items-center justify-center rounded-full border-1 border-white dark:border-gray-800">
               1
@@ -318,9 +318,9 @@ const PhoneMockup1 = () => {
           </button>
 
           {/* Nav Item 5: Profile */}
-          <button className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1">
-            <ProfileNavIcon className="w-5 h-5 mb-0.5" />
-            <span className="text-xs font-medium">Profile</span>
+          <button className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors px-1 flex-shrink-0">
+            <ProfileNavIcon className="w-4 h-4 mb-px" />
+            <span className="text-[10px] leading-tight font-medium">Profile</span>
           </button>
         </div>
       </div>
