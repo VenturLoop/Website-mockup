@@ -48,18 +48,18 @@ const LockIcon = () => (
 const PhoneMockup3 = () => {
   // Simplified avatar styling for Android theme
   const avatarDisplayData = [
-    { initial: 'J', id: 1, title: 'User J' },
-    { initial: 'A', id: 2, title: 'User A' },
-    { initial: 'L', id: 3, title: 'User L' },
-    { initial: 'S', id: 4, title: 'User S' },
-    { initial: 'R', id: 5, title: 'User R' },
+    { imgSrc: 'https://i.pravatar.cc/150?img=1', id: 1, title: 'User 1' },
+    { imgSrc: 'https://i.pravatar.cc/150?img=2', id: 2, title: 'User 2' },
+    { imgSrc: 'https://i.pravatar.cc/150?img=3', id: 3, title: 'User 3' },
+    { imgSrc: 'https://i.pravatar.cc/150?img=4', id: 4, title: 'User 4' },
+    { imgSrc: 'https://i.pravatar.cc/150?img=5', id: 5, title: 'User 5' },
   ];
 
 
   return (
     <div className="relative">
       {/* Decorative Blobs REMOVED for cleaner Android theme */}
-      <div className="android-frame animate-phone-float"> {/* Applied android-frame */}
+      <div className="android-frame animate-phone-float shadow-2xl"> {/* Applied android-frame */}
         <div className="mockup-screen">
 
           <div className="mockup-header flex justify-between items-center text-xs">
@@ -67,31 +67,31 @@ const PhoneMockup3 = () => {
             <div className="flex items-center space-x-1"> <WifiIcon /> <BatteryIcon /> </div>
           </div>
 
-          <div className="flex flex-col justify-around flex-grow px-5 py-6"> {/* Adjusted padding and justify for better spacing */}
+          <div className="flex flex-col justify-around flex-grow px-6 py-8"> {/* Adjusted padding and justify for better spacing */}
 
             <div className="text-center animate-fadeInUp">
               {/* App Logo with brand blue background */}
-              <div className="inline-block p-3 bg-brand-blue rounded-full shadow-md mb-4"> {/* Adjusted padding, shadow */}
+              <div className="inline-block p-3 bg-blue-600 rounded-full shadow-md mb-4"> {/* Adjusted padding, shadow */}
                 <AppLogoIcon />
               </div>
-              <h1 className="text-2xl font-bold text-brand-blue mb-1">Connect & Share</h1> {/* text-brand-blue */}
-              <p className="text-sm text-muted-foreground">Join our vibrant community today!</p>
+              <h1 className="text-2xl font-bold text-blue-600 mb-1">VenturLoop</h1> {/* text-brand-blue */}
+              <p className="text-sm text-muted-foreground">Find cofounders, investors & build faster.</p>
             </div>
 
             <div className="space-y-4 my-5 animate-fadeInUp animate-delay-200"> {/* Increased spacing */}
               <div className="relative">
                 <MailIcon />
-                <input type="email" placeholder="Enter your email" className="mockup-input pl-10 w-full focus-ring-accent" />
+                <input type="email" placeholder="Enter your email" className="mockup-input pl-10 w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div className="relative">
                 <LockIcon />
-                <input type="password" placeholder="Create a password" className="mockup-input pl-10 w-full focus-ring-accent" />
+                <input type="password" placeholder="Create a password" className="mockup-input pl-10 w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
 
             <div className="animate-fadeInUp animate-delay-400">
               {/* Button uses Android theme styles. Removed text-base, py-3 */}
-              <button className="mockup-button w-full animate-pulseMore focus-ring-accent animate-clickEffect">
+              <button className="mockup-button w-full flex items-center justify-center animate-pulseMore bg-blue-600 text-white hover:bg-blue-700 active:scale-95">
                 <UserPlusIcon />
                 Get Started
               </button>
@@ -104,15 +104,14 @@ const PhoneMockup3 = () => {
               <p className="text-sm font-medium text-foreground mb-3">Join these amazing people!</p>
               <div className="flex justify-center -space-x-2.5"> {/* Slightly reduced negative space */}
                 {avatarDisplayData.map((avatar, index) => (
-                  <div
+                  <img
                     key={avatar.id}
-                    // Using brand-blue for primary avatars, could alternate with muted or secondary for variety if desired
-                    className="w-9 h-9 rounded-full bg-brand-blue border-2 border-background flex items-center justify-center text-white font-semibold text-xs cursor-pointer animate-scaleIn hover-shadow-lift"
+                    src={avatar.imgSrc}
+                    alt={avatar.title}
+                    className="w-9 h-9 rounded-full border-2 border-blue-600 cursor-pointer animate-scaleIn hover:shadow-lg transform hover:-translate-y-1"
                     style={{ animationDelay: `${700 + index * 100}ms` }}
                     title={avatar.title}
-                  >
-                    {avatar.initial}
-                  </div>
+                  />
                 ))}
               </div>
             </div>
