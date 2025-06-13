@@ -131,30 +131,33 @@ export default function HomeClient() {
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex flex-col lg:flex-row items-center">
-            <div className="w-full lg:w-1/2 mb-8 lg:mb-0 animate-on-scroll">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-white">
+          <div className="flex flex-col md:flex-row lg:flex-row items-center">
+            <div className="w-full md:w-1/2 lg:w-1/2 mb-8 lg:mb-0 animate-on-scroll text-center md:text-left">
+              <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-white">
                 Your <span className="text-blue-600 dark:text-blue-400">Startup</span>
                 <br />
                 Journey Starts Here
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-md leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis,
-                pulvinar dapibus leo.
+              <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl mb-8 max-w-md leading-relaxed">
+                VenturLoop connects you with co-founders, investors, and collaborators — so you can focus on building, not searching.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift">
-                  Get Started
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Button
+                  onClick={openAppDownloadModal}
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                >
+                  Download Now
                 </Button>
                 <Button
+                  onClick={openLoginModal}
                   variant="outline"
                   className="border-2 border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
                 >
-                  Learn More
+                  Start for Free
                 </Button>
               </div>
             </div>
-            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end animate-on-scroll animate-delay-200">
+            <div className="w-full md:w-1/2 lg:w-1/2 flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
               <div className="relative">
                 <div className="w-72 sm:w-80 h-[500px] sm:h-[600px] bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-[3rem] p-2 animate-phone-float">
                   <div className="w-full h-full bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-2xl overflow-hidden">
