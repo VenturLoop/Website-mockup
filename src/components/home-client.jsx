@@ -456,13 +456,13 @@ export default function HomeClient() {
       <section className="py-16 sm:py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="w-full lg:w-1/2 order-2 lg:order-1 animate-on-scroll" data-animation="animate-slide-in-left">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10">
+            <div className="w-full lg:w-1/2 order-2 lg:order-1">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10 animate-on-scroll" data-animation="animate-slide-in-left">
                 Some <span className="text-blue-600 dark:text-blue-400">Excellent Features</span> For You
               </h2>
 
               <div className="space-y-6">
-                <div className="flex items-start animate-fade-in-right animate-delay-200">
+                <div className="flex items-start animate-on-scroll animate-delay-200" data-animation="animate-slide-in-left">
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4">
                     <span className="text-blue-600 dark:text-blue-400 font-bold">1.</span>
                   </div>
@@ -476,7 +476,7 @@ export default function HomeClient() {
                   </div>
                 </div>
 
-                <div className="flex items-start animate-fade-in-right animate-delay-300">
+                <div className="flex items-start animate-on-scroll animate-delay-400" data-animation="animate-slide-in-left">
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4">
                     <span className="text-blue-600 dark:text-blue-400 font-bold">2.</span>
                   </div>
@@ -490,7 +490,7 @@ export default function HomeClient() {
                   </div>
                 </div>
 
-                <div className="flex items-start animate-fade-in-right animate-delay-400">
+                <div className="flex items-start animate-on-scroll animate-delay-600" data-animation="animate-slide-in-left">
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4">
                     <span className="text-blue-600 dark:text-blue-400 font-bold">3.</span>
                   </div>
