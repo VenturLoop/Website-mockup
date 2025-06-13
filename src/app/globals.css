@@ -224,7 +224,7 @@ html.light { color-scheme: light; }
 /* === Android Theme Styles === */
 
 .android-frame {
-  @apply w-72 sm:w-80 h-[550px] sm:h-[650px];
+  @apply w-64 sm:w-72 h-[495px] sm:h-[585px];
   background-color: var(--android-frame-bg);
   border-radius: 1.5rem;
   padding: 8px;
