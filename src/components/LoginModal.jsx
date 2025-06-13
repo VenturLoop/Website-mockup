@@ -28,27 +28,27 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md p-8 bg-white dark:bg-gray-900 rounded-lg shadow-xl">
+      <DialogContent className="max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl">
         <DialogHeader className="flex flex-col items-center text-center">
-          <Users className='w-16 h-16 text-blue-500 mb-4' />
+          <Users className='w-16 h-16 text-blue-600 dark:text-blue-500 mb-4' />
           <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-white">
             Welcome to VenturLoop
           </DialogTitle>
-          <DialogDescription className="text-gray-600 dark:text-gray-400 mt-2 mb-6">
+          <DialogDescription className="text-gray-600 dark:text-gray-300 mt-2 mb-6">
             Join our community or access your account to continue.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
-          <Button className='w-full' size="lg" onClick={handleLogin}>
+          <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin}>
             <LogIn className="mr-2 h-5 w-5" /> Login
           </Button>
-          <Button variant='outline' className='w-full' size="lg" onClick={handleCreateAccount}>
+          <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount}>
             <UserPlus className="mr-2 h-5 w-5" /> Create Account
           </Button>
           <Button
             variant='ghost'
-            className='w-full text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500'
+            className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
             size="lg"
             onClick={handleDownloadApp}
           >
@@ -57,7 +57,7 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
         </div>
 
         <div className="mt-8 text-center">
-          <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-400">
+          <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500">
             Maybe Later
           </Button>
         </div>
