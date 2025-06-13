@@ -427,3 +427,21 @@ html.light { color-scheme: light; }
     scrollbar-width: none;  /* Firefox */
   }
 }
+
+@keyframes animated-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-background-hero {
+  background-size: 200% 200%;
+  background-image: linear-gradient(to right, #a855f7, #ec4899, #f97316, #ec4899, #a855f7);
+  animation: animated-gradient 15s ease infinite;
+}
