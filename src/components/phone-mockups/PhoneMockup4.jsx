@@ -206,7 +206,7 @@ const PhoneMockup4 = () => {
                 </div>
 
                 {/* Co-founder Specific Tabs for More Info */}
-                <div className="flex justify-around items-center bg-gray-100 dark:bg-gray-750 border-b border-android-border-light dark:border-android-border-dark shadow-sm">
+                <div className="flex justify-around items-center bg-gray-100 dark:!bg-gray-750 border-b border-android-border-light dark:border-android-border-dark shadow-sm">
                   <button
                     className={`py-2 px-3 text-xs font-medium focus:outline-none w-1/3 text-center ${ // Added w-1/3 and text-center
                       activeCoFounderTab === 'About'
