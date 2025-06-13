@@ -184,10 +184,12 @@ const PhoneMockup4 = () => {
                   </div>
                 </div>
                 {/* AI-Based Match Score Block */}
-                <div className="px-4 py-4"> {/* Increased py for a bit more separation */}
-                  <p className="text-md font-semibold text-gray-800 dark:text-gray-200 text-center mb-3">
-                    You got 14% match
-                  </p>
+                <div className="px-4 py-4 bg-sky-50 dark:bg-sky-900/50 rounded-lg border border-sky-200 dark:border-sky-700 shadow-md">
+                  <div className="text-center mb-3">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">You got</span>
+                    <span className="text-4xl font-bold text-sky-600 dark:text-sky-400 mx-1">14%</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">match</span>
+                  </div>
                   <div className="space-y-1">
                     <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
                       <YellowCircleIcon />
