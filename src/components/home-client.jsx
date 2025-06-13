@@ -127,6 +127,100 @@ export default function HomeClient() {
     return () => observer.disconnect()
   }, [])
 
+  // Count-up animation observer
+  useEffect(() => {
+    const animateNumbers = () => {
+      const counters = [
+        { id: "foundersCount", value: "10000+" },
+        { id: "investorsCount", value: "500+" },
+        { id: "matchesCount", value: "1500+" },
+        { id: "pitchedCount", value: "2k" },
+      ];
+
+      counters.forEach(counter => {
+        const element = document.getElementById(counter.id);
+        if (!element) return;
+
+        let targetValue = counter.value;
+        if (targetValue.endsWith('+')) {
+          targetValue = targetValue.slice(0, -1);
+        }
+        if (targetValue.endsWith('k')) {
+          targetValue = parseFloat(targetValue.slice(0, -1)) * 1000;
+        } else {
+          targetValue = parseInt(targetValue.replace(/,/g, ''), 10);
+        }
+
+        let currentValue = 0;
+        const duration = 4000; // Animation duration in ms
+        const startTime = performance.now();
+
+        const step = (timestamp) => {
+          const elapsedTime = timestamp - startTime;
+          const progress = Math.min(elapsedTime / duration, 1);
+          currentValue = Math.floor(progress * targetValue);
+
+          if (counter.id === "pitchedCount" && targetValue >= 1000) {
+            element.textContent = (currentValue / 1000).toFixed(currentValue % 1000 !== 0 ? 1 : 0) + "k";
+          } else if (targetValue >= 10000 && counter.id === "foundersCount") {
+            element.textContent = currentValue.toLocaleString() + "+";
+          } else if (targetValue >= 1000 && (counter.id === "matchesCount")) {
+            element.textContent = currentValue.toLocaleString() + "+";
+          }
+          else if (targetValue >= 500 && counter.id === "investorsCount") {
+            element.textContent = currentValue.toLocaleString() + "+";
+          }
+           else {
+            element.textContent = currentValue.toLocaleString();
+          }
+
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            // Ensure final value is set accurately, especially with k formatting
+            if (counter.id === "pitchedCount" && targetValue >= 1000) {
+              element.textContent = (targetValue / 1000).toFixed(targetValue % 1000 !== 0 ? 1 : 0) + "k";
+            } else if (targetValue >= 10000 && counter.id === "foundersCount") {
+              element.textContent = targetValue.toLocaleString() + "+";
+            } else if (targetValue >= 1000 && (counter.id === "matchesCount")) {
+              element.textContent = targetValue.toLocaleString() + "+";
+            } else if (targetValue >= 500 && counter.id === "investorsCount") {
+              element.textContent = targetValue.toLocaleString() + "+";
+            }
+             else {
+              element.textContent = targetValue.toLocaleString();
+            }
+          }
+        };
+        requestAnimationFrame(step);
+      });
+    };
+
+    const aboutUsSection = document.getElementById("about-us");
+    if (!aboutUsSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateNumbers();
+            observer.unobserve(entry.target); // Disconnect observer after animation starts
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when 10% of the section is visible
+    );
+
+    observer.observe(aboutUsSection);
+
+    return () => {
+      if (aboutUsSection) {
+        observer.unobserve(aboutUsSection);
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
       {/* Navigation */}
@@ -314,22 +408,22 @@ export default function HomeClient() {
               <div className="mt-6 mb-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
                 <div className="flex flex-col items-center text-center">
                   <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span className="text-2xl font-bold text-gray-900 dark:text-white">10,000+</span>
+                  <span id="foundersCount" className="text-2xl font-bold text-gray-900 dark:text-white">10,000+</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">Founders</span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Briefcase className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span className="text-2xl font-bold text-gray-900 dark:text-white">500+</span>
+                  <span id="investorsCount" className="text-2xl font-bold text-gray-900 dark:text-white">500+</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">Investors</span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Link className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span className="text-2xl font-bold text-gray-900 dark:text-white">1500+</span>
+                  <span id="matchesCount" className="text-2xl font-bold text-gray-900 dark:text-white">1500+</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">Total Matches</span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Rocket className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span className="text-2xl font-bold text-gray-900 dark:text-white">2k</span>
+                  <span id="pitchedCount" className="text-2xl font-bold text-gray-900 dark:text-white">2k</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">Startup Pitched</span>
                 </div>
               </div>
