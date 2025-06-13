@@ -105,7 +105,10 @@ const PhoneMockup4 = () => {
           </div>
 
           {/* Top Toggle Section */}
-          <div className="flex justify-around items-center p-2 bg-gray-100 border-b border-android-border-light dark:border-android-border-dark">
+          {/* Note: Dark mode for this toggle bar (and other dark: prefixed classes in this component)
+              is activated by adding the 'dark' class to an ancestor HTML element (e.g., <html> or <body>),
+              as per Tailwind's darkMode: 'class' configuration. */}
+          <div className="flex justify-around items-center p-2 bg-gray-100 dark:!bg-gray-800 border-b border-android-border-light dark:border-android-border-dark">
             <button
               className={`py-2 px-4 text-sm font-medium focus:outline-none ${
                 activeView === 'Co-founder'
