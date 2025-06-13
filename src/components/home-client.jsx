@@ -232,7 +232,7 @@ export default function HomeClient() {
           <div className="flex flex-col md:flex-row lg:flex-row items-center">
             <div className="w-full md:w-1/2 lg:w-3/5 mb-8 lg:mb-0 text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-black dark:text-white animate-on-scroll animate-fade-in-up animate-delay-100">
-                Your <span className="text-blue-600 dark:text-blue-400">Startup</span>
+                Your <span className="text-blue-600 dark:text-blue-300">Startup</span>
                 <br />
                 Journey Starts Here
               </h1>
