@@ -449,7 +449,7 @@ export default function HomeClient() {
       <section className="py-16 sm:py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="w-full lg:w-1/2 order-2 lg:order-1 animate-on-scroll">
+            <div className="w-full lg:w-1/2 order-2 lg:order-1 animate-on-scroll animate-slide-in-left">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10">
                 Some <span className="text-blue-600 dark:text-blue-400">Excellent Features</span> For You
               </h2>
@@ -499,7 +499,7 @@ export default function HomeClient() {
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center animate-on-scroll animate-delay-200">
+            <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center animate-on-scroll animate-slide-in-right animate-delay-200">
               <PhoneMockup4 />
             </div>
           </div>
