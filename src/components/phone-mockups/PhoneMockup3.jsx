@@ -32,20 +32,8 @@ const UserPlusIcon = () => (
   </svg>
 );
 
-const MailIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground opacity-70">
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
-  </svg>
-);
 
-const LockIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground opacity-70">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-  </svg>
-);
-
-
-const PhoneMockup3 = () => {
+const PhoneMockup3 = ({ onGetStartedClick }) => {
   // Simplified avatar styling for Android theme
   const avatarDisplayData = [
     { imgSrc: 'https://i.pravatar.cc/150?img=1', id: 1, title: 'User 1' },
@@ -79,19 +67,20 @@ const PhoneMockup3 = () => {
             </div>
 
             <div className="space-y-4 my-5 animate-fadeInUp animate-delay-200"> {/* Increased spacing */}
-              <div className="relative">
-                <MailIcon />
-                <input type="email" placeholder="Enter your email" className="mockup-input pl-10 w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              <div>
+                <input type="email" placeholder="Enter your email" className="mockup-input px-3 py-2 w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
-              <div className="relative">
-                <LockIcon />
-                <input type="password" placeholder="Create a password" className="mockup-input pl-10 w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              <div>
+                <input type="password" placeholder="Create a password" className="mockup-input px-3 py-2 w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
 
             <div className="animate-fadeInUp animate-delay-400">
               {/* Button uses Android theme styles. Removed text-base, py-3 */}
-              <button className="mockup-button w-full flex items-center justify-center animate-pulseMore bg-blue-600 text-white hover:bg-blue-700 active:scale-95">
+              <button
+                className="mockup-button w-full flex items-center justify-center animate-pulseMore bg-blue-600 text-white hover:bg-blue-700 active:scale-95"
+                onClick={onGetStartedClick}
+              >
                 <UserPlusIcon />
                 Get Started
               </button>

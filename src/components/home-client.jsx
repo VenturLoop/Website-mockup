@@ -446,7 +446,7 @@ export default function HomeClient() {
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center animate-on-scroll animate-delay-200">
-              <PhoneMockup3 />
+              <PhoneMockup3 onGetStartedClick={openLoginModal} />
             </div>
           </div>
         </div>
