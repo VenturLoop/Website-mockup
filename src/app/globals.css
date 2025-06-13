@@ -154,7 +154,7 @@
 .animate-delay-400 { animation-delay: 0.4s; }
 .animate-delay-500 { animation-delay: 0.5s; }
 .animate-delay-600 { animation-delay: 0.6s; }
-.animate-on-scroll { opacity: 0; transform: translateY(30px); }
+.animate-on-scroll { opacity: 0; }
 .animate-on-scroll.animate { animation: fadeInUp 0.8s ease-out forwards; }
 
 
