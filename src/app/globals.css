@@ -234,6 +234,10 @@ html.light { color-scheme: light; }
   justify-content: center;
 }
 
+.dark .android-frame {
+  background-color: var(--brand-blue);
+}
+
 .android-frame .mockup-screen {
   width: 100%;
   height: 100%;
