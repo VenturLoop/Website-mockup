@@ -152,7 +152,7 @@ export default function HomeClient() {
         }
 
         let currentValue = 0;
-        const duration = 2000; // Animation duration in ms
+        const duration = 4000; // Animation duration in ms
         const startTime = performance.now();
 
         const step = (timestamp) => {
