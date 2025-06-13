@@ -281,7 +281,7 @@ export default function HomeClient() {
 
           <div className="relative max-w-6xl mx-auto">
             {/* Central Phone Mockup */}
-            <div className="flex justify-center mb-8 lg:mb-0 animate-on-scroll animate-delay-200">
+            <div className="hidden md:flex justify-center mb-8 lg:mb-0 animate-on-scroll animate-delay-200">
               <PhoneMockup2 />
             </div>
 
