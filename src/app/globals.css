@@ -427,3 +427,25 @@ html.light { color-scheme: light; }
     scrollbar-width: none;  /* Firefox */
   }
 }
+
+@keyframes animated-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-background-hero {
+  background-size: 200% 200%;
+  background-image: linear-gradient(to right, #7dd3fc, #f9a8d4, #fde68a, #f9a8d4, #7dd3fc);
+  animation: animated-gradient 15s ease infinite;
+}
+
+.dark .animated-background-hero {
+  background-image: linear-gradient(to right, #3b82f6, #a855f7, #ec4899, #a855f7, #3b82f6);
+}

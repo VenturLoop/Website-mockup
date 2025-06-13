@@ -227,35 +227,35 @@ export default function HomeClient() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="py-12 sm:py-16 lg:py-20 overflow-hidden">
+      <section className="py-12 sm:py-16 lg:py-20 overflow-hidden animated-background-hero">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row lg:flex-row items-center">
-            <div className="w-full md:w-1/2 lg:w-3/5 mb-8 lg:mb-0 animate-on-scroll text-center md:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-white">
-                Your <span className="text-blue-600 dark:text-blue-400">Startup</span>
+            <div className="w-full md:w-1/2 lg:w-[65%] mb-8 lg:mb-0 text-center md:text-left">
+              <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-black dark:text-white animate-on-scroll animate-fade-in-up animate-delay-100">
+                Your <span className="text-blue-600 dark:text-blue-300">Startup</span>
                 <br />
                 Journey Starts Here
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl mb-8 max-w-md leading-relaxed">
+              <p className="text-gray-700 dark:text-gray-100 text-lg md:text-xl mb-8 max-w-md leading-relaxed animate-on-scroll animate-fade-in-up animate-delay-200">
                 VenturLoop connects you with co-founders, investors, and collaborators — so you can focus on building, not searching.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-on-scroll animate-fade-in-up animate-delay-300">
                 <Button
                   onClick={openAppDownloadModal}
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-brand-blue dark:hover:bg-brand-blue-dark text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border dark:border-white/75"
                 >
                   Download Now
                 </Button>
                 <Button
                   onClick={openLoginModal}
                   variant="outline"
-                  className="border-2 border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
+                  className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
                 >
                   Start for Free
                 </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 lg:w-2/5 flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
+            <div className="w-full md:w-1/2 lg:w-[35%] flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
               <PhoneMockup1 />
             </div>
           </div>
