@@ -3,25 +3,30 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef } from "react"
-import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown } from "lucide-react"
+import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown, User, LogOut, Settings, Bookmark, Bell, Briefcase } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { usePathname, useRouter } from "next/navigation" // Added useRouter
-import { AppDownloadModal } from "../components/AppDownloadModal"; // Changed to named import
-import LoginModal from "../components/LoginModal" // Added import
+import { usePathname, useRouter } from "next/navigation"
+import { AppDownloadModal } from "../components/AppDownloadModal";
+import LoginModal from "../components/LoginModal";
 import { LoopAgentModal } from "../components/LoopAgentModal";
+import { useUser } from "@/context/UserContext"; // Import useUser
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false); // Added state
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Added state
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isLoopAgentModalOpen, setIsLoopAgentModalOpen] = useState(false);
   const [isFoundersOpen, setIsFoundersOpen] = useState(false)
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false)
-  const router = useRouter() // Added router instance
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown
+
+  const router = useRouter()
   const pathname = usePathname()
   const foundersDropdownRef = useRef(null)
+  const profileDropdownRef = useRef(null); // Ref for profile dropdown
 
-  // Scroll to Our Offerings
+  const { currentUser, isLoggedIn, logoutUser } = useUser(); // Get user state and functions
+
   const handleScrollToOurOfferings = () => {
     if (pathname === '/') {
       if (typeof window !== 'undefined') {
@@ -38,60 +43,72 @@ export function Navigation() {
     setIsFoundersOpen(false);
   };
 
-  // Modal control functions
   const openAppDownloadModal = () => {
-    if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
+    if (isMenuOpen) { setIsMenuOpen(false); }
     setIsAppDownloadModalOpen(true);
   };
   const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
+
   const openLoginModal = () => {
-    if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
-    setIsLoginModalOpen(true);
+    if (!isLoggedIn) { // Only open if not logged in
+      if (isMenuOpen) { setIsMenuOpen(false); }
+      setIsLoginModalOpen(true);
+    }
   };
   const closeLoginModal = () => setIsLoginModalOpen(false);
+
   const openAppDownloadFromLoginModal = () => {
     closeLoginModal();
-    openAppDownloadModal(); // This will also close the menu due to the updated openAppDownloadModal
+    openAppDownloadModal();
   };
+
   const openLoopAgentModal = () => {
-    if (isMenuOpen) { setIsMenuOpen(false); } // Close mobile menu if open
-    if (isFoundersOpen) { setIsFoundersOpen(false); } // Close desktop dropdown if open
-    if (isMobileFoundersOpen) { setIsMobileFoundersOpen(false); } // Close mobile dropdown if open
+    if (isMenuOpen) { setIsMenuOpen(false); }
+    if (isFoundersOpen) { setIsFoundersOpen(false); }
+    if (isMobileFoundersOpen) { setIsMobileFoundersOpen(false); }
     setIsLoopAgentModalOpen(true);
   };
   const closeLoopAgentModal = () => setIsLoopAgentModalOpen(false);
 
-  // Close menu when route changes
+  const handleLogout = () => {
+    logoutUser();
+    setIsProfileDropdownOpen(false);
+    setIsMenuOpen(false);
+  };
+
   useEffect(() => {
     setIsMenuOpen(false)
-    setIsMobileFoundersOpen(false) // Also close mobile founders dropdown
-    setIsFoundersOpen(false) // Also close desktop founders dropdown
+    setIsMobileFoundersOpen(false)
+    setIsFoundersOpen(false)
+    setIsProfileDropdownOpen(false); // Close profile dropdown on route change
   }, [pathname])
 
-  // Close menu on escape key
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         setIsMenuOpen(false)
-        setIsFoundersOpen(false) // Also close desktop founders dropdown on escape
-        closeAppDownloadModal(); // Close AppDownloadModal on escape
-        closeLoginModal(); // Close LoginModal on escape
-        closeLoopAgentModal(); // Close LoopAgentModal on escape
+        setIsFoundersOpen(false)
+        setIsProfileDropdownOpen(false); // Close profile dropdown on escape
+        closeAppDownloadModal();
+        closeLoginModal();
+        closeLoopAgentModal();
       }
     }
     document.addEventListener("keydown", handleEscape)
     return () => document.removeEventListener("keydown", handleEscape)
-  }, [closeAppDownloadModal, closeLoginModal, closeLoopAgentModal]) // Added dependencies
+  }, []) // Removed dependencies as they are stable
 
-  // Click outside to close desktop founders dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (foundersDropdownRef.current && !foundersDropdownRef.current.contains(event.target)) {
         setIsFoundersOpen(false)
       }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false); // Close profile dropdown on click outside
+      }
     }
 
-    if (isFoundersOpen) {
+    if (isFoundersOpen || isProfileDropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside)
     } else {
       document.removeEventListener("mousedown", handleClickOutside)
@@ -100,17 +117,26 @@ export function Navigation() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [isFoundersOpen])
+  }, [isFoundersOpen, isProfileDropdownOpen])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  const profileMenuItems = [
+    { label: "My bookmark", icon: Bookmark, href: "/profile/bookmarks" },
+    { label: "Updates", icon: Bell, href: "/profile/updates" },
+    { label: "My startup profile", icon: Briefcase, href: "/profile/startup" },
+    { label: "Settings", icon: Settings, href: "/profile/settings" },
+  ];
+
+  // This provides a fallback if currentUser is null even when isLoggedIn is true
+  const displayUser = isLoggedIn ? (currentUser || { name: "User", email: "user@example.com", profileImage: "https://avatar.iran.liara.run/public/boy?username=guest" }) : null;
+
   return (
     <header className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <div className="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mr-2">
@@ -120,7 +146,6 @@ export function Navigation() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             <div className="relative" ref={foundersDropdownRef}>
               <button
@@ -131,15 +156,15 @@ export function Navigation() {
                 <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${isFoundersOpen ? "rotate-180" : ""}`} />
               </button>
               {isFoundersOpen && (
-                <div className="absolute mt-2 w-auto min-w-max bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20">
+                <div className="absolute mt-2 w-auto min-w-max bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-gray-700">
                   <button
-                    onClick={openLoopAgentModal}
+                    onClick={() => {openLoopAgentModal(); setIsFoundersOpen(false);}}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     Loop Mini o1
                   </button>
                   <button
-                    onClick={handleScrollToOurOfferings}
+                    onClick={() => {handleScrollToOurOfferings(); setIsFoundersOpen(false);}}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     Our Offerings
@@ -148,9 +173,9 @@ export function Navigation() {
               )}
             </div>
             <Link
-              href="/community" // Updated href
+              href="/community"
               className={`font-medium transition-colors ${
-                pathname === "/community" // Condition for active state
+                pathname === "/community"
                   ? "text-blue-600 dark:text-blue-400"
                   : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               }`}
@@ -169,25 +194,62 @@ export function Navigation() {
             </Link>
           </nav>
 
-          {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center space-x-4">
             <ThemeToggle />
             <Button
-              onClick={openAppDownloadModal} // Updated onClick
+              onClick={openAppDownloadModal}
               className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-medium text-sm"
             >
               Download App
             </Button>
-            <Button
-              onClick={openLoginModal} // Updated onClick
-              variant="ghost"
-              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium"
-            >
-              Login
-            </Button>
+            {isLoggedIn && displayUser ? (
+              <div className="relative" ref={profileDropdownRef}>
+                <button onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)} className="rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <img
+                    src={displayUser.profileImage || "https://avatar.iran.liara.run/public/boy?username=guest"}
+                    alt="Profile"
+                    className="h-9 w-9 rounded-full object-cover"
+                  />
+                </button>
+                {isProfileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-gray-700">
+                    <div className="px-4 py-3 border-b dark:border-gray-700">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{displayUser.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{displayUser.email}</p>
+                    </div>
+                    {profileMenuItems.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        onClick={() => setIsProfileDropdownOpen(false)}
+                      >
+                        <item.icon className="h-4 w-4 mr-2" />
+                        {item.label}
+                      </Link>
+                    ))}
+                    <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Button
+                onClick={openLoginModal}
+                variant="ghost"
+                className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium"
+              >
+                Login
+              </Button>
+            )}
           </div>
 
-          {/* Mobile/Tablet Right Side */}
           <div className="flex lg:hidden items-center space-x-3">
             <ThemeToggle />
             <Button
@@ -202,11 +264,26 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Mobile/Tablet Dropdown Menu */}
         {isMenuOpen && (
           <div className="lg:hidden absolute left-4 right-4 top-full mt-2 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 z-40 overflow-hidden">
             <div className="py-4">
-              {/* Navigation Links */}
+              {isLoggedIn && displayUser && (
+                <>
+                  <div className="px-4 pt-2 pb-4 flex items-center">
+                    <img
+                      src={displayUser.profileImage || "https://avatar.iran.liara.run/public/boy?username=guest"}
+                      alt="Profile"
+                      className="h-12 w-12 rounded-full object-cover mr-3"
+                    />
+                    <div>
+                      <p className="font-semibold text-gray-800 dark:text-white">{displayUser.name}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{displayUser.email}</p>
+                    </div>
+                  </div>
+                  <div className="mx-4 mb-3 border-t border-gray-200 dark:border-gray-700"></div>
+                </>
+              )}
+
               <div className="px-2 space-y-1">
                 <Link
                   href="/"
@@ -215,6 +292,7 @@ export function Navigation() {
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   <Home className="h-5 w-5 mr-3" />
                   Home
@@ -234,13 +312,13 @@ export function Navigation() {
                   {isMobileFoundersOpen && (
                     <div className="pl-8 pr-4 py-1 space-y-1">
                       <button
-                        onClick={openLoopAgentModal}
+                        onClick={() => { openLoopAgentModal(); }}
                         className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         Loop Mini o1
                       </button>
                       <button
-                        onClick={handleScrollToOurOfferings}
+                        onClick={() => { handleScrollToOurOfferings(); }}
                         className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         Our Offerings
@@ -250,14 +328,14 @@ export function Navigation() {
                 </div>
 
                 <Link
-                  href="/community" // Updated href
+                  href="/community"
                   className={`flex items-center px-4 py-3 rounded-xl font-medium transition-colors ${
-                    pathname === "/community" // Condition for active state
+                    pathname === "/community"
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  {/* Consider using a different icon like MessageSquare or Globe if Users feels generic */}
                   <Users className="h-5 w-5 mr-3" />
                   Community
                 </Link>
@@ -269,46 +347,71 @@ export function Navigation() {
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   <DollarSign className="h-5 w-5 mr-3" />
                   Pricing
                 </Link>
+
+                {isLoggedIn && (
+                  <>
+                    <div className="mx-2 my-2 border-t border-gray-200 dark:border-gray-700"></div>
+                    {profileMenuItems.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <item.icon className="h-5 w-5 mr-3" />
+                        {item.label}
+                      </Link>
+                    ))}
+                  </>
+                )}
               </div>
 
-              {/* Divider */}
               <div className="mx-4 my-4 border-t border-gray-200 dark:border-gray-700"></div>
 
-              {/* Action Buttons */}
               <div className="px-2 space-y-2">
                 <Button
-                  onClick={openAppDownloadModal} // Updated onClick
+                  onClick={() => { openAppDownloadModal(); }}
                   className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium rounded-xl py-3 flex items-center justify-center"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Download App
                 </Button>
-                <Button
-                  onClick={openLoginModal} // Updated onClick
-                  variant="outline"
-                  className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
-                >
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Login
-                </Button>
+                {isLoggedIn ? (
+                  <Button
+                    onClick={handleLogout}
+                    variant="outline"
+                    className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => { openLoginModal();}}
+                    variant="outline"
+                    className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Button>
+                )}
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Overlay for mobile menu */}
       {isMenuOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-25 lg:hidden z-30" onClick={() => setIsMenuOpen(false)} />
       )}
 
-      {/* Render Modals */}
       <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadFromLoginModal} />
+      <LoginModal isOpen={isLoginModalOpen && !isLoggedIn} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadFromLoginModal} />
       <LoopAgentModal isOpen={isLoopAgentModalOpen} onClose={closeLoopAgentModal} />
     </header>
   )
