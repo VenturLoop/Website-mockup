@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
 import { UploadCloud, Trash2 } from 'lucide-react';
 import DeleteConfirmationModal from './DeleteConfirmationModal.jsx';
 import { useUser } from '@/context/UserContext';
