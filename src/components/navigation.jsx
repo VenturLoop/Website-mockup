@@ -24,7 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AppDownloadModal } from "../components/AppDownloadModal";
 import LoginModal from "../components/LoginModal";
 import { LoopAgentModal } from "../components/LoopAgentModal";
-import { MyBookmarksModal } from "./MyBookmarksModal"; // Added import
+import MyBookmarksModal from "./MyBookmarksModal"; // Changed import
 import { useUser } from "@/context/UserContext"; // Import useUser
 
 export function Navigation() {
