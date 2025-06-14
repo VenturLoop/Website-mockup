@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Check, X } from "lucide-react" // ChevronDown, ChevronUp removed
 import { useState } from "react"
+import { useUser } from "@/context/UserContext.js";
 import { Navigation } from "@/components/navigation"
 import Footer from '@/components/Footer';
 import FaqSection from "@/components/FaqSection"; // Added import
@@ -13,6 +14,7 @@ export default function PricingClient() {
   const [billingPeriod, setBillingPeriod] = useState("monthly")
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+  const { user, isLoggedIn, isLoading } = useUser();
 
   const pricingFaqData = [
     {
@@ -119,16 +121,6 @@ export default function PricingClient() {
             {/* Billing Toggle */}
             <div className="inline-flex bg-gray-200 dark:bg-gray-800 rounded-lg p-1 mb-8"> {/* Reduced mb from mb-12 to mb-8 */}
               <button
-                onClick={() => setBillingPeriod("yearly")}
-                className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all ${
-                  billingPeriod === "yearly"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                Yearly
-              </button>
-              <button
                 onClick={() => setBillingPeriod("monthly")}
                 className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all ${
                   billingPeriod === "monthly"
@@ -138,6 +130,19 @@ export default function PricingClient() {
               >
                 Monthly
               </button>
+              <div className="relative group"> {/* Added group class for group-hover effect */}
+                <button
+                  onClick={() => setBillingPeriod("yearly")}
+                  className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all ${
+                    billingPeriod === "yearly"
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  Yearly
+                </button>
+                <span className="absolute -top-2 -right-2 text-[0.6rem] bg-green-500 text-white px-1 py-0.5 rounded-md transform transition-all duration-300 group-hover:scale-110">70% savings</span>
+              </div>
             </div>
           </div>
 
@@ -189,9 +194,10 @@ export default function PricingClient() {
               <hr className="my-4 border-gray-500 dark:border-gray-700" />
               <Button
                 className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg mt-auto" // Added mt-auto
-                onClick={() => setIsLoginModalOpen(true)}
+                disabled={isLoading || isLoggedIn}
+                onClick={() => { if (!isLoggedIn) setIsLoginModalOpen(true); }}
               >
-                Sign up for free
+                {isLoggedIn ? "Current Plan" : "Sign up for free"}
               </Button>
             </div>
 
@@ -261,7 +267,11 @@ export default function PricingClient() {
                 </li>
               </ul>
               <hr className="my-4 border-blue-300/70 dark:border-blue-400/70" />
-              <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4 mt-auto"> {/* Added mt-auto */}
+              <Button
+                className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-lg mb-4 mt-auto" // Added mt-auto
+                disabled={isLoading}
+                onClick={() => { if (isLoggedIn) { handleProceedToPayment(); } else { setIsLoginModalOpen(true); } }}
+              >
                 Choose plan ({billingPeriod === "yearly" ? "₹4999/year" : "₹499/month"})
               </Button>
 
