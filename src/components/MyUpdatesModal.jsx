@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react'; // Added useContext
+import React, { useState } from 'react'; // Removed useContext if not otherwise needed
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { cn } from "@/lib/utils.js";
-import { UserContext } from '@/context/UserContext'; // Added UserContext import
+import { useUser } from '@/context/UserContext'; // Changed import
 
 const MyUpdatesModal = ({ isOpen, onClose }) => {
-  const { currentUser } = useContext(UserContext); // Access currentUser from context
+  const { currentUser } = useUser(); // Changed to useUser()
 
   // Log currentUser to the console
   if (isOpen) {
-    console.log('Current User:', currentUser);
+    console.log('Current User from MyUpdatesModal:', currentUser);
   }
 
   if (!isOpen) return null;
