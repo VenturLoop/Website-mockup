@@ -102,21 +102,21 @@ export default function HomeClient() {
   ];
 
   const investorLogos = [
-    "Y Combinator",
-    "Sequoia",
-    "Accel",
-    "Andreessen",
-    "Kleiner",
-    "Founders",
-    "Greylock",
-    "Index",
-    "Tiger",
-    "Benchmark",
-    "First Round",
-    "NEA",
-    "GV",
-    "Insight",
-    "Lightspeed",
+    { name: "Y Combinator", logo: "/placeholder-logo1.png" },
+    { name: "Sequoia", logo: "/placeholder-logo2.png" },
+    { name: "Accel", logo: "/placeholder-logo3.png" },
+    { name: "Andreessen", logo: "/placeholder-logo4.png" },
+    { name: "Kleiner", logo: "/placeholder-logo5.png" },
+    { name: "Founders", logo: "/placeholder-logo6.png" },
+    { name: "Greylock", logo: "/placeholder-logo7.png" },
+    { name: "Index", logo: "/placeholder-logo8.png" },
+    { name: "Tiger", logo: "/placeholder-logo9.png" },
+    { name: "Benchmark", logo: "/placeholder-logo10.png" },
+    { name: "First Round", logo: "/placeholder-logo11.png" },
+    { name: "NEA", logo: "/placeholder-logo12.png" },
+    { name: "GV", logo: "/placeholder-logo13.png" },
+    { name: "Insight", logo: "/placeholder-logo14.png" },
+    { name: "Lightspeed", logo: "/placeholder-logo15.png" },
   ];
 
   const openLoginModal = () => setIsLoginModalOpen(true);
@@ -662,27 +662,29 @@ export default function HomeClient() {
           <div className="relative">
             <div className="flex space-x-8 animate-scroll-left">
               {/* First set of logos */}
-              {investorLogos.map((name, index) => (
+              {investorLogos.map((investor, index) => (
                 <div
                   key={`first-${index}`}
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
                     <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
+                      {investor.name}
                     </span>
                   </div>
                 </div>
               ))}
               {/* Duplicate set for seamless loop */}
-              {investorLogos.map((name, index) => (
+              {investorLogos.map((investor, index) => (
                 <div
                   key={`second-${index}`}
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
                     <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
+                      {investor.name}
                     </span>
                   </div>
                 </div>
@@ -694,27 +696,29 @@ export default function HomeClient() {
           <div className="relative mt-8">
             <div className="flex space-x-8 animate-scroll-right">
               {/* First set of logos (reversed) */}
-              {[...investorLogos].reverse().map((name, index) => (
+              {[...investorLogos].reverse().map((investor, index) => (
                 <div
                   key={`third-${index}`}
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
                     <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
+                      {investor.name}
                     </span>
                   </div>
                 </div>
               ))}
               {/* Duplicate set for seamless loop */}
-              {[...investorLogos].reverse().map((name, index) => (
+              {[...investorLogos].reverse().map((investor, index) => (
                 <div
                   key={`fourth-${index}`}
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
                     <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
+                      {investor.name}
                     </span>
                   </div>
                 </div>
