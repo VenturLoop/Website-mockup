@@ -130,17 +130,19 @@ export default function PricingClient() {
               >
                 Monthly
               </button>
-              <button
-                onClick={() => setBillingPeriod("yearly")}
-                className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all ${
-                  billingPeriod === "yearly"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                Yearly
-              </button>
-              <span className="ml-2 text-xs bg-green-500 text-white p-1 rounded-md self-center">70% savings</span>
+              <div className="relative group"> {/* Added group class for group-hover effect */}
+                <button
+                  onClick={() => setBillingPeriod("yearly")}
+                  className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all ${
+                    billingPeriod === "yearly"
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  Yearly
+                </button>
+                <span className="absolute -top-2 -right-2 text-[0.6rem] bg-green-500 text-white px-1 py-0.5 rounded-md transform transition-all duration-300 group-hover:scale-110">70% savings</span>
+              </div>
             </div>
           </div>
 
