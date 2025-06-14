@@ -44,14 +44,14 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 p-6">
           <div className="space-y-2">
             <label htmlFor="profilePhoto" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Profile Image</label>
             <div className="flex flex-col items-center space-y-2">
@@ -68,7 +68,7 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
 
           <div className="space-y-1">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-            <Input id="name" value={formData.name} onChange={handleChange} placeholder="Your name" />
+            <Input id="name" value={formData.name} onChange={handleChange} placeholder="Your name" className="w-full" />
           </div>
 
           <div className="space-y-1">
@@ -85,12 +85,12 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
 
           <div className="space-y-1">
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Location</label>
-            <Input id="location" value={formData.location} onChange={handleChange} placeholder="City, Country" />
+            <Input id="location" value={formData.location} onChange={handleChange} placeholder="City, Country" className="w-full" />
           </div>
 
           <div className="space-y-1">
             <label htmlFor="skills" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Skills (comma-separated)</label>
-            <Input id="skills" value={formData.skills} onChange={handleChange} placeholder="e.g., React, Node.js, Product Management" />
+            <Input id="skills" value={formData.skills} onChange={handleChange} placeholder="e.g., React, Node.js, Product Management" className="w-full" />
           </div>
         </div>
         <DialogFooter>
