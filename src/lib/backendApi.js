@@ -36,3 +36,58 @@ export const getListData = async (title) => {
     console.log('Error while updating Item: ' + error);
   }
 };
+
+
+export const getSaveProject = async (userId) => {
+  try {
+    const res = await fetch(
+      `https://digitalocean.venturloop.com/api/user/${userId}/saved/projects`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log("Error while updating Item: " + error);
+  }
+};
+
+export const getSavedCofounder = async (userId) => {
+  try {
+    const res = await fetch(
+      `https://digitalocean.venturloop.com/api/profiles/${userId}/cofounders`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log("Error while updating Item: " + error);
+  }
+};
+
+export const getSavedInvestor = async (userId) => {
+  try {
+    const res = await fetch(
+      `https://digitalocean.venturloop.com/api/profiles/${userId}/investors`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log("Error while updating Item: " + error);
+  }
+};
