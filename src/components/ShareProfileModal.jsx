@@ -39,14 +39,14 @@ export function ShareProfileModal({ isOpen, onClose, profileUrl }) {
         <DialogHeader>
           <DialogTitle>Share Profile</DialogTitle>
         </DialogHeader>
-        <div className="py-4 space-y-6">
+        <div className="p-6 space-y-6">
           <div>
             <label htmlFor="profileLink" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Your profile link
             </label>
             <div className="flex items-center space-x-2">
               <Input id="profileLink" value={profileUrl || ''} readOnly className="flex-grow bg-gray-100 dark:bg-gray-800" />
-              <Button variant="outline" onClick={handleCopyUrl} className="w-24">
+              <Button variant="outline" onClick={handleCopyUrl} className="flex-shrink-0">
                 <Copy className={`mr-2 h-4 w-4 ${copyButtonText === "Copied!" ? "text-green-500" : ""}`} />
                 {copyButtonText}
               </Button>
