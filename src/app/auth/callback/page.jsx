@@ -1,134 +1,55 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, Suspense } from "react"; // Removed useState
 import { useSearchParams, useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
-import dynamic from "next/dynamic";
-
-// Dynamically import lottie-react to avoid SSR issues
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
-
-// ✅ Utility function to load Lottie JSON from /public
-const loadAnimation = async (path) => {
-  const response = await fetch(path);
-  return await response.json();
-};
+// Removed useUser, dynamic, Lottie
 
 const AuthCallbackContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { loginUser } = useUser();
-
-  const [status, setStatus] = useState("loading");
-  const [error, setError] = useState(null);
-  const [animationData, setAnimationData] = useState(null);
-
-  const loadLottie = async (type) => {
-    const path = {
-      loading: "/lottie/success.json",
-      success: "/lottie/success.json",
-      error: "/lottie/error.json",
-    }[type];
-    const data = await loadAnimation(path);
-    setAnimationData(data);
-  };
+  // Removed loginUser, status, error, animationData states
 
   useEffect(() => {
-    loadLottie("loading");
-
     const token = searchParams.get("token");
     const userId = searchParams.get("userId");
 
     if (!token || !userId) {
-      setError("Missing token or user ID in URL.");
-      setStatus("error");
-      loadLottie("error");
+      // Handle missing token or userId - redirect to login with an error
+      // For now, this simple redirect will do. A more robust error handling
+      // might involve setting a query param for the login page to display a message.
+      router.push("/login?error=auth_callback_missing_params");
       return;
     }
 
-    const validate = async () => {
-      try {
-        const response = await fetch(
-          `https://venturloopbackend-v-1-0-9.onrender.com/api/user/${userId}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+    // Store token and userId in localStorage
+    localStorage.setItem('venturloop_auth_token', token);
+    localStorage.setItem('venturloop_user_id', userId);
 
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({
-            message: "Token validation failed",
-          }));
-          throw new Error(errorData.message);
-        }
+    // Retrieve the redirect path from localStorage
+    const redirectPath = localStorage.getItem('venturloop_redirect_path') || '/'; // Default to home
 
-        const data = await response.json();
-        const validatedUser = data?.user;
+    // Remove the redirect path from localStorage as it's no longer needed
+    localStorage.removeItem('venturloop_redirect_path');
 
-        if (!validatedUser) {
-          throw new Error("No user data returned");
-        }
+    // Perform the redirect
+    router.push(redirectPath);
 
-        const sessionResponse = await fetch("/api/auth/set-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token, userId, userData: validatedUser }),
-        });
-
-        if (!sessionResponse.ok) {
-          throw new Error("Failed to set session.");
-        }
-
-        loginUser(validatedUser);
-        setStatus("success");
-        loadLottie("success");
-
-        setTimeout(() => router.push("/"), 2000);
-      } catch (err) {
-        setError(err.message || "Unexpected error");
-        setStatus("error");
-        loadLottie("error");
-      }
-    };
-
-    validate();
-  }, [searchParams, router, loginUser]);
+    // Dependencies for useEffect. searchParams and router are stable.
+  }, [searchParams, router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[300px] text-center px-4">
-      {animationData && (
-        <Lottie animationData={animationData} loop={status === "loading"} className="w-48 h-48" />
-      )}
-
-      {status === "loading" && (
-        <p className="mt-2 text-gray-600">Verifying your account...</p>
-      )}
-
-      {status === "error" && (
-        <>
-          <h2 className="text-xl font-semibold text-red-600 mt-2">Authentication Failed</h2>
-          <p className="text-gray-500">{error}</p>
-          <a href="/login" className="text-indigo-600 underline mt-2">
-            Click here to try logging in again.
-          </a>
-        </>
-      )}
-
-      {status === "success" && (
-        <>
-          <h2 className="text-xl font-semibold text-green-600 mt-2">Login Successful</h2>
-          <p className="text-gray-500">Redirecting you to the dashboard...</p>
-        </>
-      )}
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <p>Processing authentication...</p>
+      {/* Minimal UI, user should be redirected quickly */}
     </div>
   );
 };
 
-// ✅ Main wrapper with Suspense
+// Main wrapper with Suspense
 const AuthCallbackPage = () => {
   return (
-    <Suspense fallback={<div className="text-center py-8">Loading authentication...</div>}>
+    // Suspense fallback can be very minimal as the content itself is minimal.
+    <Suspense fallback={<div className="flex flex-col items-center justify-center min-h-screen"><p>Loading...</p></div>}>
       <AuthCallbackContent />
     </Suspense>
   );
