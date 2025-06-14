@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { User, UserMinus, X } from 'lucide-react'; // X can be an alternative close icon if needed, User for view profile
+import RemoveConnectionWarningModal from './RemoveConnectionWarningModal'; // Import the new modal
 
 export function MyConnectionsModal({ isOpen, onClose, connectionsList = [], totalConnections = 0 }) {
   const router = useRouter();
+  const [isRemoveConfirmModalOpen, setIsRemoveConfirmModalOpen] = useState(false);
+  const [userToRemove, setUserToRemove] = useState(null);
 
   if (!isOpen) {
     return null;
@@ -19,17 +23,25 @@ export function MyConnectionsModal({ isOpen, onClose, connectionsList = [], tota
   };
 
   const handleRemoveConnection = (userId) => {
-    console.log("Remove connection:", userId);
-    // TODO: API call to remove connection
+    setUserToRemove(userId);
+    setIsRemoveConfirmModalOpen(true);
+  };
+
+  const executeRemoveConnection = () => {
+    console.log("Confirmed: Remove connection for user", userToRemove);
+    // TODO: API call to remove connection for userToRemove
     // Then potentially update connectionsList or refetch
-    alert(`Placeholder: Remove connection for user ${userId}`);
+    alert(`Placeholder: Connection with ${userToRemove} removed.`);
+    setIsRemoveConfirmModalOpen(false);
+    setUserToRemove(null);
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg max-h-[80vh] flex flex-col p-0">
-        <DialogHeader className="p-6 pb-4 border-b dark:border-gray-700">
-          <DialogTitle className="flex items-center justify-between">
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-lg max-h-[80vh] flex flex-col p-0">
+          <DialogHeader className="p-6 pb-4 border-b dark:border-gray-700">
+            <DialogTitle className="flex items-center justify-between">
             My Connections ({totalConnections})
             {/* Optional explicit close button in header if design calls for it, usually DialogClose in footer is enough */}
             {/* <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
@@ -38,7 +50,7 @@ export function MyConnectionsModal({ isOpen, onClose, connectionsList = [], tota
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-grow overflow-y-auto px-6 py-4 space-y-3">
+        <div className="flex-grow overflow-y-auto px-6 py-4 space-y-3 min-h-[370px]">
           {connectionsList && connectionsList.length > 0 ? (
             connectionsList.map((connection) => (
               <div
@@ -92,6 +104,15 @@ export function MyConnectionsModal({ isOpen, onClose, connectionsList = [], tota
         </DialogFooter>
       </DialogContent>
     </Dialog>
+    <RemoveConnectionWarningModal
+      isOpen={isRemoveConfirmModalOpen}
+      onClose={() => {
+        setIsRemoveConfirmModalOpen(false);
+        setUserToRemove(null);
+      }}
+      onConfirm={executeRemoveConnection}
+    />
+  </>
   );
 }
 
