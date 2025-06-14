@@ -26,6 +26,7 @@ import LoginModal from "../components/LoginModal";
 import { LoopAgentModal } from "../components/LoopAgentModal";
 import MyBookmarksModal from "./MyBookmarksModal"; // Changed import
 import { useUser } from "@/context/UserContext"; // Import useUser
+import MyUpdatesModal from "./MyUpdatesModal.jsx"; // Import MyUpdatesModal
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,6 +37,7 @@ export function Navigation() {
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown
   const [isBookmarkModalOpen, setIsBookmarkModalOpen] = useState(false); // Added state for bookmark modal
+  const [isUpdatesModalOpen, setIsUpdatesModalOpen] = useState(false); // State for Updates modal
 
   const router = useRouter();
   const pathname = usePathname();
@@ -98,6 +100,8 @@ export function Navigation() {
   };
   const closeLoopAgentModal = () => setIsLoopAgentModalOpen(false);
 
+  const toggleUpdatesModal = () => setIsUpdatesModalOpen(!isUpdatesModalOpen);
+
   const handleLogout = () => {
     logoutUser();
     setIsProfileDropdownOpen(false);
@@ -121,6 +125,7 @@ export function Navigation() {
         closeLoginModal();
         closeLoopAgentModal();
         setIsBookmarkModalOpen(false); // Ensure bookmark modal is closed
+        setIsUpdatesModalOpen(false); // Ensure updates modal is closed
       }
     };
     document.addEventListener("keydown", handleEscape);
@@ -167,7 +172,14 @@ export function Navigation() {
         setIsProfileDropdownOpen(false); // Close profile dropdown
       }
     },
-    { label: "Updates", icon: Bell, href: "/profile/updates" },
+    {
+      label: "Updates",
+      icon: Bell,
+      onClick: () => {
+        toggleUpdatesModal();
+        setIsProfileDropdownOpen(false); // Close profile dropdown
+      }
+    },
     { label: "My startup profile", icon: Briefcase, href: "/profile/startup" },
     { label: "Settings", icon: Settings, href: "/profile/settings" },
   ];
@@ -576,6 +588,10 @@ export function Navigation() {
       <MyBookmarksModal
         isOpen={isBookmarkModalOpen}
         onClose={() => setIsBookmarkModalOpen(false)}
+      />
+      <MyUpdatesModal
+        isOpen={isUpdatesModalOpen}
+        onClose={toggleUpdatesModal}
       />
     </header>
   );
