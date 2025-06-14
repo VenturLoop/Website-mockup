@@ -125,6 +125,14 @@ export default function HomeClient() {
   const openAppDownloadModal = () => setIsAppDownloadModalOpen(true);
   const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
 
+  const handleGetStartedClick = () => {
+    if (isLoggedIn) {
+      openAppDownloadModal();
+    } else {
+      openLoginModal();
+    }
+  };
+
   // Scroll animation observer
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -544,7 +552,7 @@ export default function HomeClient() {
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center animate-on-scroll animate-delay-200">
-              <PhoneMockup3 onGetStartedClick={openLoginModal} />
+              <PhoneMockup3 onGetStartedClick={handleGetStartedClick} />
             </div>
           </div>
         </div>
