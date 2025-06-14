@@ -1,13 +1,22 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Check, Star, Users, Briefcase, GitFork, Brain, Link, Rocket } from "lucide-react" // Add new icons
-import { useState, useEffect } from "react"
-import { Navigation } from "@/components/navigation"
-import Footer from '@/components/Footer';
+import { Button } from "@/components/ui/button";
+import {
+  Check,
+  Star,
+  Users,
+  Briefcase,
+  GitFork,
+  Brain,
+  Link,
+  Rocket,
+} from "lucide-react"; // Add new icons
+import { useState, useEffect } from "react";
+import { Navigation } from "@/components/navigation";
+import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection"; // Import the new component
-import LoginModal from '@/components/LoginModal';
-import { AppDownloadModal } from '@/components/AppDownloadModal';
+import LoginModal from "@/components/LoginModal";
+import { AppDownloadModal } from "@/components/AppDownloadModal";
 import { useUser } from "@/context/UserContext"; // Import useUser
 import PhoneMockup1 from "@/components/phone-mockups/PhoneMockup1"; // Import the new component
 import PhoneMockup2 from "@/components/phone-mockups/PhoneMockup2"; // Import the new component
@@ -23,28 +32,34 @@ export default function HomeClient() {
   const generalFaqData = [
     {
       question: "What is VenturLoop and how does it work?",
-      answer: "VenturLoop is a platform that helps founders connect with potential co-founders, investors, and collaborators. Simply create your profile, set your preferences, and start discovering like-minded people to build your startup with."
+      answer:
+        "VenturLoop is a platform that helps founders connect with potential co-founders, investors, and collaborators. Simply create your profile, set your preferences, and start discovering like-minded people to build your startup with.",
     },
     {
       question: "Is VenturLoop free to use?",
-      answer: "Yes, VenturLoop offers a free plan for founders to explore and connect. We also offer premium features for those who want advanced tools and visibility."
+      answer:
+        "Yes, VenturLoop offers a free plan for founders to explore and connect. We also offer premium features for those who want advanced tools and visibility.",
     },
     {
       question: "Can I find investors or incubators on VenturLoop?",
-      answer: "Absolutely. You can search and filter investors, incubators, and accelerators based on your startup’s stage, industry, and funding needs."
+      answer:
+        "Absolutely. You can search and filter investors, incubators, and accelerators based on your startup’s stage, industry, and funding needs.",
     },
     {
       question: "Do I need a startup idea to join VenturLoop?",
-      answer: "Not at all! Whether you're looking to join a startup, have an idea, or are already building one, VenturLoop helps you find the right people to collaborate with."
+      answer:
+        "Not at all! Whether you're looking to join a startup, have an idea, or are already building one, VenturLoop helps you find the right people to collaborate with.",
     },
     {
       question: "How does VenturLoop ensure safe and genuine connections?",
-      answer: "We verify profiles, monitor user activity, and offer reporting tools to ensure a safe, founder-friendly space. Community moderation helps keep the ecosystem productive and positive."
+      answer:
+        "We verify profiles, monitor user activity, and offer reporting tools to ensure a safe, founder-friendly space. Community moderation helps keep the ecosystem productive and positive.",
     },
     {
       question: "Can I use VenturLoop if I’m not based in India?",
-      answer: "Yes, VenturLoop is open to founders and investors globally. However, our initial focus is on the Indian startup ecosystem, with expanding global support."
-    }
+      answer:
+        "Yes, VenturLoop is open to founders and investors globally. However, our initial focus is on the Indian startup ecosystem, with expanding global support.",
+    },
   ];
 
   const testimonials = [
@@ -84,7 +99,7 @@ export default function HomeClient() {
       rating: 5,
       text: "Professional, efficient, and results-driven. Highly recommend to any serious entrepreneur.",
     },
-  ]
+  ];
 
   const investorLogos = [
     "Y Combinator",
@@ -102,7 +117,7 @@ export default function HomeClient() {
     "GV",
     "Insight",
     "Lightspeed",
-  ]
+  ];
 
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
@@ -146,18 +161,18 @@ export default function HomeClient() {
         { id: "pitchedCount", value: "2k" },
       ];
 
-      counters.forEach(counter => {
+      counters.forEach((counter) => {
         const element = document.getElementById(counter.id);
         if (!element) return;
 
         let targetValue = counter.value;
-        if (targetValue.endsWith('+')) {
+        if (targetValue.endsWith("+")) {
           targetValue = targetValue.slice(0, -1);
         }
-        if (targetValue.endsWith('k')) {
+        if (targetValue.endsWith("k")) {
           targetValue = parseFloat(targetValue.slice(0, -1)) * 1000;
         } else {
-          targetValue = parseInt(targetValue.replace(/,/g, ''), 10);
+          targetValue = parseInt(targetValue.replace(/,/g, ""), 10);
         }
 
         let currentValue = 0;
@@ -170,34 +185,34 @@ export default function HomeClient() {
           currentValue = Math.floor(progress * targetValue);
 
           if (counter.id === "pitchedCount" && targetValue >= 1000) {
-            element.textContent = (currentValue / 1000).toFixed(currentValue % 1000 !== 0 ? 1 : 0) + "k";
+            element.textContent =
+              (currentValue / 1000).toFixed(currentValue % 1000 !== 0 ? 1 : 0) +
+              "k";
           } else if (targetValue >= 10000 && counter.id === "foundersCount") {
             element.textContent = currentValue.toLocaleString() + "+";
-          } else if (targetValue >= 1000 && (counter.id === "matchesCount")) {
+          } else if (targetValue >= 1000 && counter.id === "matchesCount") {
             element.textContent = currentValue.toLocaleString() + "+";
-          }
-          else if (targetValue >= 500 && counter.id === "investorsCount") {
+          } else if (targetValue >= 500 && counter.id === "investorsCount") {
             element.textContent = currentValue.toLocaleString() + "+";
-          }
-           else {
+          } else {
             element.textContent = currentValue.toLocaleString();
           }
-
 
           if (progress < 1) {
             requestAnimationFrame(step);
           } else {
             // Ensure final value is set accurately, especially with k formatting
             if (counter.id === "pitchedCount" && targetValue >= 1000) {
-              element.textContent = (targetValue / 1000).toFixed(targetValue % 1000 !== 0 ? 1 : 0) + "k";
+              element.textContent =
+                (targetValue / 1000).toFixed(targetValue % 1000 !== 0 ? 1 : 0) +
+                "k";
             } else if (targetValue >= 10000 && counter.id === "foundersCount") {
               element.textContent = targetValue.toLocaleString() + "+";
-            } else if (targetValue >= 1000 && (counter.id === "matchesCount")) {
+            } else if (targetValue >= 1000 && counter.id === "matchesCount") {
               element.textContent = targetValue.toLocaleString() + "+";
             } else if (targetValue >= 500 && counter.id === "investorsCount") {
               element.textContent = targetValue.toLocaleString() + "+";
-            }
-             else {
+            } else {
               element.textContent = targetValue.toLocaleString();
             }
           }
@@ -238,16 +253,19 @@ export default function HomeClient() {
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 overflow-hidden animated-background-hero">
         <div className="container mx-auto px-4 sm:px-6">
-          
           <div className="flex flex-col md:flex-row lg:flex-row items-center">
             <div className="w-full md:w-1/2 lg:w-[65%] mb-8 lg:mb-0 text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-black dark:text-white animate-on-scroll animate-fade-in-up animate-delay-100">
-                Your <span className="text-blue-600 dark:text-blue-300">Startup</span>
+                Your{" "}
+                <span className="text-blue-600 dark:text-blue-300">
+                  Startup
+                </span>
                 <br />
                 Journey Starts Here
               </h1>
               <p className="text-gray-700 dark:text-gray-100 text-lg md:text-xl mb-8 max-w-md leading-relaxed animate-on-scroll animate-fade-in-up animate-delay-200">
-                VenturLoop connects you with co-founders, investors, and collaborators — so you can focus on building, not searching.
+                VenturLoop connects you with co-founders, investors, and
+                collaborators — so you can focus on building, not searching.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-on-scroll animate-fade-in-up animate-delay-300">
                 <Button
@@ -273,12 +291,19 @@ export default function HomeClient() {
       </section>
 
       {/* Our Offerings - Enhanced */}
-      <section id="services" className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
+      <section
+        id="services"
+        className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900"
+      >
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 lg:mb-16 animate-on-scroll">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Offerings</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Our Offerings
+            </h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-              Explore VenturLoop's core features, designed to empower your startup journey, from finding the right partners to securing investment and getting expert advice.
+              Explore VenturLoop's core features, designed to empower your
+              startup journey, from finding the right partners to securing
+              investment and getting expert advice.
             </p>
           </div>
 
@@ -297,9 +322,14 @@ export default function HomeClient() {
                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mb-4">
                       <Users className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Find a Co-Founder</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                      Find a Co-Founder
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      🔄 Discover like-minded co-founders based on goals, skills, and interests to build your dream startup team. Use our platform to find a co-founder who complements your vision.
+                      🔄 Discover like-minded co-founders based on goals,
+                      skills, and interests to build your dream startup team.
+                      Use our platform to find a co-founder who complements your
+                      vision.
                     </p>
                   </div>
                 </div>
@@ -310,9 +340,13 @@ export default function HomeClient() {
                     <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mb-4">
                       <Briefcase className="w-6 h-6 text-green-600 dark:text-green-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Connect with Investors</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                      Connect with Investors
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      📈 Pitch your idea directly to curated investors and incubators who align with your startup’s mission. Easily connect with investors to fund your venture.
+                      📈 Pitch your idea directly to curated investors and
+                      incubators who align with your startup’s mission. Easily
+                      connect with investors to fund your venture.
                     </p>
                   </div>
                 </div>
@@ -323,9 +357,13 @@ export default function HomeClient() {
                     <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-4">
                       <GitFork className="w-6 h-6 text-purple-600 dark:text-purple-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Collaborate on Projects</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                      Collaborate on Projects
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      🤝 Join or start real-time projects with other founders for startup collaboration to gain traction, feedback, and visibility.
+                      🤝 Join or start real-time projects with other founders
+                      for startup collaboration to gain traction, feedback, and
+                      visibility.
                     </p>
                   </div>
                 </div>
@@ -336,9 +374,13 @@ export default function HomeClient() {
                     <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center mb-4">
                       <Brain className="w-6 h-6 text-orange-600 dark:text-orange-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Get Startup Advice (AI)</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                      Get Startup Advice (AI)
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      🧠 Leverage our AI startup advisor, Loop, to get instant answers, strategies, and mentorship tailored to your startup journey.
+                      🧠 Leverage our AI startup advisor, Loop, to get instant
+                      answers, strategies, and mentorship tailored to your
+                      startup journey.
                     </p>
                   </div>
                 </div>
@@ -352,9 +394,12 @@ export default function HomeClient() {
       <section className="py-12 sm:py-16 lg:py-24 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 lg:mb-16 animate-on-scroll">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">How It Works</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              How It Works
+            </h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-              We personalize every interaction so you can focus on building, collaborating, and scaling.
+              We personalize every interaction so you can focus on building,
+              collaborating, and scaling.
             </p>
           </div>
 
@@ -368,9 +413,13 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">1</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Create Your Profile</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">
+                  Create Your Profile
+                </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
-                  Tell us about your startup goals, skills, and what you're looking for—whether it’s a co-founder, investor, or collaborators.
+                  Tell us about your startup goals, skills, and what you're
+                  looking for—whether it’s a co-founder, investor, or
+                  collaborators.
                 </p>
               </div>
 
@@ -379,9 +428,13 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">2</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Get Matched Intelligently</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">
+                  Get Matched Intelligently
+                </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
-                  Our smart algorithm and AI advisor Loop match you with like-minded founders, relevant investors, and real-time opportunities.
+                  Our smart algorithm and AI advisor Loop match you with
+                  like-minded founders, relevant investors, and real-time
+                  opportunities.
                 </p>
               </div>
 
@@ -390,9 +443,12 @@ export default function HomeClient() {
                 <div className="w-12 h-12 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
                   <span className="text-white font-bold text-xl">3</span>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Build & Scale Together</h3>
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">
+                  Build & Scale Together
+                </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-center max-w-xs">
-                  Start meaningful conversations, collaborate on live projects, pitch your startup, and grow your venture—all in one platform.
+                  Start meaningful conversations, collaborate on live projects,
+                  pitch your startup, and grow your venture—all in one platform.
                 </p>
               </div>
             </div>
@@ -401,40 +457,77 @@ export default function HomeClient() {
       </section>
 
       {/* Where Founders Meet Their Future Section */}
-      <section id="about-us" className="pt-16 pb-24 sm:pt-20 sm:pb-32 bg-gray-50 dark:bg-gray-900">
+      <section
+        id="about-us"
+        className="pt-16 pb-24 sm:pt-20 sm:pb-32 bg-gray-50 dark:bg-gray-900"
+      >
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 animate-on-scroll">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center lg:text-left">
-                Where <span className="text-blue-600 dark:text-blue-400">Founders</span> Meet
+                Where{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  Founders
+                </span>{" "}
+                Meet
                 <br />
                 Their Future
               </h2>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed text-center lg:text-left">
-                VenturLoop is where founders link up with co-founders, investors, and collaborators to turn ideas into real startups—fast and hassle-free.
+                VenturLoop is where founders link up with co-founders,
+                investors, and collaborators to turn ideas into real
+                startups—fast and hassle-free.
               </p>
 
               {/* Statistical Highlights */}
               <div className="mt-6 mb-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
                 <div className="flex flex-col items-center text-center">
                   <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span id="foundersCount" className="text-2xl font-bold text-gray-900 dark:text-white">10,000+</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Founders</span>
+                  <span
+                    id="foundersCount"
+                    className="text-2xl font-bold text-gray-900 dark:text-white"
+                  >
+                    10,000+
+                  </span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Founders
+                  </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Briefcase className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span id="investorsCount" className="text-2xl font-bold text-gray-900 dark:text-white">500+</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Investors</span>
+                  <span
+                    id="investorsCount"
+                    className="text-2xl font-bold text-gray-900 dark:text-white"
+                  >
+                    500+
+                  </span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Investors
+                  </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Link className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span id="matchesCount" className="text-2xl font-bold text-gray-900 dark:text-white">1500+</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Total Matches</span>
+                  <span
+                    id="matchesCount"
+                    className="text-2xl font-bold text-gray-900 dark:text-white"
+                  >
+                    1500+
+                  </span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Total Matches
+                  </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Rocket className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-                  <span id="pitchedCount" className="text-2xl font-bold text-gray-900 dark:text-white">2k</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Startup Pitched</span>
+                  <span
+                    id="pitchedCount"
+                    className="text-2xl font-bold text-gray-900 dark:text-white"
+                  >
+                    2k
+                  </span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Startup Pitched
+                  </span>
                 </div>
               </div>
 
@@ -460,56 +553,86 @@ export default function HomeClient() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 order-2 lg:order-1">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10 animate-on-scroll" data-animation="animate-slide-in-left">
-                Some <span className="text-blue-600 dark:text-blue-400">Excellent Features</span> For You
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10 animate-on-scroll"
+                data-animation="animate-slide-in-left"
+              >
+                Some{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  Excellent Features
+                </span>{" "}
+                For You
               </h2>
 
               <div className="space-y-6">
-                <div className="flex items-start animate-on-scroll animate-delay-200" data-animation="animate-slide-in-left">
+                <div
+                  className="flex items-start animate-on-scroll animate-delay-200"
+                  data-animation="animate-slide-in-left"
+                >
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-600 dark:text-blue-400 font-bold">1.</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-bold">
+                      1.
+                    </span>
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-left mb-3">
                       AI Matchmaking Dashboard
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Connect instantly with like-minded co-founders, investors, and collaborators. Intelligent filters make discovery effortless.
+                      Connect instantly with like-minded co-founders, investors,
+                      and collaborators. Intelligent filters make discovery
+                      effortless.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start animate-on-scroll animate-delay-400" data-animation="animate-slide-in-left">
+                <div
+                  className="flex items-start animate-on-scroll animate-delay-400"
+                  data-animation="animate-slide-in-left"
+                >
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-600 dark:text-blue-400 font-bold">2.</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-bold">
+                      2.
+                    </span>
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-left mb-3">
                       One-Click Investor Pitching
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Upload your deck, tap your vertical, and instantly pitch to relevant investors. Built-in tracking and feedback tools included.
+                      Upload your deck, tap your vertical, and instantly pitch
+                      to relevant investors. Built-in tracking and feedback
+                      tools included.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start animate-on-scroll animate-delay-600" data-animation="animate-slide-in-left">
+                <div
+                  className="flex items-start animate-on-scroll animate-delay-600"
+                  data-animation="animate-slide-in-left"
+                >
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-600 dark:text-blue-400 font-bold">3.</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-bold">
+                      3.
+                    </span>
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-left mb-3">
                       Incubator Access Gateway
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Apply to top-tier incubators and accelerators in one place. No more endless forms and scattered applications.
+                      Apply to top-tier incubators and accelerators in one
+                      place. No more endless forms and scattered applications.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center animate-on-scroll animate-delay-200" data-animation="animate-slide-in-right">
+            <div
+              className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center animate-on-scroll animate-delay-200"
+              data-animation="animate-slide-in-right"
+            >
               <PhoneMockup4 />
             </div>
           </div>
@@ -535,7 +658,9 @@ export default function HomeClient() {
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">{name}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                      {name}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -546,7 +671,9 @@ export default function HomeClient() {
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">{name}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                      {name}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -563,7 +690,9 @@ export default function HomeClient() {
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">{name}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                      {name}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -574,7 +703,9 @@ export default function HomeClient() {
                   className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
                 >
                   <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">{name}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                      {name}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -595,17 +726,28 @@ export default function HomeClient() {
         </div>
 
         {/* Testimonial slider container - now full-width relative to section */}
-        <div className="testimonial-container mt-8"> {/* Consider adjusting mt-8 if mb-12 on title is too much/little */}
+        <div className="testimonial-container mt-8">
+          {" "}
+          {/* Consider adjusting mt-8 if mb-12 on title is too much/little */}
           <div className="testimonial-row flex overflow-x-auto pb-4">
             {[...testimonials, ...testimonials].map((testimonial, index) => (
-              <div key={`row1-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
-                  <div className="flex items-center mb-4">
+              <div
+                key={`row1-${index}`}
+                className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift"
+              >
+                <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 mr-4 flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">{testimonial.name.charAt(0)}</span>
+                    <span className="text-white font-bold text-lg">
+                      {testimonial.name.charAt(0)}
+                    </span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {testimonial.role}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center mb-4">
@@ -614,44 +756,71 @@ export default function HomeClient() {
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
                     {[...Array(5 - testimonial.rating)].map((_, i) => (
-                      <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current" />
+                      <Star
+                        key={`empty-${i}`}
+                        className="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current"
+                      />
                     ))}
                   </div>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">{testimonial.rating}.0</span>
+                  <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                    {testimonial.rating}.0
+                  </span>
                 </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">"{testimonial.text}"</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="testimonial-row flex overflow-x-auto pt-4 pb-4">
-              {[...testimonials.slice(Math.ceil(testimonials.length / 2)), ...testimonials.slice(0, Math.ceil(testimonials.length / 2)), ...testimonials.slice(Math.ceil(testimonials.length / 2)), ...testimonials.slice(0, Math.ceil(testimonials.length / 2))].map((testimonial, index) => (
-                <div key={`row2-${index}`} className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift">
-                  <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-teal-500 mr-4 flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">{testimonial.name.charAt(0)}</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
-                  </div>
-                </div>
-                <div className="flex items-center mb-4">
-                  <div className="flex text-yellow-400">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                    {[...Array(5 - testimonial.rating)].map((_, i) => (
-                      <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current" />
-                    ))}
-                  </div>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">{testimonial.rating}.0</span>
-                </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">"{testimonial.text}"</p>
-                </div>
-              ))}
-            </div>
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                  "{testimonial.text}"
+                </p>
+              </div>
+            ))}
           </div>
+          <div className="testimonial-row flex overflow-x-auto pt-4 pb-4">
+            {[
+              ...testimonials.slice(Math.ceil(testimonials.length / 2)),
+              ...testimonials.slice(0, Math.ceil(testimonials.length / 2)),
+              ...testimonials.slice(Math.ceil(testimonials.length / 2)),
+              ...testimonials.slice(0, Math.ceil(testimonials.length / 2)),
+            ].map((testimonial, index) => (
+              <div
+                key={`row2-${index}`}
+                className="testimonial-card flex-shrink-0 w-80 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover-lift"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-teal-500 mr-4 flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">
+                      {testimonial.name.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {testimonial.role}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                    {[...Array(5 - testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={`empty-${i}`}
+                        className="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current"
+                      />
+                    ))}
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                    {testimonial.rating}.0
+                  </span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                  "{testimonial.text}"
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
         {/* The extraneous div and its comment are removed here. */}
       </section>
 
@@ -695,19 +864,31 @@ export default function HomeClient() {
 
                   {/* Floating Email Icons */}
                   <div className="absolute -top-5 -left-2 w-12 h-12 bg-white dark:bg-gray-100 rounded-lg shadow-lg flex items-center justify-center animate-float">
-                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      className="w-6 h-6 text-blue-600"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                   </div>
                   <div className="absolute -top-4 -right-3 w-10 h-10 bg-yellow-400 rounded-lg shadow-lg flex items-center justify-center animate-float-delayed">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                   </div>
                   <div className="absolute -bottom-2 -left-1 w-8 h-8 bg-green-400 rounded-full shadow-lg flex items-center justify-center animate-float">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path
                         fillRule="evenodd"
                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -725,8 +906,8 @@ export default function HomeClient() {
                 Subscribe to our newsletter for the latest updates and insights
               </h2>
               <p className="text-blue-100 text-lg mb-8 leading-relaxed">
-                Stay updated with the latest startup trends, investor insights, and platform updates delivered directly
-                to your inbox.
+                Stay updated with the latest startup trends, investor insights,
+                and platform updates delivered directly to your inbox.
               </p>
 
               {/* Email Subscription Form */}
@@ -741,7 +922,9 @@ export default function HomeClient() {
                 </Button>
               </div>
 
-              <p className="text-blue-200 text-sm mt-4">No spam, unsubscribe at any time.</p>
+              <p className="text-blue-200 text-sm mt-4">
+                No spam, unsubscribe at any time.
+              </p>
             </div>
           </div>
         </div>
@@ -749,8 +932,15 @@ export default function HomeClient() {
 
       {/* Footer */}
       <Footer />
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadModal} />
-      <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={closeLoginModal}
+        onOpenAppDownloadModal={openAppDownloadModal}
+      />
+      <AppDownloadModal
+        isOpen={isAppDownloadModalOpen}
+        onClose={closeAppDownloadModal}
+      />
     </div>
-  )
+  );
 }
