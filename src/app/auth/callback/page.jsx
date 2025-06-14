@@ -1,19 +1,21 @@
 // src/app/auth/callback/page.jsx
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+export const dynamic = 'force-dynamic'; // Ensure this page is dynamically rendered
 
+import React, { useEffect, useState, Suspense } from 'react'; // Import Suspense
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
 
-const AuthCallbackPage = () => {
+// Inner component that uses useSearchParams
+const AuthCallbackContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { loginUser } = useUser();
 
-  const [status, setStatus] = useState('loading'); // 'loading', 'success', 'error'
+  const [status, setStatus] = useState('loading');
   const [error, setError] = useState(null);
-  const [userData, setUserData] = useState(null); // To store user data from validation
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const token = searchParams.get('token');
@@ -22,12 +24,9 @@ const AuthCallbackPage = () => {
     if (token && userId) {
       const validateToken = async () => {
         try {
-          // Assume this is the validation endpoint. This needs to be confirmed.
           const response = await fetch('https://auth.venturloop.com/api/verify-token', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, userId }),
           });
 
@@ -35,20 +34,16 @@ const AuthCallbackPage = () => {
             const errorData = await response.json().catch(() => ({ message: 'Token validation failed with status: ' + response.status }));
             throw new Error(errorData.message || 'Token validation failed');
           }
-
           const validatedUserData = await response.json();
-          if (!validatedUserData) { // Or check for a specific property that should exist
+          if (!validatedUserData) {
             throw new Error('No user data returned from validation');
           }
 
           console.log('Token validated successfully. User data:', validatedUserData);
 
-          // Now, call our API route to set the session cookie
           const sessionResponse = await fetch('/api/auth/set-session', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, userId, userData: validatedUserData }),
           });
 
@@ -58,57 +53,60 @@ const AuthCallbackPage = () => {
           }
 
           console.log('Session cookie set successfully.');
-          loginUser(validatedUserData); // Update UserContext
-          setUserData(validatedUserData); // Local state for display on this page if needed
+          loginUser(validatedUserData);
+          setUserData(validatedUserData);
           setStatus('success');
-          router.push('/'); // Redirect to homepage
+          router.push('/');
         } catch (err) {
           console.error('Validation Error:', err);
           setError(err.message || 'An unexpected error occurred during token validation.');
           setStatus('error');
-          // Redirect to login page with a generic error.
-          // Specific errors could be logged to console or an error reporting service.
           router.push('/login?error=authentication_failed');
         }
       };
-
       validateToken();
     } else {
       setStatus('error');
       console.error('Token or UserId not found in URL.');
       router.push('/login?error=missing_credentials');
     }
-  }, [searchParams, router, loginUser ]);
+  // Ensure all dependencies are listed, especially if they are from props or outer scope.
+  // For this component, searchParams, router, loginUser are the main external dependencies for the effect.
+  }, [searchParams, router, loginUser]);
 
   if (status === 'loading') {
     return <div>Loading... Verifying authentication...</div>;
   }
-
   if (status === 'error') {
+    // This UI might be briefly shown if redirection via router.push takes a moment.
     return (
       <div>
-        {/* This content might be briefly visible before redirect kicks in from useEffect */}
         <h1>Authentication Problem</h1>
         <p>{error || 'An error occurred during authentication. You are being redirected...'}</p>
         <p>If you are not redirected, <a href="/login">click here to try logging in again</a>.</p>
       </div>
     );
   }
-
   if (status === 'success' && userData) {
     return (
       <div>
         <h1>Authentication Successful!</h1>
-        <p>Welcome, {userData.name || userId}!</p> {/* Assuming userData has a 'name' field */}
+        {/* userData might not have a name, ensure fallback or specific property */}
+        <p>Welcome, {userData.name || `User ${userId}`}!</p>
         <p>Redirecting you to the homepage...</p>
-        {/* <pre>{JSON.stringify(userData, null, 2)}</pre> */}
-        {/* <button onClick={() => router.push('/profile')}>Go to Profile</button> */}
       </div>
     );
   }
+  return <div>Processing authentication...</div>; // Default fallback
+};
 
-  // Fallback, though ideally one of the above states should always be met.
-  return <div>Processing authentication...</div>;
+// Main page component that wraps the content with Suspense
+const AuthCallbackPage = () => {
+  return (
+    <Suspense fallback={<div>Loading page details...</div>}> {/* Provide a meaningful fallback */}
+      <AuthCallbackContent />
+    </Suspense>
+  );
 };
 
 export default AuthCallbackPage;
