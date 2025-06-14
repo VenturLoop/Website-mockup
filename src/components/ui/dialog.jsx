@@ -67,6 +67,13 @@ export const DialogDescription = React.forwardRef(({ className, children, ...pro
 ));
 DialogDescription.displayName = 'DialogDescription';
 
+export const DialogFooter = ({ className, children, ...props }) => (
+  <div className={`flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 p-6 pt-0 ${className || ''}`} {...props}>
+    {children}
+  </div>
+);
+DialogFooter.displayName = 'DialogFooter';
+
 // Add basic CSS for animations if not using Tailwind JIT animations or a CSS file
 // For simplicity, let's assume Tailwind handles this or use inline styles/classes for now.
 // Adding keyframes and animation classes directly here for self-containment if needed:

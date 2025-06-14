@@ -28,12 +28,14 @@ import MyBookmarksModal from "./MyBookmarksModal"; // Changed import
 import { useUser } from "@/context/UserContext"; // Import useUser
 import MyUpdatesModal from "./MyUpdatesModal.jsx"; // Import MyUpdatesModal
 import MyStartupProfileModal from "./MyStartupProfileModal";
+import SettingsModal from './SettingsModal'; // Import SettingsModal
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isLoopAgentModalOpen, setIsLoopAgentModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false); // State for SettingsModal
   const [isFoundersOpen, setIsFoundersOpen] = useState(false);
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown
@@ -102,6 +104,9 @@ export function Navigation() {
   };
   const closeLoopAgentModal = () => setIsLoopAgentModalOpen(false);
 
+  const openSettingsModal = () => setIsSettingsModalOpen(true);
+  const closeSettingsModal = () => setIsSettingsModalOpen(false);
+
   const toggleUpdatesModal = () => setIsUpdatesModalOpen(!isUpdatesModalOpen);
   const toggleMyStartupProfileModal = () => setIsMyStartupProfileModalOpen(!isMyStartupProfileModalOpen);
 
@@ -130,11 +135,12 @@ export function Navigation() {
         setIsBookmarkModalOpen(false); // Ensure bookmark modal is closed
         setIsUpdatesModalOpen(false); // Ensure updates modal is closed
         setIsMyStartupProfileModalOpen(false);
+        closeSettingsModal(); // Close settings modal on Escape
       }
     };
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, []); // No dependencies needed if close functions are stable
+  }, [closeSettingsModal]); // Added closeSettingsModal to dependency array
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -192,7 +198,14 @@ export function Navigation() {
         setIsProfileDropdownOpen(false);
       }
     },
-    { label: "Settings", icon: Settings, href: "/profile/settings" },
+    {
+      label: "Settings",
+      icon: Settings,
+      onClick: () => {
+        openSettingsModal();
+        setIsProfileDropdownOpen(false);
+      }
+    },
   ];
 
   console.log("currentUser", currentUser);
@@ -607,6 +620,10 @@ export function Navigation() {
       <MyStartupProfileModal
         isOpen={isMyStartupProfileModalOpen}
         onClose={toggleMyStartupProfileModal}
+      />
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        onClose={closeSettingsModal}
       />
     </header>
   );
