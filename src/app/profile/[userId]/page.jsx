@@ -1,92 +1,119 @@
 // src/app/profile/[userId]/page.jsx
 "use client";
 
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { Button } from "@/components/ui/button"; // Import the button
-import { Mail, MapPin, Briefcase, Users, Eye, Save, UserPlus, Image as ImageIcon } from 'lucide-react'; // Import icons
-import { Navigation } from "@/components/navigation"; // Import Navigation
+import { Button } from "@/components/ui/button";
+import { Mail, MapPin, Briefcase, Users, Eye, Edit, Share2, UserPlus, Image as ImageIcon } from 'lucide-react';
+import { Navigation } from "@/components/navigation";
+import { useUser } from "@/context/UserContext.js";
+import LoginModal from "@/components/LoginModal.jsx";
+import { EditProfileModal } from "@/components/EditProfileModal.jsx";
+import { ShareProfileModal } from "@/components/ShareProfileModal.jsx";
+import Footer from '@/components/Footer.jsx';
 
 // Mock data - will be replaced or fetched based on userId
 const mockUserProfile = {
     "success": true,
     "message": "User profile fetched successfully.",
     "user": {
-        "userId": "682de28d858fff4521c35b29",
-        "email": "iazgarmohammed@gmail.com",
-        "name": "Mohammed Azgar",
+        "userId": "682de28d858fff4521c35b29", // Example other user ID
+        "email": "otheruser@example.com",
+        "name": "Other User",
         "userChatStatus": "offline",
         "lastSeen": "2025-05-21T14:32:49.932Z",
         "profile": {
-            "_id": "682de2d1858fff4521c35b30",
-            "profilePhoto": "",
-            "birthday": "05/02/2007",
-            "location": " Tamil Nadu India",
-            "skillSet": [
-                "App Developer", "Frontend Developer", "Backend Developer", "Full Stack Developer",
-                "Android Developer", "iOS Developer", "Node.js Developer", "React Native Developer",
-                "React Developer", "Python Developer", "Java Developer", "Blockchain",
-                "IoT Developer", "Embedded Systems", "Machine Learning", "Deep Learning",
-                "Networking", "Database Management", "Automation Testing", "Quality Assurance",
-                "Product Manager", "Product", "Technical Product Manager", "UI/UX Design",
-                "Product Design", "Design Thinking", "Figma", "Prototyping",
-                "Wireframing", "No-code Developer", "Business Development", "Marketing",
-                "Sales", "Growth Marketing", "Digital Marketing", "Venture Capital",
-                "Angel Investing", "Fundraising", "Brand Strategy", "Performance Marketing",
-                "Go-to-Market Strategy", "Finance", "Financial Modeling", "Startup CFO",
-                "Equity Management", "Pitch Deck Expert", "Legal", "Startup Law",
-                "Cap Table Management", "Business Strategy", "B2B Sales", "Startup Mentor",
-                "Compliance", "Regulations", "Corporate Partnerships", "B2C Strategy",
-                "Marketplace Strategy", "Founder", "Resilience", "Time Management",
-                "Storytelling", "Public Speaking", "Leadership", "Incubator Coach",
-                "Startup Evangelist", "Startup Generalist", "Early Stage Specialist",
-                "Accelerator Lead", "Pitching", "Negotiation", "Empathy"
-            ],
-            "industries": ["Social Impact"],
+            "_id": "682de2d1858fff4521c35b31", // Different profile ID
+            "profilePhoto": "https://avatar.iran.liara.run/public/girl",
+            "birthday": "01/01/1990",
+            "location": "San Francisco, USA",
+            "skillSet": ["Product Management", "UX Design", "Growth Hacking"],
+            "industries": ["Tech", "SaaS"],
             "otherWebsiteUrls": {},
-            "createdAt": "2025-05-21T14:27:29.136Z",
-            "updatedAt": "2025-05-21T14:31:44.827Z",
-            "__v": 1,
-            "commitmentLevel": "Already full time in a startup",
-            "equityExpectation": "Fully Negotiable",
-            "priorStartupExperience": "Founded/Co-founded a company",
-            "status": "Network",
-            "bio": "Mindset is everything "
+            "createdAt": "2025-01-01T10:00:00.000Z",
+            "updatedAt": "2025-01-01T10:00:00.000Z",
+            "__v": 0,
+            "commitmentLevel": "Open to opportunities",
+            "equityExpectation": "Negotiable",
+            "priorStartupExperience": "Worked at a startup",
+            "status": "Active",
+            "bio": "Passionate about building innovative products."
         },
-        "totalConnections": 0,
-        "viewCount": 0,
-        "isPremium": false,
-        "profileComplete": false,
-        "profileIncompleteReason": ["profilePhoto"],
-        "isStartupDetails": false,
+        "totalConnections": 150,
+        "viewCount": 500,
+        "isPremium": true,
+        "profileComplete": true,
+        "profileIncompleteReason": [],
+        "isStartupDetails": true,
         "limits": {
-            "investorContactingLimit": 0,
-            "founderConnectingLimit": 0,
-            "founderDirectMessageLimit": 0,
-            "investorSaveLimit": 0,
-            "founderSaveLimit": 0
+            "investorContactingLimit": 5,
+            "founderConnectingLimit": 10,
+            "founderDirectMessageLimit": 5,
+            "investorSaveLimit": 20,
+            "founderSaveLimit": 20
         }
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRlMjhkODU4ZmZmNDUyMWMzNWIyOSIsImVtYWlsIjoiaWF6Z2FybW9oYW1tZWRAZ21haWwuY29tIiwiaWF0IjoxNzQ5NzA3OTQ5LCJleHAiOjE3NDk3OTQzNDl9.OH-ZuEda4sjqz3VP3ibuxOfyZxccbGLFvt2jM4D1DPo"
+    }
 };
+
 
 export default function UserProfilePage() {
   const params = useParams();
-  const userId = params.userId;
-  const userProfileData = mockUserProfile.user.userId === userId ? mockUserProfile.user : null;
+  const { currentUser, isLoading, isLoggedIn } = useUser();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [profileUrl, setProfileUrl] = useState('');
 
-  if (!userProfileData) {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setProfileUrl(window.location.href);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      setIsLoginModalOpen(true);
+    } else {
+      setIsLoginModalOpen(false);
+    }
+  }, [isLoading, isLoggedIn]);
+
+  if (isLoading) {
     return (
       <>
         <Navigation />
-        {/* Adjusted container for "User not found" - it also needs to respect navbar height */}
-        <div className="flex justify-center items-center h-[calc(100vh-4rem)] bg-gray-100 dark:bg-gray-900 overflow-y-auto hide-scrollbar"> {/* Added overflow-y-auto and hide-scrollbar */}
-          <p className="text-2xl text-gray-700 dark:text-gray-300 p-10">User not found.</p>
+        <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
+          <p>Loading profile...</p>
         </div>
+        <Footer />
       </>
     );
   }
 
-  const { name, email, profile, totalConnections, viewCount } = userProfileData;
+  const profileUserId = params.userId;
+  const isOwnProfile = currentUser?.userId === profileUserId;
+  const userProfileData = isOwnProfile ? currentUser : mockUserProfile.user; // Use mock for others for now
+
+  if (!userProfileData && !isOwnProfile) { // Only show "User not found" if it's not the current user's (potentially loading) profile
+    return (
+      <>
+        <Navigation />
+        {/* Adjusted container for "User not found" - it also needs to respect navbar height */}
+        <div className="flex justify-center items-center h-[calc(100vh-4rem)] bg-gray-100 dark:bg-gray-900 overflow-y-auto hide-scrollbar">
+          <p className="text-2xl text-gray-700 dark:text-gray-300 p-10">User not found.</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  // If it's own profile and userProfileData is not yet loaded (currentUser might be loading initially)
+  // but isLoading is false and isLoggedIn is true, show a slightly different loading or minimal view.
+  // For this iteration, we assume currentUser is populated if isLoading is false and isLoggedIn is true.
+  // A more robust solution might involve checking if currentUser.userId matches params.userId
+  // and if currentUser has all necessary fields.
+
+  const { name, email, profile, totalConnections, viewCount } = userProfileData || {};
   const {
     profilePhoto,
     location,
@@ -96,10 +123,13 @@ export default function UserProfilePage() {
     commitmentLevel,
     equityExpectation,
     priorStartupExperience
-  } = profile;
+  } = profile || {}; // Add fallback for profile if userProfileData is null/undefined initially
 
-  const handleSaveProfile = () => console.log("Save Profile clicked for user:", userId);
-  const handleConnectRequest = () => console.log("Send Connection Request clicked for user:", userId);
+  const handleConnectRequest = () => {
+    // Placeholder for future implementation
+    // For now, it does nothing or could open a confirmation modal
+    alert("Connect request functionality not yet implemented.");
+  };
 
   return (
     <>
@@ -124,22 +154,30 @@ export default function UserProfilePage() {
                 </div>
               )}
               <div className="w-full space-y-3">
-                <Button onClick={handleSaveProfile} className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white">
-                  <Save size={18} className="mr-2" /> Save Profile
-                </Button>
-                <Button onClick={handleConnectRequest} variant="outline" className="w-full text-blue-600 border-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:border-blue-400 dark:hover:bg-gray-800">
-                  <UserPlus size={18} className="mr-2" /> Send Connection Request
-                </Button>
-              </div>
+                  {isOwnProfile ? (
+                    <>
+                      <Button onClick={() => setIsEditModalOpen(true)} className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white">
+                        <Edit size={18} className="mr-2" /> Edit Profile
+                      </Button>
+                      <Button onClick={() => setIsShareModalOpen(true)} variant="outline" className="w-full">
+                        <Share2 size={18} className="mr-2" /> Share Profile
+                      </Button>
+                    </>
+                  ) : (
+                    <Button onClick={handleConnectRequest} variant="outline" className="w-full text-blue-600 border-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:border-blue-400 dark:hover:bg-gray-800">
+                      <UserPlus size={18} className="mr-2" /> Send Connection Request
+                    </Button>
+                  )}
+                </div>
               <div className="w-full text-center md:text-left pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Stats</h3>
                  <div className="flex items-center justify-center md:justify-start text-gray-600 dark:text-gray-400 mb-2">
                    <Users size={18} className="mr-2 text-blue-500 dark:text-blue-400" />
-                   <span>{totalConnections} Connections</span>
+                   <span>{totalConnections || 0} Connections</span>
                  </div>
                  <div className="flex items-center justify-center md:justify-start text-gray-600 dark:text-gray-400">
                    <Eye size={18} className="mr-2 text-blue-500 dark:text-blue-400" />
-                   <span>{viewCount} Profile Views</span>
+                   <span>{viewCount || 0} Profile Views</span>
                  </div>
               </div>
             </div>
@@ -204,6 +242,21 @@ export default function UserProfilePage() {
           </div> {/* End of Div3 (White Background Container) */}
         </div> {/* End of Div2 (Container mx-auto) */}
       </div> {/* End of Div1 (Main Background Div) */}
+
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+      {isOwnProfile && (
+        <EditProfileModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          currentUser={currentUser}
+        />
+      )}
+      <ShareProfileModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        profileUrl={profileUrl}
+      />
+      <Footer />
     </>
   );
 }
