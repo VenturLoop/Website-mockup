@@ -274,13 +274,15 @@ export default function HomeClient() {
                 >
                   Download Now
                 </Button>
-                <Button
-                  onClick={openLoginModal}
-                  variant="outline"
-                  className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
-                >
-                  Start for Free
-                </Button>
+                {!isLoggedIn && (
+                  <Button
+                    onClick={openLoginModal}
+                    variant="outline"
+                    className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Start for Free
+                  </Button>
+                )}
               </div>
             </div>
             <div className="w-full md:w-1/2 lg:w-[35%] flex justify-center md:justify-end lg:justify-end animate-on-scroll animate-delay-200">
@@ -533,10 +535,10 @@ export default function HomeClient() {
 
               <div className="flex justify-center lg:justify-start">
                 <Button
-                  onClick={openLoginModal}
+                  onClick={isLoggedIn ? openAppDownloadModal : openLoginModal}
                   className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
                 >
-                  Get Started
+                  {isLoggedIn ? "Download Now" : "Get Started"}
                 </Button>
               </div>
             </div>
