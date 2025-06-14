@@ -62,20 +62,6 @@ const SettingsModal = ({ isOpen, onClose }) => {
               </button>
             </div>
           </section>
-
-          {/* Privacy Section */}
-          <section>
-            <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 px-1">Privacy</h3>
-            <div className="space-y-1 sm:space-y-2">
-              <button className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200">
-                <div className="flex items-center">
-                  <ShieldCheck className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
-                  <span className="text-sm sm:text-base">Blocked users</span>
-                </div>
-                <ChevronRight className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-              </button>
-            </div>
-          </section>
         </div>
 
         <div className="p-4 sm:p-6 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-3 sm:space-y-4 sticky bottom-0 bg-white dark:bg-gray-900 z-10">
