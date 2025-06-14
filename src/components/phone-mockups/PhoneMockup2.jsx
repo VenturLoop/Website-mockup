@@ -40,8 +40,11 @@ const PhoneMockup2 = () => {
 
           {/* Main content area - now only for centering the logo and tagline */}
           <div className="flex flex-col flex-grow items-center justify-center text-center px-4">
-            <PlaceholderVenturloopLogo />
-            <p className="mt-3 text-sm text-foreground">
+ <img
+                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
+                alt="Venturloop Logo"
+                className="w-28 h-28 -white  object-contain mr-2 rounded-lg"
+              />            <p className="mt-3 text-sm text-foreground">
               Everything you need to build the next big thing!
             </p>
           </div>

@@ -59,9 +59,12 @@ const PhoneMockup3 = ({ onGetStartedClick }) => {
 
             <div className="text-center animate-fadeInUp">
               {/* App Logo with brand blue background */}
-              <div className="inline-block p-3 bg-blue-600 rounded-full shadow-md mb-4"> {/* Adjusted padding, shadow */}
-                <AppLogoIcon />
-              </div>
+              <div className="inline-block   rounded-full shadow-md "> {/* Adjusted padding, shadow */}
+ <img
+                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
+                alt="Venturloop Logo"
+                className="w-16 h-16 -white  object-contain  rounded-lg"
+              />              </div>
               <h1 className="text-2xl font-bold text-blue-600 mb-1">VenturLoop</h1> {/* text-brand-blue */}
               <p className="text-sm text-muted-foreground">Find cofounders, investors & build faster.</p>
             </div>

@@ -39,9 +39,11 @@ export default function Footer() {
           {/* Company Info */}
           <div className="sm:col-span-2 lg:col-span-2 animate-on-scroll">
             <div className="flex items-center mb-6">
-              <div className="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mr-2">
-                <span className="text-white font-bold text-sm">V</span>
-              </div>
+               <img
+                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
+                alt="Venturloop Logo"
+                className="w-8 h-8 -white  object-contain mr-2 mt-1 rounded-lg"
+              />
               <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">Venturloop</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed max-w-md">

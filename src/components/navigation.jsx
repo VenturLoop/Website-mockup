@@ -28,7 +28,7 @@ import MyBookmarksModal from "./MyBookmarksModal"; // Changed import
 import { useUser } from "@/context/UserContext"; // Import useUser
 import MyUpdatesModal from "./MyUpdatesModal.jsx"; // Import MyUpdatesModal
 import MyStartupProfileModal from "./MyStartupProfileModal";
-import SettingsModal from './SettingsModal'; // Import SettingsModal
+import SettingsModal from "./SettingsModal"; // Import SettingsModal
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +41,8 @@ export function Navigation() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown
   const [isBookmarkModalOpen, setIsBookmarkModalOpen] = useState(false); // Added state for bookmark modal
   const [isUpdatesModalOpen, setIsUpdatesModalOpen] = useState(false); // State for Updates modal
-  const [isMyStartupProfileModalOpen, setIsMyStartupProfileModalOpen] = useState(false);
+  const [isMyStartupProfileModalOpen, setIsMyStartupProfileModalOpen] =
+    useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -108,7 +109,8 @@ export function Navigation() {
   const closeSettingsModal = () => setIsSettingsModalOpen(false);
 
   const toggleUpdatesModal = () => setIsUpdatesModalOpen(!isUpdatesModalOpen);
-  const toggleMyStartupProfileModal = () => setIsMyStartupProfileModalOpen(!isMyStartupProfileModalOpen);
+  const toggleMyStartupProfileModal = () =>
+    setIsMyStartupProfileModalOpen(!isMyStartupProfileModalOpen);
 
   const handleLogout = () => {
     logoutUser();
@@ -180,7 +182,7 @@ export function Navigation() {
       onClick: () => {
         setIsBookmarkModalOpen(true);
         setIsProfileDropdownOpen(false); // Close profile dropdown
-      }
+      },
     },
     {
       label: "Updates",
@@ -188,7 +190,7 @@ export function Navigation() {
       onClick: () => {
         toggleUpdatesModal();
         setIsProfileDropdownOpen(false); // Close profile dropdown
-      }
+      },
     },
     {
       label: "My startup profile",
@@ -196,7 +198,7 @@ export function Navigation() {
       onClick: () => {
         toggleMyStartupProfileModal();
         setIsProfileDropdownOpen(false);
-      }
+      },
     },
     {
       label: "Settings",
@@ -204,7 +206,7 @@ export function Navigation() {
       onClick: () => {
         openSettingsModal();
         setIsProfileDropdownOpen(false);
-      }
+      },
     },
   ];
 
@@ -225,9 +227,11 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <div className="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mr-2">
-                <span className="text-white font-bold text-sm">V</span>
-              </div>
+              <img
+                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
+                alt="Venturloop Logo"
+                className="w-8 h-8 -white  object-contain mr-2 rounded-lg"
+              />
               <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
                 Venturloop
               </span>
@@ -351,7 +355,8 @@ export function Navigation() {
                     {profileMenuItems.map((item) => {
                       const commonProps = {
                         key: item.label,
-                        className: "flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
+                        className:
+                          "flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
                         onClick: (e) => {
                           if (item.onClick) {
                             if (item.href) e.preventDefault();
@@ -359,7 +364,7 @@ export function Navigation() {
                           } else {
                             setIsProfileDropdownOpen(false);
                           }
-                        }
+                        },
                       };
 
                       if (item.href && !item.onClick) {
@@ -530,14 +535,15 @@ export function Navigation() {
                     {profileMenuItems.map((item) => {
                       const commonProps = {
                         key: item.label,
-                        className: "flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
+                        className:
+                          "flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
                         onClick: (e) => {
                           if (item.onClick) {
                             if (item.href) e.preventDefault();
                             item.onClick();
                           }
                           setIsMenuOpen(false);
-                        }
+                        },
                       };
 
                       if (item.href && !item.onClick) {
