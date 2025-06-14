@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Image as LucideImage } from 'lucide-react'; // Placeholder icon
@@ -94,9 +94,7 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
           </div>
         </div>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
+          <Button variant="outline" onClick={onClose}>Cancel</Button>
           <Button type="button" onClick={handleSaveChanges}>Save Changes</Button>
         </DialogFooter>
       </DialogContent>

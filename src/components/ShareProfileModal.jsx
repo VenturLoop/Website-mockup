@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Facebook, Twitter, Linkedin, Mail } from 'lucide-react';
@@ -74,9 +74,7 @@ export function ShareProfileModal({ isOpen, onClose, profileUrl }) {
           </div>
         </div>
         <DialogFooter className="mt-2">
-          <DialogClose asChild>
-            <Button variant="outline" onClick={onClose}>Close</Button>
-          </DialogClose>
+          <Button variant="outline" onClick={onClose}>Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
