@@ -1,11 +1,33 @@
 // LoginModal.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog.jsx";
 import { Button } from "@/components/ui/button.jsx";
-import { Users, LogIn, UserPlus, Download } from 'lucide-react'; // Or any other appropriate icons
+import { Users, LogIn, UserPlus, Download, AlertTriangle } from 'lucide-react'; // Added AlertTriangle
 
 const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState('');
+
   if (!isOpen) return null;
+
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+    if (errorParam) {
+      if (errorParam === 'authentication_failed') {
+        setErrorMessage('Login failed. Please try again. If the problem persists, contact support.');
+      } else if (errorParam === 'missing_credentials') {
+        setErrorMessage('Authentication callback was missing necessary information. Please try logging in again.');
+      } else {
+        setErrorMessage('An unknown error occurred. Please try again.');
+      }
+      // Optional: Clear the error from URL after displaying, so it doesn't reappear on manual modal close/reopen
+      // router.replace(window.location.pathname, undefined, { shallow: true }); // This might be too aggressive if modal can be closed without full navigation
+    } else {
+      setErrorMessage(''); // Clear any previous error message if no error in URL
+    }
+  }, [isOpen, searchParams, router]); // Re-check if modal is opened and params change
 
   // TODO: Implement actual Login, Create Account, and App Download functionalities
   const handleLogin = () => {
@@ -35,6 +57,12 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
           <DialogDescription className="text-gray-600 dark:text-gray-300 mt-2 mb-6">
             Join our community or access your account to continue.
           </DialogDescription>
+          {errorMessage && (
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-md mb-4 text-sm flex items-center">
+              <AlertTriangle className="h-5 w-5 mr-2" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
         </DialogHeader>
 
         <div className="space-y-4">
