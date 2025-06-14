@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Mail, MapPin, Briefcase, DollarSign, Target, Building, Users, Eye, ImageIcon, Link as LinkIcon } from 'lucide-react';
 import { Navigation } from "@/components/navigation";
+import Footer from '@/components/Footer'; // Import Footer
 import LoginModal from '@/components/LoginModal';
 
 const mockInvestorProfiles = [
@@ -418,6 +419,7 @@ export default function InvestorProfilePage() {
           </div> {/* End of White Background Container */}
         </div> {/* End of Container mx-auto */}
       </div> {/* End of Main Background Div */}
+      <Footer />
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   );
