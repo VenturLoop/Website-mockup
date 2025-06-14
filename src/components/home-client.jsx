@@ -113,6 +113,14 @@ export default function HomeClient() {
   const openAppDownloadModal = () => setIsAppDownloadModalOpen(true);
   const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
 
+  const handleGetStartedClick = () => {
+    if (isLoggedIn) {
+      openAppDownloadModal();
+    } else {
+      openLoginModal();
+    }
+  };
+
   // Scroll animation observer
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -546,7 +554,7 @@ export default function HomeClient() {
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center animate-on-scroll animate-delay-200">
-              <PhoneMockup3 onGetStartedClick={openLoginModal} />
+              <PhoneMockup3 onGetStartedClick={handleGetStartedClick} />
             </div>
           </div>
         </div>
@@ -643,63 +651,66 @@ export default function HomeClient() {
         </div>
       </section>
 
-    <section className="py-16 bg-gray-50 dark:bg-gray-900 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12 animate-on-scroll">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Connect With Verified Investors On The Platform
-          </h2>
-        </div>
+      <section className="py-16 bg-gray-50 dark:bg-gray-900 overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 animate-on-scroll">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Connect With Verified Investors On The Platform
+            </h2>
+          </div>
 
-        {/* Row 1: Scroll Left */}
-        <div className="relative">
-          <div className="flex space-x-8 animate-scroll-left">
-            {[...investorLogos, ...investorLogos]?.map((item, index) => (
-              <button
-                key={`row1-${index}`}
-                onClick={() => router.push(`/investor/${item._id}`)}
-                className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover:scale-105 transition-transform"
-              >
-                <div className="flex items-center space-x-3">
-                  <img
-                    src={item?.image}
-                    alt={`${item?.name} Logo`}
-                    className="w-8 h-8 object-contain rounded-lg"
-                  />
-                  <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                    {item?.name}
-                  </span>
-                </div>
-              </button>
-            ))}
+          {/* Row 1: Scroll Left */}
+          <div className="relative">
+            <div className="flex space-x-8 animate-scroll-left">
+              {[...investorLogos, ...investorLogos]?.map((item, index) => (
+                <button
+                  key={`row1-${index}`}
+                  onClick={() => router.push(`/investor/${item._id}`)}
+                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover:scale-105 transition-transform"
+                >
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={item?.image}
+                      alt={`${item?.name} Logo`}
+                      className="w-8 h-8 object-contain rounded-lg"
+                    />
+                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                      {item?.name}
+                    </span>
+                  </div>
+                </button>
+              ))}
+              {/* Auto-sliding investor logos */}
+            </div>
+
+            {/* Row 2: Scroll Right */}
+            <div className="relative mt-8">
+              <div className="flex space-x-8 animate-scroll-right">
+                {[...investorLogos2, ...investorLogos2]
+                  ?.reverse()
+                  .map((item, index) => (
+                    <button
+                      key={`row2-${index}`}
+                      onClick={() => router.push(`/investor/${item._id}`)}
+                      className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover:scale-105 transition-transform"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <img
+                          src={item?.image}
+                          alt={`${item?.name} Logo`}
+                          className="w-8 h-8 object-contain rounded-lg"
+                        />
+                        <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                          {item?.name}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Row 2: Scroll Right */}
-        <div className="relative mt-8">
-          <div className="flex space-x-8 animate-scroll-right">
-            {[...investorLogos2, ...investorLogos2]?.reverse().map((item, index) => (
-              <button
-                key={`row2-${index}`}
-                onClick={() => router.push(`/investor/${item._id}`)}
-                className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover:scale-105 transition-transform"
-              >
-                <div className="flex items-center space-x-3">
-                  <img
-                    src={item?.image}
-                    alt={`${item?.name} Logo`}
-                    className="w-8 h-8 object-contain rounded-lg"
-                  />
-                  <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                    {item?.name}
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
       {/* Testimonials Section with Auto-Carousel */}
       <section id="testimonial" className="py-16 bg-white dark:bg-gray-950">
         {/* Title with standard padding */}
