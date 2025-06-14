@@ -116,31 +116,16 @@ export function Navigation() {
       if (e.key === "Escape") {
         setIsMenuOpen(false);
         setIsFoundersOpen(false);
-        setIsProfileDropdownOpen(false); // Close profile dropdown on escape
+        setIsProfileDropdownOpen(false);
         closeAppDownloadModal();
         closeLoginModal();
         closeLoopAgentModal();
+        setIsBookmarkModalOpen(false); // Ensure bookmark modal is closed
       }
     };
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, []); // Removed dependencies as they are stable
-
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
-        setIsMenuOpen(false);
-        setIsFoundersOpen(false);
-        setIsProfileDropdownOpen(false); // Close profile dropdown on escape
-        closeAppDownloadModal();
-        closeLoginModal();
-        closeLoopAgentModal();
-        setIsBookmarkModalOpen(false); // Close bookmark modal on escape
-      }
-    };
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, []);
+  }, []); // No dependencies needed if close functions are stable
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -321,16 +306,17 @@ export function Navigation() {
                       const commonProps = {
                         key: item.label,
                         className: "flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
-                        onClick: () => {
+                        onClick: (e) => {
                           if (item.onClick) {
+                            if (item.href) e.preventDefault();
                             item.onClick();
                           } else {
-                            // For items with href, also close dropdown
                             setIsProfileDropdownOpen(false);
                           }
                         }
                       };
-                      if (item.href) {
+
+                      if (item.href && !item.onClick) {
                         return (
                           <Link href={item.href} {...commonProps}>
                             <item.icon className="h-4 w-4 mr-2" />
@@ -339,7 +325,7 @@ export function Navigation() {
                         );
                       } else {
                         return (
-                          <button {...commonProps}>
+                          <button {...commonProps} type="button">
                             <item.icon className="h-4 w-4 mr-2" />
                             {item.label}
                           </button>
@@ -499,15 +485,16 @@ export function Navigation() {
                       const commonProps = {
                         key: item.label,
                         className: "flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
-                        onClick: () => {
+                        onClick: (e) => {
                           if (item.onClick) {
-                            item.onClick(); // This will open the bookmark modal
+                            if (item.href) e.preventDefault();
+                            item.onClick();
                           }
-                          // Always close the main mobile menu for any item click
                           setIsMenuOpen(false);
                         }
                       };
-                      if (item.href) {
+
+                      if (item.href && !item.onClick) {
                         return (
                           <Link href={item.href} {...commonProps}>
                             <item.icon className="h-5 w-5 mr-3" />
@@ -516,7 +503,7 @@ export function Navigation() {
                         );
                       } else {
                         return (
-                          <button {...commonProps}>
+                          <button {...commonProps} type="button">
                             <item.icon className="h-5 w-5 mr-3" />
                             {item.label}
                           </button>
