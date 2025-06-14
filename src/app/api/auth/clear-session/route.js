@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic'; // Explicitly mark as dynamic
+
 export async function POST(request) { // Changed to POST for consistency, though GET could also work
   try {
     const cookieStore = cookies();
