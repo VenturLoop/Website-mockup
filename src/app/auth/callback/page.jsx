@@ -1,13 +1,19 @@
-// src/app/auth/callback/page.jsx
 "use client";
 
-export const dynamic = "force-dynamic"; // Ensure this page is dynamically rendered
-
-import React, { useEffect, useState, Suspense } from "react"; // Import Suspense
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
+import dynamic from "next/dynamic";
 
-// Inner component that uses useSearchParams
+// Dynamically import lottie-react to avoid SSR issues
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
+// ✅ Utility function to load Lottie JSON from /public
+const loadAnimation = async (path) => {
+  const response = await fetch(path);
+  return await response.json();
+};
+
 const AuthCallbackContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -15,130 +21,114 @@ const AuthCallbackContent = () => {
 
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [animationData, setAnimationData] = useState(null);
+
+  const loadLottie = async (type) => {
+    const path = {
+      loading: "/lottie/success.json",
+      success: "/lottie/success.json",
+      error: "/lottie/error.json",
+    }[type];
+    const data = await loadAnimation(path);
+    setAnimationData(data);
+  };
 
   useEffect(() => {
+    loadLottie("loading");
+
     const token = searchParams.get("token");
     const userId = searchParams.get("userId");
 
-    if (token && userId) {
-      const validateToken = async () => {
-        try {
-          // const response = await fetch(
-          //   "https://venturloopbackend-v-1-0-9.onrender.com/auth/verify-token",
-          //   {
-          //     method: "POST",
-          //     headers: { "Content-Type": "application/json" },
-          //     body: JSON.stringify({ token, userId }),
-          //   }
-          // );
-          const response = await fetch(
-            `https://venturloopbackend-v-1-0-9.onrender.com/api/user/${userId}`,
-            {
-              method: "GET",
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-
-          if (!response.ok) {
-            const errorData = await response.json().catch(() => ({
-              message:
-                "Token validation failed with status: " + response.status,
-            }));
-            throw new Error(errorData.message || "Token validation failed");
-          }
-          const validatedUserData = await response.json();
-          if (!validatedUserData) {
-            throw new Error("No user data returned from validation");
-          }
-
-          console.log(
-            "Token validated successfully. User data:",
-            validatedUserData
-          );
-
-          const sessionResponse = await fetch("/api/auth/set-session", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              token,
-              userId,
-              userData: validatedUserData,
-            }),
-          });
-
-          if (!sessionResponse.ok) {
-            const sessionErrorData = await sessionResponse
-              .json()
-              .catch(() => ({ message: "Failed to set session cookie" }));
-            throw new Error(
-              sessionErrorData.message || "Failed to set session cookie"
-            );
-          }
-
-          console.log("Session cookie set successfully.");
-          loginUser(validatedUserData);
-          setUserData(validatedUserData);
-          setStatus("success");
-          router.push("/");
-        } catch (err) {
-          console.error("Validation Error:", err);
-          setError(
-            err.message ||
-              "An unexpected error occurred during token validation."
-          );
-          setStatus("error");
-          router.push("/login?error=authentication_failed");
-        }
-      };
-      validateToken();
-    } else {
+    if (!token || !userId) {
+      setError("Missing token or user ID in URL.");
       setStatus("error");
-      console.error("Token or UserId not found in URL.");
-      router.push("/login?error=missing_credentials");
+      loadLottie("error");
+      return;
     }
-    // Ensure all dependencies are listed, especially if they are from props or outer scope.
-    // For this component, searchParams, router, loginUser are the main external dependencies for the effect.
+
+    const validate = async () => {
+      try {
+        const response = await fetch(
+          `https://venturloopbackend-v-1-0-9.onrender.com/api/user/${userId}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({
+            message: "Token validation failed",
+          }));
+          throw new Error(errorData.message);
+        }
+
+        const data = await response.json();
+        const validatedUser = data?.user;
+
+        if (!validatedUser) {
+          throw new Error("No user data returned");
+        }
+
+        const sessionResponse = await fetch("/api/auth/set-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, userId, userData: validatedUser }),
+        });
+
+        if (!sessionResponse.ok) {
+          throw new Error("Failed to set session.");
+        }
+
+        loginUser(validatedUser);
+        setStatus("success");
+        loadLottie("success");
+
+        setTimeout(() => router.push("/"), 2000);
+      } catch (err) {
+        setError(err.message || "Unexpected error");
+        setStatus("error");
+        loadLottie("error");
+      }
+    };
+
+    validate();
   }, [searchParams, router, loginUser]);
 
-  if (status === "loading") {
-    return <div>Loading... Verifying authentication...</div>;
-  }
-  if (status === "error") {
-    // This UI might be briefly shown if redirection via router.push takes a moment.
-    return (
-      <div>
-        <h1>Authentication Problem</h1>
-        <p>
-          {error ||
-            "An error occurred during authentication. You are being redirected..."}
-        </p>
-        <p>
-          If you are not redirected,{" "}
-          <a href="/login">click here to try logging in again</a>.
-        </p>
-      </div>
-    );
-  }
-  if (status === "success" && userData) {
-    return (
-      <div>
-        <h1>Authentication Successful!</h1>
-        {/* userData might not have a name, ensure fallback or specific property */}
-        <p>Welcome, {userData.name || `User ${userId}`}!</p>
-        <p>Redirecting you to the homepage...</p>
-      </div>
-    );
-  }
-  return <div>Processing authentication...</div>; // Default fallback
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[300px] text-center px-4">
+      {animationData && (
+        <Lottie animationData={animationData} loop={status === "loading"} className="w-48 h-48" />
+      )}
+
+      {status === "loading" && (
+        <p className="mt-2 text-gray-600">Verifying your account...</p>
+      )}
+
+      {status === "error" && (
+        <>
+          <h2 className="text-xl font-semibold text-red-600 mt-2">Authentication Failed</h2>
+          <p className="text-gray-500">{error}</p>
+          <a href="/login" className="text-indigo-600 underline mt-2">
+            Click here to try logging in again.
+          </a>
+        </>
+      )}
+
+      {status === "success" && (
+        <>
+          <h2 className="text-xl font-semibold text-green-600 mt-2">Login Successful</h2>
+          <p className="text-gray-500">Redirecting you to the dashboard...</p>
+        </>
+      )}
+    </div>
+  );
 };
 
-// Main page component that wraps the content with Suspense
+// ✅ Main wrapper with Suspense
 const AuthCallbackPage = () => {
   return (
-    <Suspense fallback={<div>Loading page details...</div>}>
-      {" "}
-      {/* Provide a meaningful fallback */}
+    <Suspense fallback={<div className="text-center py-8">Loading authentication...</div>}>
       <AuthCallbackContent />
     </Suspense>
   );

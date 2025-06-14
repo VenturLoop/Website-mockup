@@ -238,14 +238,7 @@ export default function HomeClient() {
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 overflow-hidden animated-background-hero">
         <div className="container mx-auto px-4 sm:px-6">
-          {!isLoading && isLoggedIn && currentUser && (
-            <div className="mb-8 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg text-center animate-on-scroll animate-fade-in-down">
-              <p className="text-lg font-semibold text-blue-700 dark:text-blue-300">
-                Welcome back, {currentUser.name || 'User'}!
-              </p>
-              {/* You could add more user-specific CTAs or info here */}
-            </div>
-          )}
+          
           <div className="flex flex-col md:flex-row lg:flex-row items-center">
             <div className="w-full md:w-1/2 lg:w-[65%] mb-8 lg:mb-0 text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-black dark:text-white animate-on-scroll animate-fade-in-up animate-delay-100">
