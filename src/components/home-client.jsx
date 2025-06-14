@@ -22,12 +22,18 @@ import PhoneMockup1 from "@/components/phone-mockups/PhoneMockup1"; // Import th
 import PhoneMockup2 from "@/components/phone-mockups/PhoneMockup2"; // Import the new component
 import PhoneMockup3 from "@/components/phone-mockups/PhoneMockup3"; // Import the new component
 import PhoneMockup4 from "@/components/phone-mockups/PhoneMockup4"; // Import the new component
+import { getInvestorListData } from "@/lib/backendApi";
+import { useRouter } from "next/navigation";
 
 export default function HomeClient() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
   const { currentUser, isLoggedIn, isLoading } = useUser(); // Get user state
   // openFaq, toggleFaq, and old faqData removed
+  const router = useRouter();
+
+  const [investorLogos, setInvestorLogos] = useState([]);
+  const [investorLogos2, setInvestorLogos2] = useState([]);
 
   const generalFaqData = [
     {
@@ -99,24 +105,6 @@ export default function HomeClient() {
       rating: 5,
       text: "Professional, efficient, and results-driven. Highly recommend to any serious entrepreneur.",
     },
-  ];
-
-  const investorLogos = [
-    "Y Combinator",
-    "Sequoia",
-    "Accel",
-    "Andreessen",
-    "Kleiner",
-    "Founders",
-    "Greylock",
-    "Index",
-    "Tiger",
-    "Benchmark",
-    "First Round",
-    "NEA",
-    "GV",
-    "Insight",
-    "Lightspeed",
   ];
 
   const openLoginModal = () => setIsLoginModalOpen(true);
@@ -243,6 +231,20 @@ export default function HomeClient() {
         observer.unobserve(aboutUsSection);
       }
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchApiData = async () => {
+      try {
+        const results = await getInvestorListData();
+        console.log("results invest", results?.data1);
+        if (results?.success) {
+          setInvestorLogos(results?.data1);
+          setInvestorLogos2(results?.data2);
+        }
+      } catch (error) {}
+    };
+    fetchApiData();
   }, []);
 
   return (
@@ -641,81 +643,63 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* Investors Section with Auto-Sliding Animation */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900 overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 animate-on-scroll">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Connect With Verified Investors On The Platform
-            </h2>
-          </div>
+    <section className="py-16 bg-gray-50 dark:bg-gray-900 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 animate-on-scroll">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Connect With Verified Investors On The Platform
+          </h2>
+        </div>
 
-          {/* Auto-sliding investor logos */}
-          <div className="relative">
-            <div className="flex space-x-8 animate-scroll-left">
-              {/* First set of logos */}
-              {investorLogos.map((name, index) => (
-                <div
-                  key={`first-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
-                    </span>
-                  </div>
+        {/* Row 1: Scroll Left */}
+        <div className="relative">
+          <div className="flex space-x-8 animate-scroll-left">
+            {[...investorLogos, ...investorLogos]?.map((item, index) => (
+              <button
+                key={`row1-${index}`}
+                onClick={() => router.push(`/investor/${item._id}`)}
+                className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover:scale-105 transition-transform"
+              >
+                <div className="flex items-center space-x-3">
+                  <img
+                    src={item?.image}
+                    alt={`${item?.name} Logo`}
+                    className="w-8 h-8 object-contain rounded-lg"
+                  />
+                  <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                    {item?.name}
+                  </span>
                 </div>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {investorLogos.map((name, index) => (
-                <div
-                  key={`second-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Second row sliding in opposite direction */}
-          <div className="relative mt-8">
-            <div className="flex space-x-8 animate-scroll-right">
-              {/* First set of logos (reversed) */}
-              {[...investorLogos].reverse().map((name, index) => (
-                <div
-                  key={`third-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
-                    </span>
-                  </div>
-                </div>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {[...investorLogos].reverse().map((name, index) => (
-                <div
-                  key={`fourth-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {name}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+              </button>
+            ))}
           </div>
         </div>
-      </section>
 
+        {/* Row 2: Scroll Right */}
+        <div className="relative mt-8">
+          <div className="flex space-x-8 animate-scroll-right">
+            {[...investorLogos2, ...investorLogos2]?.reverse().map((item, index) => (
+              <button
+                key={`row2-${index}`}
+                onClick={() => router.push(`/investor/${item._id}`)}
+                className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover:scale-105 transition-transform"
+              >
+                <div className="flex items-center space-x-3">
+                  <img
+                    src={item?.image}
+                    alt={`${item?.name} Logo`}
+                    className="w-8 h-8 object-contain rounded-lg"
+                  />
+                  <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                    {item?.name}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
       {/* Testimonials Section with Auto-Carousel */}
       <section id="testimonial" className="py-16 bg-white dark:bg-gray-950">
         {/* Title with standard padding */}

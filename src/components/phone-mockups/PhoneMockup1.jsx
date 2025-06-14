@@ -352,7 +352,7 @@ const PhoneMockup1 = () => {
                 src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
                 alt="Venturloop Logo"
                 className="w-8 h-8 -white  object-contain mr-2 rounded-lg"
-              />{" "}
+              />
             </div>
             <button className="bg-yellow-400 text-black text-xs font-semibold py-1 px-3 rounded-full shadow-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50">
               Founder Pass
