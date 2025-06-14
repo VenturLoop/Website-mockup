@@ -208,7 +208,7 @@ export function Navigation() {
                   <img
                     src={displayUser.profileImage || "https://avatar.iran.liara.run/public/boy?username=guest"}
                     alt="Profile"
-                    className="h-9 w-9 rounded-full object-cover"
+                    className="h-9 mt-2 w-9 rounded-full object-cover"
                   />
                 </button>
                 {isProfileDropdownOpen && (
