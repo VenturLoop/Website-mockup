@@ -1,42 +1,57 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect, useRef } from "react"
-import { Menu, X, Users, DollarSign, Download, LogIn, Home, ChevronDown, User, LogOut, Settings, Bookmark, Bell, Briefcase } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { usePathname, useRouter } from "next/navigation"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect, useRef } from "react";
+import {
+  Menu,
+  X,
+  Users,
+  DollarSign,
+  Download,
+  LogIn,
+  Home,
+  ChevronDown,
+  User,
+  LogOut,
+  Settings,
+  Bookmark,
+  Bell,
+  Briefcase,
+} from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { usePathname, useRouter } from "next/navigation";
 import { AppDownloadModal } from "../components/AppDownloadModal";
 import LoginModal from "../components/LoginModal";
 import { LoopAgentModal } from "../components/LoopAgentModal";
 import { useUser } from "@/context/UserContext"; // Import useUser
 
 export function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isLoopAgentModalOpen, setIsLoopAgentModalOpen] = useState(false);
-  const [isFoundersOpen, setIsFoundersOpen] = useState(false)
-  const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false)
+  const [isFoundersOpen, setIsFoundersOpen] = useState(false);
+  const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const foundersDropdownRef = useRef(null)
+  const router = useRouter();
+  const pathname = usePathname();
+  const foundersDropdownRef = useRef(null);
   const profileDropdownRef = useRef(null); // Ref for profile dropdown
 
   const { currentUser, isLoggedIn, logoutUser } = useUser(); // Get user state and functions
 
   const handleScrollToOurOfferings = () => {
-    if (pathname === '/') {
-      if (typeof window !== 'undefined') {
-        const element = document.getElementById('services');
+    if (pathname === "/") {
+      if (typeof window !== "undefined") {
+        const element = document.getElementById("services");
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }
     } else {
-      router.push('/#services');
+      router.push("/#services");
     }
     setIsMenuOpen(false);
     setIsMobileFoundersOpen(false);
@@ -44,14 +59,19 @@ export function Navigation() {
   };
 
   const openAppDownloadModal = () => {
-    if (isMenuOpen) { setIsMenuOpen(false); }
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
     setIsAppDownloadModalOpen(true);
   };
   const closeAppDownloadModal = () => setIsAppDownloadModalOpen(false);
 
   const openLoginModal = () => {
-    if (!isLoggedIn) { // Only open if not logged in
-      if (isMenuOpen) { setIsMenuOpen(false); }
+    if (!isLoggedIn) {
+      // Only open if not logged in
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
       setIsLoginModalOpen(true);
     }
   };
@@ -63,9 +83,15 @@ export function Navigation() {
   };
 
   const openLoopAgentModal = () => {
-    if (isMenuOpen) { setIsMenuOpen(false); }
-    if (isFoundersOpen) { setIsFoundersOpen(false); }
-    if (isMobileFoundersOpen) { setIsMobileFoundersOpen(false); }
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+    if (isFoundersOpen) {
+      setIsFoundersOpen(false);
+    }
+    if (isMobileFoundersOpen) {
+      setIsMobileFoundersOpen(false);
+    }
     setIsLoopAgentModalOpen(true);
   };
   const closeLoopAgentModal = () => setIsLoopAgentModalOpen(false);
@@ -77,51 +103,57 @@ export function Navigation() {
   };
 
   useEffect(() => {
-    setIsMenuOpen(false)
-    setIsMobileFoundersOpen(false)
-    setIsFoundersOpen(false)
+    setIsMenuOpen(false);
+    setIsMobileFoundersOpen(false);
+    setIsFoundersOpen(false);
     setIsProfileDropdownOpen(false); // Close profile dropdown on route change
-  }, [pathname])
+  }, [pathname]);
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
-        setIsMenuOpen(false)
-        setIsFoundersOpen(false)
+        setIsMenuOpen(false);
+        setIsFoundersOpen(false);
         setIsProfileDropdownOpen(false); // Close profile dropdown on escape
         closeAppDownloadModal();
         closeLoginModal();
         closeLoopAgentModal();
       }
-    }
-    document.addEventListener("keydown", handleEscape)
-    return () => document.removeEventListener("keydown", handleEscape)
-  }, []) // Removed dependencies as they are stable
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []); // Removed dependencies as they are stable
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (foundersDropdownRef.current && !foundersDropdownRef.current.contains(event.target)) {
-        setIsFoundersOpen(false)
+      if (
+        foundersDropdownRef.current &&
+        !foundersDropdownRef.current.contains(event.target)
+      ) {
+        setIsFoundersOpen(false);
       }
-      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target)
+      ) {
         setIsProfileDropdownOpen(false); // Close profile dropdown on click outside
       }
-    }
+    };
 
     if (isFoundersOpen || isProfileDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isFoundersOpen, isProfileDropdownOpen])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isFoundersOpen, isProfileDropdownOpen]);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const profileMenuItems = [
     { label: "My bookmark", icon: Bookmark, href: "/profile/bookmarks" },
@@ -130,10 +162,16 @@ export function Navigation() {
     { label: "Settings", icon: Settings, href: "/profile/settings" },
   ];
 
-  console.log("currentUser", currentUser)
+  console.log("currentUser", currentUser);
 
   // This provides a fallback if currentUser is null even when isLoggedIn is true
-  const displayUser = isLoggedIn ? (currentUser || { name: "User", email: "user@example.com", profileImage: "https://avatar.iran.liara.run/public/boy?username=guest" }) : null;
+  const displayUser = isLoggedIn
+    ? currentUser || {
+        name: "User",
+        email: "user@example.com",
+        profileImage: "https://avatar.iran.liara.run/public/boy?username=guest",
+      }
+    : null;
 
   return (
     <header className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 sticky top-0 z-50">
@@ -144,7 +182,9 @@ export function Navigation() {
               <div className="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mr-2">
                 <span className="text-white font-bold text-sm">V</span>
               </div>
-              <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">Venturloop</span>
+              <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
+                Venturloop
+              </span>
             </Link>
           </div>
 
@@ -155,18 +195,28 @@ export function Navigation() {
                 className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
               >
                 For Founders
-                <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${isFoundersOpen ? "rotate-180" : ""}`} />
+                <ChevronDown
+                  className={`h-4 w-4 ml-1 transition-transform duration-200 ${
+                    isFoundersOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
               {isFoundersOpen && (
                 <div className="absolute mt-2 w-auto min-w-max bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-gray-700">
                   <button
-                    onClick={() => {openLoopAgentModal(); setIsFoundersOpen(false);}}
+                    onClick={() => {
+                      openLoopAgentModal();
+                      setIsFoundersOpen(false);
+                    }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     Loop Mini o1
                   </button>
                   <button
-                    onClick={() => {handleScrollToOurOfferings(); setIsFoundersOpen(false);}}
+                    onClick={() => {
+                      handleScrollToOurOfferings();
+                      setIsFoundersOpen(false);
+                    }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     Our Offerings
@@ -206,19 +256,42 @@ export function Navigation() {
             </Button>
             {isLoggedIn && displayUser ? (
               <div className="relative" ref={profileDropdownRef}>
-                <button onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)} className="rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 mt-2 focus:ring-blue-500">
+                <button
+                  onClick={() =>
+                    setIsProfileDropdownOpen(!isProfileDropdownOpen)
+                  }
+                  className="rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 mt-2 focus:ring-blue-500"
+                >
                   <img
-                    src={displayUser.profileImage || "https://avatar.iran.liara.run/public/boy?username=guest"}
+                    src={
+                      displayUser?.profile?.profilePhoto ||
+                      "https://avatar.iran.liara.run/public/boy?username=guest"
+                    }
                     alt="Profile"
                     className="h-9  w-9 rounded-full object-cover"
                   />
                 </button>
                 {isProfileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-gray-700">
-                    <div className="px-4 py-3 border-b dark:border-gray-700">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{displayUser.name}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{displayUser.email}</p>
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-   gray-700">
+                    <div className="px-4 py-3 flex items-center gap-3 border-b dark:border-gray-700">
+                      <img
+                        src={
+                          displayUser?.profile?.profilePhoto ||
+                          "https://avatar.iran.liara.run/public/boy?username=guest"
+                        }
+                        alt="Profile"
+                        className="h-9 w-9 rounded-full object-cover"
+                      />
+                      <div className="flex flex-col overflow-hidden">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                          {displayUser?.name || "Guest User"}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                          {displayUser?.email || "guest@example.com"}
+                        </p>
+                      </div>
                     </div>
+
                     {profileMenuItems.map((item) => (
                       <Link
                         key={item.label}
@@ -261,7 +334,11 @@ export function Navigation() {
               className="h-10 w-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -273,13 +350,20 @@ export function Navigation() {
                 <>
                   <div className="px-4 pt-2 pb-4 flex items-center">
                     <img
-                      src={displayUser.profileImage || "https://avatar.iran.liara.run/public/boy?username=guest"}
+                      src={
+                        displayUser.profileImage ||
+                        "https://avatar.iran.liara.run/public/boy?username=guest"
+                      }
                       alt="Profile"
                       className="h-12 w-12 rounded-full object-cover mr-3"
                     />
                     <div>
-                      <p className="font-semibold text-gray-800 dark:text-white">{displayUser.name}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{displayUser.email}</p>
+                      <p className="font-semibold text-gray-800 dark:text-white">
+                        {displayUser.name}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {displayUser.email}
+                      </p>
                     </div>
                   </div>
                   <div className="mx-4 mb-3 border-t border-gray-200 dark:border-gray-700"></div>
@@ -302,25 +386,35 @@ export function Navigation() {
 
                 <div>
                   <button
-                    onClick={() => setIsMobileFoundersOpen(!isMobileFoundersOpen)}
+                    onClick={() =>
+                      setIsMobileFoundersOpen(!isMobileFoundersOpen)
+                    }
                     className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
                   >
                     <div className="flex items-center">
                       <Users className="h-5 w-5 mr-3" />
                       For Founders
                     </div>
-                    <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isMobileFoundersOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                      className={`h-5 w-5 transition-transform duration-200 ${
+                        isMobileFoundersOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
                   {isMobileFoundersOpen && (
                     <div className="pl-8 pr-4 py-1 space-y-1">
                       <button
-                        onClick={() => { openLoopAgentModal(); }}
+                        onClick={() => {
+                          openLoopAgentModal();
+                        }}
                         className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         Loop Mini o1
                       </button>
                       <button
-                        onClick={() => { handleScrollToOurOfferings(); }}
+                        onClick={() => {
+                          handleScrollToOurOfferings();
+                        }}
                         className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         Our Offerings
@@ -377,7 +471,9 @@ export function Navigation() {
 
               <div className="px-2 space-y-2">
                 <Button
-                  onClick={() => { openAppDownloadModal(); }}
+                  onClick={() => {
+                    openAppDownloadModal();
+                  }}
                   className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium rounded-xl py-3 flex items-center justify-center"
                 >
                   <Download className="h-4 w-4 mr-2" />
@@ -394,7 +490,9 @@ export function Navigation() {
                   </Button>
                 ) : (
                   <Button
-                    onClick={() => { openLoginModal();}}
+                    onClick={() => {
+                      openLoginModal();
+                    }}
                     variant="outline"
                     className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
                   >
@@ -409,12 +507,25 @@ export function Navigation() {
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-25 lg:hidden z-30" onClick={() => setIsMenuOpen(false)} />
+        <div
+          className="fixed inset-0 bg-black bg-opacity-25 lg:hidden z-30"
+          onClick={() => setIsMenuOpen(false)}
+        />
       )}
 
-      <AppDownloadModal isOpen={isAppDownloadModalOpen} onClose={closeAppDownloadModal} />
-      <LoginModal isOpen={isLoginModalOpen && !isLoggedIn} onClose={closeLoginModal} onOpenAppDownloadModal={openAppDownloadFromLoginModal} />
-      <LoopAgentModal isOpen={isLoopAgentModalOpen} onClose={closeLoopAgentModal} />
+      <AppDownloadModal
+        isOpen={isAppDownloadModalOpen}
+        onClose={closeAppDownloadModal}
+      />
+      <LoginModal
+        isOpen={isLoginModalOpen && !isLoggedIn}
+        onClose={closeLoginModal}
+        onOpenAppDownloadModal={openAppDownloadFromLoginModal}
+      />
+      <LoopAgentModal
+        isOpen={isLoopAgentModalOpen}
+        onClose={closeLoopAgentModal}
+      />
     </header>
-  )
+  );
 }

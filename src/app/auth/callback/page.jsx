@@ -85,7 +85,7 @@ const AuthCallbackContent = () => {
             Authentication Failed
           </h2>
           <p className="text-gray-500 mt-1">{error}</p>
-          <a href="/login" className="text-indigo-600 underline mt-2">
+          <a href="/" className="text-indigo-600 underline mt-2">
             Try logging in again
           </a>
         </>
