@@ -8,10 +8,11 @@ import {
   Briefcase,
   GitFork,
   Brain,
-  Link,
+  Link as LinkIcon, // Aliased Link to LinkIcon
   Rocket,
 } from "lucide-react"; // Add new icons
 import { useState, useEffect } from "react";
+import Link from 'next/link'; // Import Link
 import { Navigation } from "@/components/navigation";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection"; // Import the new component
@@ -102,21 +103,21 @@ export default function HomeClient() {
   ];
 
   const investorLogos = [
-    { name: "Y Combinator", logo: "/placeholder-logo1.png" },
-    { name: "Sequoia", logo: "/placeholder-logo2.png" },
-    { name: "Accel", logo: "/placeholder-logo3.png" },
-    { name: "Andreessen", logo: "/placeholder-logo4.png" },
-    { name: "Kleiner", logo: "/placeholder-logo5.png" },
-    { name: "Founders", logo: "/placeholder-logo6.png" },
-    { name: "Greylock", logo: "/placeholder-logo7.png" },
-    { name: "Index", logo: "/placeholder-logo8.png" },
-    { name: "Tiger", logo: "/placeholder-logo9.png" },
-    { name: "Benchmark", logo: "/placeholder-logo10.png" },
-    { name: "First Round", logo: "/placeholder-logo11.png" },
-    { name: "NEA", logo: "/placeholder-logo12.png" },
-    { name: "GV", logo: "/placeholder-logo13.png" },
-    { name: "Insight", logo: "/placeholder-logo14.png" },
-    { name: "Lightspeed", logo: "/placeholder-logo15.png" },
+    { name: "Y Combinator", logo: "/placeholder-logo1.png", id: "1" },
+    { name: "Sequoia", logo: "/placeholder-logo2.png", id: "2" },
+    { name: "Accel", logo: "/placeholder-logo3.png", id: "3" },
+    { name: "Andreessen", logo: "/placeholder-logo4.png", id: "4" },
+    { name: "Kleiner", logo: "/placeholder-logo5.png", id: "5" },
+    { name: "Founders", logo: "/placeholder-logo6.png", id: "6" },
+    { name: "Greylock", logo: "/placeholder-logo7.png", id: "7" },
+    { name: "Index", logo: "/placeholder-logo8.png", id: "8" },
+    { name: "Tiger", logo: "/placeholder-logo9.png", id: "9" },
+    { name: "Benchmark", logo: "/placeholder-logo10.png", id: "10" },
+    { name: "First Round", logo: "/placeholder-logo11.png", id: "11" },
+    { name: "NEA", logo: "/placeholder-logo12.png", id: "12" },
+    { name: "GV", logo: "/placeholder-logo13.png", id: "13" },
+    { name: "Insight", logo: "/placeholder-logo14.png", id: "14" },
+    { name: "Lightspeed", logo: "/placeholder-logo15.png", id: "15" },
   ];
 
   const openLoginModal = () => setIsLoginModalOpen(true);
@@ -516,7 +517,7 @@ export default function HomeClient() {
                   </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
-                  <Link className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+                  <LinkIcon className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" /> {/* Updated to LinkIcon */}
                   <span
                     id="matchesCount"
                     className="text-2xl font-bold text-gray-900 dark:text-white"
@@ -662,32 +663,34 @@ export default function HomeClient() {
           <div className="relative">
             <div className="flex space-x-8 animate-scroll-left">
               {/* First set of logos */}
-              {investorLogos.map((investor, index) => (
-                <div
-                  key={`first-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {investor.name}
-                    </span>
+              {investorLogos.map((investor) => (
+                <Link key={`first-${investor.id}`} href={`/investor/${investor.id}`}>
+                  <div
+                    className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
+                  >
+                    <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                      <img src={investor.logo} alt={investor.name} className="h-full mr-2" />
+                      <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                        {investor.name}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
               {/* Duplicate set for seamless loop */}
-              {investorLogos.map((investor, index) => (
-                <div
-                  key={`second-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {investor.name}
-                    </span>
+              {investorLogos.map((investor) => (
+                <Link key={`second-${investor.id}`} href={`/investor/${investor.id}`}>
+                  <div
+                    className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
+                  >
+                    <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                      <img src={investor.logo} alt={investor.name} className="h-full mr-2" />
+                      <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                        {investor.name}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -696,32 +699,34 @@ export default function HomeClient() {
           <div className="relative mt-8">
             <div className="flex space-x-8 animate-scroll-right">
               {/* First set of logos (reversed) */}
-              {[...investorLogos].reverse().map((investor, index) => (
-                <div
-                  key={`third-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {investor.name}
-                    </span>
+              {[...investorLogos].reverse().map((investor) => (
+                <Link key={`third-${investor.id}`} href={`/investor/${investor.id}`}>
+                  <div
+                    className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
+                  >
+                    <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                      <img src={investor.logo} alt={investor.name} className="h-full mr-2" />
+                      <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                        {investor.name}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
               {/* Duplicate set for seamless loop */}
-              {[...investorLogos].reverse().map((investor, index) => (
-                <div
-                  key={`fourth-${index}`}
-                  className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
-                >
-                  <div className="h-8 flex items-center justify-center whitespace-nowrap">
-                    <img src={investor.logo} alt={investor.name} className="h-6 mr-2" />
-                    <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
-                      {investor.name}
-                    </span>
+              {[...investorLogos].reverse().map((investor) => (
+                <Link key={`fourth-${investor.id}`} href={`/investor/${investor.id}`}>
+                  <div
+                    className="bg-white dark:bg-gray-800 px-8 py-4 rounded-lg shadow-sm flex-shrink-0 hover-lift"
+                  >
+                    <div className="h-8 flex items-center justify-center whitespace-nowrap">
+                      <img src={investor.logo} alt={investor.name} className="h-full mr-2" />
+                      <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                        {investor.name}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
