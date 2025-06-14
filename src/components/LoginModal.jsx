@@ -1,29 +1,55 @@
 // LoginModal.jsx
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState, Suspense } from 'react'; // Import Suspense
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog.jsx";
 import { Button } from "@/components/ui/button.jsx";
-import { Users, LogIn, UserPlus, Download } from 'lucide-react'; // Or any other appropriate icons
+import { Users, LogIn, UserPlus, Download, AlertTriangle } from 'lucide-react';
 
-const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
-  if (!isOpen) return null;
+// Inner component that uses useSearchParams
+const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
+  const searchParams = useSearchParams();
+  // const router = useRouter(); // Router might not be needed if not clearing params
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // TODO: Implement actual Login, Create Account, and App Download functionalities
+  useEffect(() => {
+    // Only process if the modal is open and searchParams is available
+    if (isOpen && searchParams) {
+      const errorParam = searchParams.get('error');
+      if (errorParam) {
+        if (errorParam === 'authentication_failed') {
+          setErrorMessage('Login failed. Please try again. If the problem persists, contact support.');
+        } else if (errorParam === 'missing_credentials') {
+          setErrorMessage('Authentication callback was missing necessary information. Please try logging in again.');
+        } else {
+          setErrorMessage('An unknown error occurred. Please try again.');
+        }
+        // Optional: Clear the error from URL. Consider implications.
+        // router.replace(window.location.pathname, undefined, { shallow: true });
+      } else {
+        setErrorMessage(''); // Clear if no error
+      }
+    }
+  // Effect dependencies: isOpen to re-check when modal opens, searchParams to react to URL changes.
+  }, [isOpen, searchParams]);
+
+  // Event handlers for modal actions
   const handleLogin = () => {
     window.location.href = 'https://auth.venturloop.com/login';
   };
-
   const handleCreateAccount = () => {
     window.location.href = 'https://auth.venturloop.com/auth/signup';
   };
-
   const handleDownloadApp = () => {
     console.log("Download App action triggered");
     if(onOpenAppDownloadModal) {
       onOpenAppDownloadModal();
     }
-    onClose(); // Close this modal to open the other
+    onClose();
   };
 
+  // Actual Dialog rendering
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl">
@@ -35,8 +61,13 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
           <DialogDescription className="text-gray-600 dark:text-gray-300 mt-2 mb-6">
             Join our community or access your account to continue.
           </DialogDescription>
+          {errorMessage && (
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-md mb-4 text-sm flex items-center">
+              <AlertTriangle className="h-5 w-5 mr-2" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
         </DialogHeader>
-
         <div className="space-y-4">
           <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin}>
             <LogIn className="mr-2 h-5 w-5" /> Login
@@ -53,7 +84,6 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
             <Download className="mr-2 h-5 w-5" /> Download VenturLoop App
           </Button>
         </div>
-
         <div className="mt-8 text-center">
           <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500">
             Maybe Later
@@ -61,6 +91,21 @@ const LoginModal = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
         </div>
       </DialogContent>
     </Dialog>
+  );
+};
+
+// Main LoginModal component that wraps the content with Suspense
+const LoginModal = (props) => {
+  // Do not render Suspense or ModalContent if modal is not open
+  if (!props.isOpen) return null;
+
+  return (
+    // Keying Suspense with props.isOpen ensures it re-evaluates when modal visibility changes,
+    // though for reading searchParams, this might not be strictly needed if structure is correct.
+    // Fallback can be null for a modal that appears over content, or a very minimal loader.
+    <Suspense fallback={null}>
+      <LoginModalContent {...props} />
+    </Suspense>
   );
 };
 
