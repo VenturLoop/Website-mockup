@@ -10,6 +10,7 @@ import { useUser } from "@/context/UserContext.js";
 import LoginModal from "@/components/LoginModal.jsx";
 import { EditProfileModal } from "@/components/EditProfileModal.jsx";
 import { ShareProfileModal } from "@/components/ShareProfileModal.jsx";
+import { MyConnectionsModal } from "@/components/MyConnectionsModal.jsx";
 import Footer from '@/components/Footer.jsx';
 
 // Mock data - will be replaced or fetched based on userId
@@ -62,6 +63,8 @@ export default function UserProfilePage() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isMyConnectionsModalOpen, setIsMyConnectionsModalOpen] = useState(false);
+  const [connectionsData, setConnectionsData] = useState({ list: [], total: 0 });
   const [profileUrl, setProfileUrl] = useState('');
 
   useEffect(() => {
@@ -131,6 +134,30 @@ export default function UserProfilePage() {
     alert("Connect request functionality not yet implemented.");
   };
 
+  const handleOpenConnectionsModal = () => {
+    const displayedTotalConnections = totalConnections || 0; // from userProfileData or currentUser
+
+    if (isOwnProfile && currentUser) {
+      // For own profile, use a specific mock list. The total should match currentUser.totalConnections.
+      const ownMockList = [
+        { userId: 'connUser1', name: 'My Connection Alpha', profilePhotoUrl: '/placeholder.jpg', bio: 'Alpha bio - connected to me.' },
+        { userId: 'connUser2', name: 'My Connection Beta', profilePhotoUrl: '/placeholder.jpg', bio: 'Beta bio - also connected.' },
+        { userId: 'connUser3', name: 'My Connection Gamma', profilePhotoUrl: '/placeholder.jpg', bio: 'Gamma - another connection.' },
+      ];
+      // Adjust list to not exceed actual total, though ideally mock list length matches total
+      setConnectionsData({ list: ownMockList.slice(0, displayedTotalConnections), total: displayedTotalConnections });
+    } else {
+      // For viewing another user's profile, use a different mock set.
+      // The total should match userProfileData.totalConnections for the viewed user.
+      const otherUserMockList = [
+        { userId: 'otherConnA', name: 'Other User Connection A', profilePhotoUrl: '/placeholder.jpg', bio: 'Viewing another profile\'s connection A.' },
+        { userId: 'otherConnB', name: 'Other User Connection B', profilePhotoUrl: '/placeholder.jpg', bio: 'Viewing another profile\'s connection B.' },
+      ];
+      setConnectionsData({ list: otherUserMockList.slice(0, displayedTotalConnections), total: displayedTotalConnections });
+    }
+    setIsMyConnectionsModalOpen(true);
+  };
+
   return (
     <>
       <Navigation />
@@ -171,10 +198,15 @@ export default function UserProfilePage() {
                 </div>
               <div className="w-full text-center md:text-left pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Stats</h3>
-                 <div className="flex items-center justify-center md:justify-start text-gray-600 dark:text-gray-400 mb-2">
-                   <Users size={18} className="mr-2 text-blue-500 dark:text-blue-400" />
-                   <span>{totalConnections || 0} Connections</span>
-                 </div>
+                  <button
+                    onClick={(totalConnections || 0) > 0 ? handleOpenConnectionsModal : undefined}
+                    disabled={!((totalConnections || 0) > 0)}
+                    className={`flex items-center justify-center md:justify-start text-gray-600 dark:text-gray-400 mb-2 w-full text-left ${(totalConnections || 0) > 0 ? 'cursor-pointer hover:opacity-80' : 'cursor-default'}`}
+                    aria-label={(totalConnections || 0) > 0 ? "View connections" : "No connections"}
+                  >
+                    <Users size={18} className="mr-2 text-blue-500 dark:text-blue-400 flex-shrink-0" />
+                    <span>{totalConnections || 0} Connection{(totalConnections || 0) !== 1 ? 's' : ''}</span>
+                  </button>
                  <div className="flex items-center justify-center md:justify-start text-gray-600 dark:text-gray-400">
                    <Eye size={18} className="mr-2 text-blue-500 dark:text-blue-400" />
                    <span>{viewCount || 0} Profile Views</span>
@@ -255,6 +287,12 @@ export default function UserProfilePage() {
         isOpen={isShareModalOpen}
         onClose={() => setIsShareModalOpen(false)}
         profileUrl={profileUrl}
+      />
+      <MyConnectionsModal
+        isOpen={isMyConnectionsModalOpen}
+        onClose={() => setIsMyConnectionsModalOpen(false)}
+        connectionsList={connectionsData.list}
+        totalConnections={connectionsData.total}
       />
       <Footer />
     </>
