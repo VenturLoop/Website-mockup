@@ -24,6 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AppDownloadModal } from "../components/AppDownloadModal";
 import LoginModal from "../components/LoginModal";
 import { LoopAgentModal } from "../components/LoopAgentModal";
+import MyBookmarksModal from "./MyBookmarksModal"; // Changed import
 import { useUser } from "@/context/UserContext"; // Import useUser
 
 export function Navigation() {
@@ -34,6 +35,7 @@ export function Navigation() {
   const [isFoundersOpen, setIsFoundersOpen] = useState(false);
   const [isMobileFoundersOpen, setIsMobileFoundersOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // State for profile dropdown
+  const [isBookmarkModalOpen, setIsBookmarkModalOpen] = useState(false); // Added state for bookmark modal
 
   const router = useRouter();
   const pathname = usePathname();
@@ -114,15 +116,16 @@ export function Navigation() {
       if (e.key === "Escape") {
         setIsMenuOpen(false);
         setIsFoundersOpen(false);
-        setIsProfileDropdownOpen(false); // Close profile dropdown on escape
+        setIsProfileDropdownOpen(false);
         closeAppDownloadModal();
         closeLoginModal();
         closeLoopAgentModal();
+        setIsBookmarkModalOpen(false); // Ensure bookmark modal is closed
       }
     };
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, []); // Removed dependencies as they are stable
+  }, []); // No dependencies needed if close functions are stable
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -156,7 +159,14 @@ export function Navigation() {
   };
 
   const profileMenuItems = [
-    { label: "My bookmark", icon: Bookmark, href: "/profile/bookmarks" },
+    {
+      label: "My bookmark",
+      icon: Bookmark,
+      onClick: () => {
+        setIsBookmarkModalOpen(true);
+        setIsProfileDropdownOpen(false); // Close profile dropdown
+      }
+    },
     { label: "Updates", icon: Bell, href: "/profile/updates" },
     { label: "My startup profile", icon: Briefcase, href: "/profile/startup" },
     { label: "Settings", icon: Settings, href: "/profile/settings" },
@@ -292,17 +302,36 @@ export function Navigation() {
                       </div>
                     </div>
 
-                    {profileMenuItems.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        onClick={() => setIsProfileDropdownOpen(false)}
-                      >
-                        <item.icon className="h-4 w-4 mr-2" />
-                        {item.label}
-                      </Link>
-                    ))}
+                    {profileMenuItems.map((item) => {
+                      const commonProps = {
+                        key: item.label,
+                        className: "flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
+                        onClick: (e) => {
+                          if (item.onClick) {
+                            if (item.href) e.preventDefault();
+                            item.onClick();
+                          } else {
+                            setIsProfileDropdownOpen(false);
+                          }
+                        }
+                      };
+
+                      if (item.href && !item.onClick) {
+                        return (
+                          <Link href={item.href} {...commonProps}>
+                            <item.icon className="h-4 w-4 mr-2" />
+                            {item.label}
+                          </Link>
+                        );
+                      } else {
+                        return (
+                          <button {...commonProps} type="button">
+                            <item.icon className="h-4 w-4 mr-2" />
+                            {item.label}
+                          </button>
+                        );
+                      }
+                    })}
                     <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
                     <button
                       onClick={handleLogout}
@@ -452,17 +481,35 @@ export function Navigation() {
                 {isLoggedIn && (
                   <>
                     <div className="mx-2 my-2 border-t border-gray-200 dark:border-gray-700"></div>
-                    {profileMenuItems.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <item.icon className="h-5 w-5 mr-3" />
-                        {item.label}
-                      </Link>
-                    ))}
+                    {profileMenuItems.map((item) => {
+                      const commonProps = {
+                        key: item.label,
+                        className: "flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
+                        onClick: (e) => {
+                          if (item.onClick) {
+                            if (item.href) e.preventDefault();
+                            item.onClick();
+                          }
+                          setIsMenuOpen(false);
+                        }
+                      };
+
+                      if (item.href && !item.onClick) {
+                        return (
+                          <Link href={item.href} {...commonProps}>
+                            <item.icon className="h-5 w-5 mr-3" />
+                            {item.label}
+                          </Link>
+                        );
+                      } else {
+                        return (
+                          <button {...commonProps} type="button">
+                            <item.icon className="h-5 w-5 mr-3" />
+                            {item.label}
+                          </button>
+                        );
+                      }
+                    })}
                   </>
                 )}
               </div>
@@ -525,6 +572,10 @@ export function Navigation() {
       <LoopAgentModal
         isOpen={isLoopAgentModalOpen}
         onClose={closeLoopAgentModal}
+      />
+      <MyBookmarksModal
+        isOpen={isBookmarkModalOpen}
+        onClose={() => setIsBookmarkModalOpen(false)}
       />
     </header>
   );
