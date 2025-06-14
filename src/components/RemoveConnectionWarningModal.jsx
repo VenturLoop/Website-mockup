@@ -7,8 +7,8 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '../ui/dialog'; // Adjusted path
-import { Button } from '../ui/button'; // Adjusted path
+} from '@/components/ui/dialog'; // Corrected
+import { Button } from '@/components/ui/button'; // Corrected
 
 const RemoveConnectionWarningModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
