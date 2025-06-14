@@ -318,8 +318,18 @@ export function Navigation() {
                   />
                 </button>
                 {isProfileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-   gray-700">
-                    <div className="px-4 py-3 flex items-center gap-3 border-b dark:border-gray-700">
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-gray-700">
+                    <button
+                      onClick={() => {
+                        if (currentUser && currentUser.userId) {
+                          router.push(`/profile/${currentUser.userId}`);
+                        }
+                        setIsProfileDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 flex items-center gap-3 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                      role="button"
+                      tabIndex="0"
+                    >
                       <img
                         src={
                           displayUser?.profile?.profilePhoto ||
@@ -336,7 +346,7 @@ export function Navigation() {
                           {displayUser?.email || "guest@example.com"}
                         </p>
                       </div>
-                    </div>
+                    </button>
 
                     {profileMenuItems.map((item) => {
                       const commonProps = {
