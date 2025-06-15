@@ -46,7 +46,6 @@ const AuthCallbackContent = () => {
         if (!userRes.ok) throw new Error("User fetch failed");
 
         const { user } = await userRes.json();
-        console.log("Current user Data ", user)
         if (!user) throw new Error("User not found");
 
         const sessionRes = await fetch("/api/auth/set-session", {
@@ -59,7 +58,6 @@ const AuthCallbackContent = () => {
 
         if (user) {
           localStorage.setItem('currentUser', JSON.stringify(user));
-          console.log("AuthCallbackContent: User data stored in localStorage.");
         }
         loginUser(user);
         setStatus("success");

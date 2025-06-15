@@ -37,10 +37,8 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
     if (selectedFile) {
       const objectUrl = URL.createObjectURL(selectedFile);
       setImagePreviewUrl(objectUrl);
-      // console.log("Created object URL:", objectUrl);
       return () => {
         URL.revokeObjectURL(objectUrl);
-        // console.log("Revoked object URL:", objectUrl);
       };
     } else {
       // No file selected, ensure preview reverts to current user's photo (or placeholder if none)
@@ -81,10 +79,8 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
   };
 
   const handleSaveChanges = async () => { // Made async to align with placeholder comments
-    console.log("Form data to save:", formData);
 
     if (selectedFile) {
-      console.log("New profile image selected:", selectedFile.name);
       // **Conceptual API Call - Placeholder**
       // 1. Upload `selectedFile` to a backend endpoint (e.g., /api/upload-image)
       //    const imageUploadFormData = new FormData();
@@ -114,7 +110,6 @@ export function EditProfileModal({ isOpen, onClose, currentUser }) {
       //    }
       // For now, just log and proceed to close.
     } else {
-      console.log("No new profile image selected.");
       // **Conceptual API Call for text data only - Placeholder**
       // try {
       //   // const profileUpdateResponse = await fetch('/api/update-profile', {

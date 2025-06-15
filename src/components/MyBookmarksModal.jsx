@@ -23,7 +23,7 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
   const tabs = [
     { id: "founder", label: "Founder Profiles", function: getSavedCofounder },
     { id: "investor", label: "Investor Profiles", function: getSavedInvestor },
-    { id: "projects", label: "Saved Projects", function: getSaveProject },
+    // { id: "projects", label: "Saved Projects", function: getSaveProject },
   ];
 
   useEffect(() => {
@@ -35,8 +35,7 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
         const tab = tabs.find((t) => t.id === activeTab);
         if (!tab?.function) return;
 
-        const result = await tab.function(currentUser?._id);
-        console.log("BookMark Result", result, currentUser?._id);
+        const result = await tab.function(currentUser?.userId);
         setBookmarksData(result?.data || []);
       } catch (err) {
         console.error("Failed to fetch bookmarks:", err);
@@ -47,7 +46,7 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
     };
 
     fetchData();
-  }, [activeTab, isLoggedIn, currentUser?._id]);
+  }, [activeTab, isLoggedIn, currentUser?.userId]);
 
   const renderEmptyOrLoading = (label) => {
     const base =
@@ -90,17 +89,28 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
     return (
       <div className="p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto">
         <h2 className="text-lg font-medium mb-4">Founder Profiles</h2>
-        {bookmarksData.map((item, idx) => (
+        {bookmarksData?.map((item, idx) => (
           <div
             key={idx}
-            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4"
+            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4 flex items-center gap-4"
           >
-            <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
-              {item.name || "Untitled"}
-            </h3>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              {item.about || "No description available."}
-            </p>
+            <img
+              src={
+                item?.profile?.profilePhoto ||
+                "https://avatar.iran.liara.run/public/boy?username=guest"
+              }
+              alt="User"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+
+            <div className="flex flex-col">
+              <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
+                {item?.name || "Untitled"}
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {item.profile?.status || "No description available."}
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -115,16 +125,27 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
       <div className="p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto">
         <h2 className="text-lg font-medium mb-4">Investor Profiles</h2>
         {bookmarksData.map((item, idx) => (
-          <div
+         <div
             key={idx}
-            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4"
+            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4 flex items-center gap-4"
           >
-            <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
-              {item.name || "Untitled"}
-            </h3>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              {item.about || "No description available."}
-            </p>
+            <img
+              src={
+                item?.image ||
+                "https://avatar.iran.liara.run/public/boy?username=guest"
+              }
+              alt="Investor"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+
+            <div className="flex flex-col">
+              <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
+                {item.name || "Untitled"}
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {item.investorType || "No description available."}
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -139,16 +160,27 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
       <div className="p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto">
         <h2 className="text-lg font-medium mb-4">Saved Projects</h2>
         {bookmarksData.map((item, idx) => (
-          <div
+         <div
             key={idx}
-            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4"
+            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4 flex items-center gap-4"
           >
-            <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
-              {item.title || "Untitled"}
-            </h3>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              {item.description || "No description available."}
-            </p>
+            <img
+              src={
+                item?.profile?.profilePhoto ||
+                "https://avatar.iran.liara.run/public/boy?username=guest"
+              }
+              alt="User"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+
+            <div className="flex flex-col">
+              <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
+                {item.name || "Untitled"}
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {item.about || "No description available."}
+              </p>
+            </div>
           </div>
         ))}
       </div>

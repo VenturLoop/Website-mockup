@@ -59,7 +59,6 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
     }, 2000);
   };
   const handleDownloadApp = () => {
-    console.log("Download App action triggered");
     if(onOpenAppDownloadModal) {
       onOpenAppDownloadModal();
     }

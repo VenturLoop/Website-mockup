@@ -82,7 +82,6 @@ const MyStartupProfileModal = ({ isOpen, onClose }) => {
   };
 
   const handleConfirmDeleteAction = () => {
-    console.log("Delete action confirmed. Clearing form data for user:", currentUser?.id);
     setStartupName('');
     setElevationPitch('');
     setLocation('');

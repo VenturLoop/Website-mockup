@@ -17,7 +17,6 @@ export function MyConnectionsModal({ isOpen, onClose, connectionsList = [], tota
   }
 
   const handleViewProfile = (userId) => {
-    console.log("View profile:", userId);
     router.push(`/profile/${userId}`);
     onClose(); // Close modal after navigation
   };
@@ -28,7 +27,6 @@ export function MyConnectionsModal({ isOpen, onClose, connectionsList = [], tota
   };
 
   const executeRemoveConnection = () => {
-    console.log("Confirmed: Remove connection for user", userToRemove);
     // TODO: API call to remove connection for userToRemove
     // Then potentially update connectionsList or refetch
     alert(`Placeholder: Connection with ${userToRemove} removed.`);

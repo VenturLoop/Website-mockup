@@ -215,7 +215,6 @@ export function Navigation() {
     },
   ];
 
-  console.log("currentUser", currentUser);
 
   // This provides a fallback if currentUser is null even when isLoggedIn is true
   const displayUser = isLoggedIn

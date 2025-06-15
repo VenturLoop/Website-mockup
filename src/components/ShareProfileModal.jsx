@@ -28,7 +28,6 @@ export function ShareProfileModal({ isOpen, onClose, profileUrl }) {
 
   // Placeholder social share functions
   const handleSocialShare = (platform) => {
-    console.log(`Sharing on ${platform}: ${profileUrl}`);
     // In a real app, you'd use window.open with the respective share URLs
     // e.g., for Twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(profileUrl)}&text=${encodeURIComponent("Check out this profile!")}`
   };

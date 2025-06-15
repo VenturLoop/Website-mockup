@@ -271,7 +271,6 @@ export default function HomeClient() {
     const fetchApiData = async () => {
       try {
         const results = await getInvestorListData();
-        console.log("results invest", results?.data1);
         if (results?.success) {
           setInvestorLogos(results?.data1);
           setInvestorLogos2(results?.data2);
