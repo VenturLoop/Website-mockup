@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 // VoLTEIcon (moved from src/components/icons/VoLTEIcon.jsx)
 const VoLTEIcon = ({ className }) => (
@@ -348,9 +349,12 @@ const PhoneMockup1 = () => {
         <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <img
-                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
-                alt="Venturloop Logo"
+              <Image
+                src="/appLogoT.png"
+                alt="VenturLoop app logo within a smartphone mockup showcasing startup connection features."
+                width={32}
+                height={32}
+                priority={true}
                 className="w-8 h-8 -white  object-contain mr-2 rounded-lg"
               />
             </div>
