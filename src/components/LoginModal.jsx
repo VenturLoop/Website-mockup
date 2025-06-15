@@ -12,7 +12,8 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
   const searchParams = useSearchParams();
   // const router = useRouter(); // Router might not be needed if not clearing params
   const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Add isLoading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(null); // 'login', 'createAccount', or null
 
   useEffect(() => {
     // Only process if the modal is open and searchParams is available
@@ -38,16 +39,20 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
   // Event handlers for modal actions
   const handleLogin = () => {
     setIsLoading(true);
+    setLoadingButton('login');
     setTimeout(() => {
       window.location.href = 'https://auth.venturloop.com/login';
       setIsLoading(false);
+      setLoadingButton(null);
     }, 2000);
   };
   const handleCreateAccount = () => {
     setIsLoading(true);
+    setLoadingButton('createAccount');
     setTimeout(() => {
       window.location.href = 'https://auth.venturloop.com/auth/signup';
       setIsLoading(false);
+      setLoadingButton(null);
     }, 2000);
   };
   const handleDownloadApp = () => {
@@ -77,29 +82,23 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
             </div>
           )}
         </DialogHeader>
-        {isLoading ? (
-          <div className="text-center">
-            <p>Loading...</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin} disabled={isLoading}>
-              <LogIn className="mr-2 h-5 w-5" /> Login
-            </Button>
-            <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount} disabled={isLoading}>
-              <UserPlus className="mr-2 h-5 w-5" /> Create Account
-            </Button>
-            <Button
-              variant='ghost'
-              disabled={isLoading}
-              className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
-              size="lg"
-              onClick={handleDownloadApp}
-            >
-              <Download className="mr-2 h-5 w-5" /> Download VenturLoop App
-            </Button>
-          </div>
-        )}
+        <div className="space-y-4">
+          <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin} disabled={isLoading}>
+            {loadingButton === 'login' ? 'Loading...' : <><LogIn className="mr-2 h-5 w-5" /> Login</>}
+          </Button>
+          <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount} disabled={isLoading}>
+            {loadingButton === 'createAccount' ? 'Loading...' : <><UserPlus className="mr-2 h-5 w-5" /> Create Account</>}
+          </Button>
+          <Button
+            variant='ghost'
+            disabled={isLoading}
+            className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
+            size="lg"
+            onClick={handleDownloadApp}
+          >
+            <Download className="mr-2 h-5 w-5" /> Download VenturLoop App
+          </Button>
+        </div>
         <div className="mt-8 text-center">
           <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500" disabled={isLoading}>
             Maybe Later
@@ -116,8 +115,6 @@ const LoginModal = (props) => {
   if (!props.isOpen) return null;
 
   return (
-    // Keying Suspense with props.isOpen ensures it re-evaluates when modal visibility changes,
-    // though for reading searchParams, this might not be strictly needed if structure is correct.
     // Fallback can be null for a modal that appears over content, or a very minimal loader.
     <Suspense fallback={null}>
       <LoginModalContent {...props} />
