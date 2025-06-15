@@ -20,6 +20,22 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true); // Start as true
 
   useEffect(() => {
+    // Try to load user from session storage first
+    try {
+      const storedUser = sessionStorage.getItem('currentUser');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+        setIsLoading(false);
+        console.log("UserProvider: User loaded from session storage.", user);
+        return; // IMPORTANT: Exit early if found in session storage
+      }
+    } catch (error) {
+      console.error("UserProvider: Error loading user from session storage", error);
+      // If parsing fails, treat as no user in session storage
+      sessionStorage.removeItem('currentUser');
+    }
     // This effect will run once on mount to try and load user from a session cookie
     const loadSessionFromCookie = async () => {
       setIsLoading(true);
@@ -58,6 +74,14 @@ export const UserProvider = ({ children }) => {
     if (userData) {
       setCurrentUser(userData);
       setIsLoggedIn(true);
+      if (userData) {
+        try {
+          sessionStorage.setItem('currentUser', JSON.stringify(userData));
+          console.log("UserProvider: User data stored in session storage during login.", userData);
+        } catch (error) {
+          console.error("UserProvider: Error storing user data in session storage during login", error);
+        }
+      }
       setIsLoading(false);
       console.log("UserContext: loginUser called with:", userData);
     } else {
@@ -77,6 +101,12 @@ export const UserProvider = ({ children }) => {
     } catch (error) {
       console.error("UserContext: Error clearing session cookie via API", error);
     } finally {
+      try {
+        sessionStorage.removeItem('currentUser');
+        console.log("UserProvider: User data removed from session storage during logout.");
+      } catch (error) {
+        console.error("UserProvider: Error removing user data from session storage during logout", error);
+      }
       setCurrentUser(null);
       setIsLoggedIn(false);
       setIsLoading(false);
