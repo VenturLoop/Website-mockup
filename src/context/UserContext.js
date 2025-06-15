@@ -20,21 +20,21 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true); // Start as true
 
   useEffect(() => {
-    // Try to load user from session storage first
+    // Try to load user from local storage first
     try {
-      const storedUser = sessionStorage.getItem('currentUser');
+      const storedUser = localStorage.getItem('currentUser');
       if (storedUser) {
         const user = JSON.parse(storedUser);
         setCurrentUser(user);
         setIsLoggedIn(true);
         setIsLoading(false);
-        console.log("UserProvider: User loaded from session storage.", user);
-        return; // IMPORTANT: Exit early if found in session storage
+        console.log("UserProvider: User loaded from localStorage.", user);
+        return; // IMPORTANT: Exit early if found in local storage
       }
     } catch (error) {
-      console.error("UserProvider: Error loading user from session storage", error);
-      // If parsing fails, treat as no user in session storage
-      sessionStorage.removeItem('currentUser');
+      console.error("UserProvider: Error loading user from localStorage", error);
+      // If parsing fails, treat as no user in local storage
+      localStorage.removeItem('currentUser');
     }
     // This effect will run once on mount to try and load user from a session cookie
     const loadSessionFromCookie = async () => {
@@ -76,10 +76,10 @@ export const UserProvider = ({ children }) => {
       setIsLoggedIn(true);
       if (userData) {
         try {
-          sessionStorage.setItem('currentUser', JSON.stringify(userData));
-          console.log("UserProvider: User data stored in session storage during login.", userData);
+          localStorage.setItem('currentUser', JSON.stringify(userData));
+          console.log("UserProvider: User data stored in localStorage during login.", userData);
         } catch (error) {
-          console.error("UserProvider: Error storing user data in session storage during login", error);
+          console.error("UserProvider: Error storing user data in localStorage during login", error);
         }
       }
       setIsLoading(false);
@@ -102,10 +102,10 @@ export const UserProvider = ({ children }) => {
       console.error("UserContext: Error clearing session cookie via API", error);
     } finally {
       try {
-        sessionStorage.removeItem('currentUser');
-        console.log("UserProvider: User data removed from session storage during logout.");
+        localStorage.removeItem('currentUser');
+        console.log("UserProvider: User data removed from localStorage during logout.");
       } catch (error) {
-        console.error("UserProvider: Error removing user data from session storage during logout", error);
+        console.error("UserProvider: Error removing user data from localStorage during logout", error);
       }
       setCurrentUser(null);
       setIsLoggedIn(false);

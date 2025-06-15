@@ -58,8 +58,8 @@ const AuthCallbackContent = () => {
         if (!sessionRes.ok) throw new Error("Failed to set session");
 
         if (user) {
-          sessionStorage.setItem('currentUser', JSON.stringify(user));
-          console.log("AuthCallbackContent: User data stored in session storage.");
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log("AuthCallbackContent: User data stored in localStorage.");
         }
         loginUser(user);
         setStatus("success");
