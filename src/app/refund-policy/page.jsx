@@ -1,7 +1,7 @@
 import PrivacyPolicyCompo from "@/components/PrivacyPolicyCompo";
 
 export const metadata = {
-  title: "Refund Policy | VenturLoop SaaS Subscription Refunds | Startup",
+  title: "Payment Policy | VenturLoop SaaS Subscription Refunds | Startup",
   description:
     "Understand VenturLoop's refund policy for SaaS subscriptions. Clear terms for requesting refunds on our cofounder matching platform.",
 };

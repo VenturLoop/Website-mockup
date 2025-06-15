@@ -36,7 +36,7 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
         if (!tab?.function) return;
 
         const result = await tab.function(currentUser?._id);
-        console.log("BookMark Result", result);
+        console.log("BookMark Result", result, currentUser?._id);
         setBookmarksData(result?.data || []);
       } catch (err) {
         console.error("Failed to fetch bookmarks:", err);
