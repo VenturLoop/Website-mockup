@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'; // Import useRouter
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
 import { useState, useEffect } from 'react'; // Added useEffect
 import Link from 'next/link'; // Make sure this import is added
+import FeedArticleCard from '@/components/FeedArticleCard'; // Import the new component
 import CreateArticleModal from '@/components/CreateArticleModal';
 import CreateArticleCard from '@/components/CreateArticleCard'; // New import
 import { AppDownloadModal } from '@/components/AppDownloadModal'; // Changed to named import
@@ -371,65 +372,16 @@ const Feed = () => {
         // Retrieve the expansion state for the current post
         const isExpanded = expandedComments[post.articleId] || false;
 
-        // Text truncation logic
-        const words = post.content.split(' ');
-        const isLongText = words.length > 30;
-        const truncatedText = isLongText ? words.slice(0, 30).join(' ') + '...' : post.content;
+        // Note: Text truncation logic (words, isLongText, truncatedText) is now encapsulated within FeedArticleCard.
 
         return (
           // Inside the map function:
-          <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6"> {/* Added mb-6 */}
-            {/* Top Section */}
-        <div className="flex items-start justify-between mb-4"> {/* Increased mb-3 to mb-4 */}
-          <div className="flex items-center">
-            <Link href={`/profile/${post.userId}`} passHref>
-              <a className="group"> {/* Added group class for potential hover effects on children */}
-                <img
-                  src={`https://i.pravatar.cc/40?u=${post.userId}`}
-                  alt={post.name}
-                  className="w-10 h-10 rounded-full mr-3 cursor-pointer group-hover:ring-2 group-hover:ring-blue-500 transition-all" // Added hover effect
-                />
-              </a>
-            </Link>
-            <div>
-              <Link href={`/profile/${post.userId}`} passHref>
-                <a className="font-semibold text-gray-900 dark:text-white hover:underline cursor-pointer text-sm"> {/* Added text-sm */}
-                  {post.name}
-                </a>
-              </Link>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Posted an article.</p> {/* Added mt-0.5 */}
-            </div>
-          </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{post.time}</span> {/* Added whitespace-nowrap */}
-        </div>
+          // The outer div for the entire card, including FeedArticleCard content and the Bottom/Comments sections
+          <div key={post.articleId || i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6">
+            <FeedArticleCard post={post} /> {/* This component now handles Top and Middle sections */}
 
-        {/* Middle Section */}
-        <div className="mb-4 flex flex-col"> {/* Changed to flex-col and removed items-start */}
-          <div className="flex-grow mb-3"> {/* Removed pr-4, added mb-3 */}
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
-              <span className="font-medium">Posted an article:</span> {truncatedText}
-            </p>
-            {isLongText && (
-              <Link href={`/article/${post.articleId}`} passHref>
-                <a className="text-blue-600 dark:text-blue-400 hover:underline ml-1 text-sm font-medium">
-                  see more
-                </a>
-              </Link>
-            )}
-          </div>
-          {post.image && (
-            <div className="w-full h-auto flex-shrink-0"> {/* Changed to w-full, h-auto, removed ml-2 */}
-              <img
-                src={post.image}
-                alt="Article image"
-                className="w-full h-full object-cover rounded-lg border border-gray-200 dark:border-gray-700"
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Bottom Section */}
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* Main container - unchanged for now */}
+            {/* Bottom Section - This remains from the original structure */}
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
           {/* Left group - REMOVED flex-shrink-1 */}
           <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 min-w-0">
             <div className="flex -space-x-2 flex-shrink-0"> {/* Avatars - flex-shrink-0 to prevent them from shrinking */}
