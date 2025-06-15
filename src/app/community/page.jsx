@@ -335,31 +335,31 @@ const Feed = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* Increased mt and pt */}
-          <div className="flex items-center gap-x-4"> {/* Increased gap */}
-            {/* Overlapping avatars (placeholders) */}
-            <div className="flex -space-x-2">
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* Main container - unchanged for now */}
+          {/* Left group - applied responsive gap and shrinking properties */}
+          <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 flex-shrink-1 min-w-0">
+            <div className="flex -space-x-2 flex-shrink-0"> {/* Avatars - flex-shrink-0 to prevent them from shrinking */}
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
             </div>
+            {/* Opinion text - added whitespace-nowrap and min-w-0 */}
             <button
               onClick={() => toggleComments(post.articleId)} // Updated onClick
               aria-expanded={isExpanded} // For accessibility
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap min-w-0"
             >
               {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
             </button>
-            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+            {/* Upvote text - added whitespace-nowrap and min-w-0 */}
+            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium whitespace-nowrap min-w-0">
               {post.upvotes} Upvote{post.upvotes !== 1 ? 's' : ''}
             </span>
           </div>
-          <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> {/* Icon size is fine */}
-              <path d="M7 10v12" />
-              <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" />
-            </svg>
-            Upvote
+          {/* Right Upvote button - largely unchanged, ensure it has flex-shrink-0 if it shouldn't shrink */}
+          <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" /></svg>
+            <span className="whitespace-nowrap">Upvote</span> {/* Added whitespace-nowrap to the text part of the button too */}
           </button>
         </div>
         {/* Comments Section - Conditionally Rendered */}
