@@ -336,8 +336,8 @@ const Feed = () => {
 
         {/* Bottom Section */}
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* Main container - unchanged for now */}
-          {/* Left group - applied responsive gap and shrinking properties */}
-          <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 flex-shrink-1 min-w-0">
+          {/* Left group - REMOVED flex-shrink-1 */}
+          <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 min-w-0">
             <div className="flex -space-x-2 flex-shrink-0"> {/* Avatars - flex-shrink-0 to prevent them from shrinking */}
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
