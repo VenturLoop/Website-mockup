@@ -39,8 +39,9 @@ const FeedArticleCard = (props) => {
 
   return (
     <div className="flex pt-1"> {/* Root flex container */}
-      {/* First Child (Avatar Gutter) */}
-      <div className="flex-shrink-0 mr-3">
+      {/* First Child ("Line & Avatars Column") */}
+      <div className="flex flex-col items-center mr-3">
+        {/* Main Poster's Avatar */}
         <Link href={`/profile/${post.userId}`} passHref>
           <a className="group">
             <img
@@ -50,11 +51,19 @@ const FeedArticleCard = (props) => {
             />
           </a>
         </Link>
+        {/* Vertical Line */}
+        <div className="w-px bg-gray-300 dark:bg-gray-600 flex-grow my-2"></div>
+        {/* 3 Small Avatars (Moved from Bottom Section) */}
+        <div className="flex -space-x-2 flex-shrink-0">
+          <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
+          <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
+          <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
+        </div>
       </div>
 
-      {/* Second Child (Content Column) */}
-      <div className="border-l border-gray-300 dark:border-gray-600 pl-3 flex-grow min-w-0">
-        {/* Top Section (Name/Time) - Avatar removed from here */}
+      {/* Second Child (Content Column) - Removed border-l and pl-3 */}
+      <div className="flex-grow min-w-0">
+        {/* Top Section (Name/Time) - Avatar already removed from here in previous step */}
         <div className="flex items-start justify-between mb-4">
           <div> {/* Name and "Posted an article" */}
             <Link href={`/profile/${post.userId}`} passHref>
@@ -92,14 +101,10 @@ const FeedArticleCard = (props) => {
           )}
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom Section - 3 small avatars removed from here */}
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
-          <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 min-w-0">
-            <div className="flex -space-x-2 flex-shrink-0">
-              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
-              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
-              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
-            </div>
+          <div className="flex items-center gap-x-2 lg:gap-x-3 min-w-0"> {/* Adjusted gap classes */}
+            {/* The div for 3 small avatars was here, now moved to the first column */}
             <button
               onClick={toggleCardComments}
               aria-expanded={isCommentsExpanded}
@@ -113,7 +118,7 @@ const FeedArticleCard = (props) => {
           </div>
           <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150 flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" /></svg>
-            <span className="whitespace-nowrap">Upvote</span>
+            <span className="hidden sm:inline whitespace-nowrap">Upvote</span> {/* Adjusted visibility */}
           </button>
         </div>
 
