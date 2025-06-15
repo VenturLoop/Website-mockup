@@ -261,11 +261,19 @@ const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // A
 
 const Feed = () => {
   const [expandedComments, setExpandedComments] = useState({}); // To store expanded state for each post
+  const [opinionSortOrder, setOpinionSortOrder] = useState({}); // To store sort order for each post
 
   const toggleComments = (articleId) => {
     setExpandedComments(prev => ({
       ...prev,
       [articleId]: !prev[articleId]
+    }));
+  };
+
+  const handleSortChange = (articleId, newSortOrder) => {
+    setOpinionSortOrder(prev => ({
+      ...prev,
+      [articleId]: newSortOrder
     }));
   };
 
@@ -391,54 +399,71 @@ const Feed = () => {
             </div>
 
             {/* Comment List Area */}
-            <div className="mt-6"> {/* Added top margin for separation from input area */}
-              {/* Recent Comments Section */}
-              <div className="mb-6">
-                <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">Recent Comments</h4>
-                <div className="space-y-4">
-                  {post.commentsArray && post.commentsArray.length > 0 ? (
-                    [...post.commentsArray].reverse().map((comment) => ( // Create a reversed copy for rendering
-                      <div key={comment.commentId} className="flex items-start space-x-3">
-                        <img src={comment.commenterAvatarUrl} alt={comment.commenterName} className="w-8 h-8 rounded-full flex-shrink-0 mt-1" />
-                        <div className="flex-grow bg-gray-50 dark:bg-gray-700 p-3 rounded-lg shadow"> {/* Changed dark:bg-gray-700/30 to dark:bg-gray-700 */}
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{comment.commenterName}</span>
-                            <span className="text-xs text-gray-400 dark:text-gray-500">{comment.commentTimestamp}</span>
-                          </div>
-                          <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{comment.commentText}</p> {/* Added whitespace-pre-wrap */}
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">No recent comments yet.</p>
-                  )}
+            <div className="mt-6"> {/* Assuming this is the main container for lists that was there */}
+              {/* New Main Header for Opinions */}
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
+                </h3>
+                {/* Sort Dropdown */}
+                <div className="relative"> {/* Container for select and potentially a custom arrow later */}
+                  <select
+                    value={opinionSortOrder[post.articleId] || 'latest'} // Default to 'latest'
+                    onChange={(e) => handleSortChange(post.articleId, e.target.value)}
+                    className="text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-8" // Basic styling, appearance-none to help with custom arrow if added
+                  >
+                    <option value="latest">Latest Opinions</option>
+                    <option value="trending">Trending Opinions</option>
+                  </select>
+                  {/* Basic dropdown arrow using SVG - for better appearance than default browser arrow */}
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
+                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  </div>
                 </div>
               </div>
 
-              {/* Trending Comments Section */}
-              <div>
-                <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">Trending Comments</h4>
-                <div className="space-y-4">
-                  {(() => { // IIFE to handle filtering and conditional rendering
-                    const trendingComments = post.commentsArray ? post.commentsArray.filter(comment => comment.isTrending) : [];
-                    if (trendingComments.length > 0) {
-                      return trendingComments.map((comment) => (
-                        <div key={comment.commentId} className="flex items-start space-x-3">
-                          <img src={comment.commenterAvatarUrl} alt={comment.commenterName} className="w-8 h-8 rounded-full flex-shrink-0 mt-1" />
-                          <div className="flex-grow bg-gray-50 dark:bg-gray-700 p-3 rounded-lg shadow"> {/* Changed dark:bg-gray-700/30 to dark:bg-gray-700 */}
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{comment.commenterName}</span>
-                              <span className="text-xs text-gray-400 dark:text-gray-500">{comment.commentTimestamp}</span>
-                            </div>
-                            <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{comment.commentText}</p> {/* Added whitespace-pre-wrap */}
-                          </div>
-                        </div>
-                      ));
-                    } else {
-                      return <p className="text-sm text-gray-500 dark:text-gray-400">No trending comments at the moment.</p>;
+              {/* The actual list of opinions will go below this header,
+                  replacing the old separate "Recent" and "Trending" list structures.
+              */}
+              <div className="space-y-4">
+                {(() => { // IIFE for cleaner logic separation
+                  const currentSortOrder = opinionSortOrder[post.articleId] || 'latest';
+                  let opinionsToDisplay = [];
+
+                  if (post.commentsArray && post.commentsArray.length > 0) {
+                    if (currentSortOrder === 'latest') {
+                      opinionsToDisplay = [...post.commentsArray].reverse(); // Show all, newest first by reversing
+                    } else if (currentSortOrder === 'trending') {
+                      opinionsToDisplay = post.commentsArray.filter(opinion => opinion.isTrending);
                     }
-                  })()}
-                </div>
+                  }
+
+                  if (opinionsToDisplay.length > 0) {
+                    return opinionsToDisplay.map((opinion) => (
+                      // Re-using the individual opinion item structure from previous steps
+                      <div key={opinion.commentId} className="flex items-start space-x-3">
+                        <img src={opinion.commenterAvatarUrl} alt={opinion.commenterName} className="w-8 h-8 rounded-full flex-shrink-0 mt-1" />
+                        <div className="flex-grow bg-gray-50 dark:bg-gray-700 p-3 rounded-lg shadow">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{opinion.commenterName}</span>
+                            <span className="text-xs text-gray-400 dark:text-gray-500">{opinion.commentTimestamp}</span>
+                          </div>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{opinion.commentText}</p>
+                        </div>
+                      </div>
+                    ));
+                  } else {
+                    // Display a message based on why the list might be empty
+                    if (currentSortOrder === 'trending') {
+                      return <p className="text-sm text-gray-500 dark:text-gray-400">No trending opinions at the moment.</p>;
+                    } else if (!post.commentsArray || post.commentsArray.length === 0) {
+                       return <p className="text-sm text-gray-500 dark:text-gray-400">No opinions yet. Be the first to share!</p>;
+                    } else {
+                       // This case should ideally not be hit if logic is correct, but as a fallback:
+                       return <p className="text-sm text-gray-500 dark:text-gray-400">No opinions to display for this filter.</p>;
+                    }
+                  }
+                })()}
               </div>
             </div>
           </div>
