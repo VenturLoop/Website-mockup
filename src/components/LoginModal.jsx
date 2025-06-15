@@ -1,17 +1,20 @@
 // LoginModal.jsx
 "use client";
 
-import React, { useEffect, useState, Suspense } from 'react'; // Import Suspense
-import { useSearchParams, useRouter } from 'next/navigation';
+import React, { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation'; // useRouter removed as it's not used
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { Users, LogIn, UserPlus, Download, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner'; // Import toast
 
 // Inner component that uses useSearchParams
 const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
   const searchParams = useSearchParams();
   // const router = useRouter(); // Router might not be needed if not clearing params
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(null); // 'login', 'createAccount', or null
 
   useEffect(() => {
     // Only process if the modal is open and searchParams is available
@@ -36,10 +39,24 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
 
   // Event handlers for modal actions
   const handleLogin = () => {
-    window.location.href = 'https://auth.venturloop.com/login';
+    setIsLoading(true);
+    setLoadingButton('login');
+    toast.success("Logged in successfully!"); // Show toast
+    setTimeout(() => {
+      window.location.href = 'https://auth.venturloop.com/login';
+      setIsLoading(false);
+      setLoadingButton(null);
+    }, 2000);
   };
   const handleCreateAccount = () => {
-    window.location.href = 'https://auth.venturloop.com/auth/signup';
+    setIsLoading(true);
+    setLoadingButton('createAccount');
+    toast.success("Logged in successfully!"); // Show toast (as per instruction, could be "Account created...")
+    setTimeout(() => {
+      window.location.href = 'https://auth.venturloop.com/auth/signup';
+      setIsLoading(false);
+      setLoadingButton(null);
+    }, 2000);
   };
   const handleDownloadApp = () => {
     console.log("Download App action triggered");
@@ -69,14 +86,15 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
           )}
         </DialogHeader>
         <div className="space-y-4">
-          <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin}>
-            <LogIn className="mr-2 h-5 w-5" /> Login
+          <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin} disabled={isLoading}>
+            {loadingButton === 'login' ? 'Loading...' : <><LogIn className="mr-2 h-5 w-5" /> Login</>}
           </Button>
-          <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount}>
-            <UserPlus className="mr-2 h-5 w-5" /> Create Account
+          <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount} disabled={isLoading}>
+            {loadingButton === 'createAccount' ? 'Loading...' : <><UserPlus className="mr-2 h-5 w-5" /> Create Account</>}
           </Button>
           <Button
             variant='ghost'
+            disabled={isLoading}
             className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
             size="lg"
             onClick={handleDownloadApp}
@@ -85,7 +103,7 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
           </Button>
         </div>
         <div className="mt-8 text-center">
-          <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500">
+          <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500" disabled={isLoading}>
             Maybe Later
           </Button>
         </div>
@@ -100,8 +118,6 @@ const LoginModal = (props) => {
   if (!props.isOpen) return null;
 
   return (
-    // Keying Suspense with props.isOpen ensures it re-evaluates when modal visibility changes,
-    // though for reading searchParams, this might not be strictly needed if structure is correct.
     // Fallback can be null for a modal that appears over content, or a very minimal loader.
     <Suspense fallback={null}>
       <LoginModalContent {...props} />
