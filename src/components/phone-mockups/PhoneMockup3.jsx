@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 // Shared Icons
 const TimeIcon = () => (
@@ -60,9 +61,11 @@ const PhoneMockup3 = ({ onGetStartedClick }) => {
             <div className="text-center animate-fadeInUp">
               {/* App Logo with brand blue background */}
               <div className="inline-block   rounded-full shadow-md "> {/* Adjusted padding, shadow */}
- <img
-                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
-                alt="Venturloop Logo"
+ <Image
+                src="/appLogoT.png"
+                alt="VenturLoop app logo on a sign-up screen mockup."
+                width={64}
+                height={64}
                 className="w-16 h-16 -white  object-contain  rounded-lg"
               />              </div>
               <h1 className="text-2xl font-bold text-blue-600 mb-1">VenturLoop</h1> {/* text-brand-blue */}
@@ -96,10 +99,12 @@ const PhoneMockup3 = ({ onGetStartedClick }) => {
               <p className="text-sm font-medium text-foreground mb-3">Join these amazing people!</p>
               <div className="flex justify-center -space-x-2.5"> {/* Slightly reduced negative space */}
                 {avatarDisplayData.map((avatar, index) => (
-                  <img
+                  <Image
                     key={avatar.id}
                     src={avatar.imgSrc}
                     alt={avatar.title}
+                    width={36}
+                    height={36}
                     className="w-9 h-9 rounded-full border-2 border-blue-600 cursor-pointer animate-scaleIn hover:shadow-lg transform hover:-translate-y-1"
                     style={{ animationDelay: `${700 + index * 100}ms` }}
                     title={avatar.title}

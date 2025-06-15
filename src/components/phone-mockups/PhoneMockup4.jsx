@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 
 // Shared Icons
 const TimeIcon = () => (
@@ -259,9 +260,11 @@ const PhoneMockup4 = () => {
                   {/* Co-founder Identity Section */}
                   <div className="p-4 flex items-center space-x-4">
                     {/* Profile Picture */}
-                    <img
-                      src="https://ik.imagekit.io/venturloopimage/user_profiles/bf1370b8-51f8-4514-8045-a7661d041115_pGvAfpP-o.jpeg?updatedAt=1749968142080" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
-                      alt="Venturloop Logo"
+                    <Image
+                      src="https://ik.imagekit.io/venturloopimage/user_profiles/bf1370b8-51f8-4514-8045-a7661d041115_pGvAfpP-o.jpeg?updatedAt=1749968142080"
+                      alt="Rishi Rajput profile picture on VenturLoop"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 bg-gray-300 dark:bg-gray-700 rounded-md flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300"
                     />
                     {/* Text Info */}
@@ -435,9 +438,11 @@ const PhoneMockup4 = () => {
                 {/* Investor Identity Block */}
                 <div className="p-4 flex items-center space-x-3 border-b border-android-border-light dark:border-android-border-dark">
                   {/* Avatar */}
-                  <img
-                    src="https://ik.imagekit.io/venturloopimage/user_profiles/jungle_ventures_logo_ZyHBNA7W2.jpg" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
-                    alt="Venturloop Logo"
+                  <Image
+                    src="https://ik.imagekit.io/venturloopimage/user_profiles/jungle_ventures_logo_ZyHBNA7W2.jpg"
+                    alt="Jungle Ventures logo on VenturLoop investor profile"
+                    width={48}
+                    height={48}
                     className="w-12 h-12 bg-gray-300 dark:bg-gray-700 rounded-md flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300"
                   />
 

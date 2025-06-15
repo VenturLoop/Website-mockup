@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 // Shared Icons needed for the header
 const TimeIcon = () => (
@@ -40,9 +41,11 @@ const PhoneMockup2 = () => {
 
           {/* Main content area - now only for centering the logo and tagline */}
           <div className="flex flex-col flex-grow items-center justify-center text-center px-4">
- <img
-                src="/appLogoT.png" // 🔁 Replace with your actual image path (e.g., /logo.svg or /assets/logo.png)
-                alt="Venturloop Logo"
+ <Image
+                src="/appLogoT.png"
+                alt="VenturLoop app logo displayed on a smartphone mockup screen related to startup offerings."
+                width={112}
+                height={112}
                 className="w-28 h-28 -white  object-contain mr-2 rounded-lg"
               />            <p className="mt-3 text-sm text-foreground">
               Everything you need to build the next big thing!

@@ -280,8 +280,38 @@ export default function HomeClient() {
     fetchApiData();
   }, []);
 
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@list": testimonials.map(testimonial => ({
+      "@type": "Review",
+      itemReviewed: {
+        "@type": "Organization",
+        name: "VenturLoop",
+        url: "https://venturloop.com/"
+      },
+      author: {
+        "@type": "Person",
+        name: testimonial.name
+      },
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: String(testimonial.rating),
+        bestRating: "5"
+      },
+      reviewBody: testimonial.text,
+      publisher: {
+        "@type": "Organization",
+        name: "VenturLoop"
+      }
+    }))
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
       {/* Navigation */}
       <Navigation />
 
@@ -299,15 +329,14 @@ export default function HomeClient() {
                 Journey Starts Here
               </h1>
               <p className="text-gray-700 dark:text-gray-100 text-lg md:text-xl mb-8 max-w-md leading-relaxed animate-on-scroll animate-fade-in-up animate-delay-200">
-                VenturLoop connects you with co-founders, investors, and
-                collaborators — so you can focus on building, not searching.
+                VenturLoop is the leading platform for `startup matchmaking India`, helping you `find cofounder for startup` connections, pitch to investors, and collaborate effectively—so you can focus on building, not just searching.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-on-scroll animate-fade-in-up animate-delay-300">
                 <Button
                   onClick={openAppDownloadModal}
                   className="bg-blue-600 hover:bg-blue-700 dark:bg-brand-blue dark:hover:bg-brand-blue-dark text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border dark:border-white/75"
                 >
-                  Download Now
+                  Explore Platform Features
                 </Button>
                 {!isLoggedIn && (
                   <Button
@@ -315,7 +344,7 @@ export default function HomeClient() {
                     variant="outline"
                     className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift dark:border-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
                   >
-                    Start for Free
+                    Find Your Co-Founder Free
                   </Button>
                 )}
               </div>
@@ -363,10 +392,7 @@ export default function HomeClient() {
                       Find a Co-Founder
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      🔄 Discover like-minded co-founders based on goals,
-                      skills, and interests to build your dream startup team.
-                      Use our platform to find a co-founder who complements your
-                      vision.
+                      🔄 Discover like-minded partners using our intuitive tools to `find cofounder for startup` success. Build your dream team based on shared goals, skills, and interests.
                     </p>
                   </div>
                 </div>
@@ -381,9 +407,7 @@ export default function HomeClient() {
                       Connect with Investors
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      📈 Pitch your idea directly to curated investors and
-                      incubators who align with your startup’s mission. Easily
-                      connect with investors to fund your venture.
+                      📈 Seamlessly `pitch startup idea to investors` and incubators curated for your mission. Our platform makes it easy to connect with the right funding partners for your venture.
                     </p>
                   </div>
                 </div>
@@ -398,9 +422,7 @@ export default function HomeClient() {
                       Collaborate on Projects
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      🤝 Join or start real-time projects with other founders
-                      for startup collaboration to gain traction, feedback, and
-                      visibility.
+                      🤝 Utilize our `startup collaboration platform` to join or initiate real-time projects. Gain traction, valuable feedback, and enhanced visibility with fellow innovators.
                     </p>
                   </div>
                 </div>
@@ -412,12 +434,10 @@ export default function HomeClient() {
                       <Brain className="w-6 h-6 text-orange-600 dark:text-orange-500" />
                     </div>
                     <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
-                      Get Startup Advice (AI)
+                      Guidance from Our AI Copilot
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                      🧠 Leverage our AI startup advisor, Loop, to get instant
-                      answers, strategies, and mentorship tailored to your
-                      startup journey.
+                      🧠 Leverage Loop, our advanced `AI Copilot for Startups`, to get instant answers, data-driven strategies, and mentorship tailored to your unique startup journey.
                     </p>
                   </div>
                 </div>
@@ -432,7 +452,7 @@ export default function HomeClient() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 lg:mb-16 animate-on-scroll">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              How It Works
+              How VenturLoop Works
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
               We personalize every interaction so you can focus on building,
@@ -502,18 +522,10 @@ export default function HomeClient() {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="w-full lg:w-1/2 animate-on-scroll">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center lg:text-left">
-                Where{" "}
-                <span className="text-blue-600 dark:text-blue-400">
-                  Founders
-                </span>{" "}
-                Meet
-                <br />
-                Their Future
+                Trusted by 10,000+ Founders & 500+ Investors
               </h2>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed text-center lg:text-left">
-                VenturLoop is where founders link up with co-founders,
-                investors, and collaborators to turn ideas into real
-                startups—fast and hassle-free.
+                As a premier hub for `startup matchmaking India`, VenturLoop is where founders link up with co-founders, investors, and collaborators to turn ideas into real startups—fast, efficiently, and hassle-free.
               </p>
 
               {/* Statistical Highlights */}
@@ -573,7 +585,7 @@ export default function HomeClient() {
                   onClick={isLoggedIn ? openAppDownloadModal : openLoginModal}
                   className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium text-lg btn-hover hover-lift"
                 >
-                  {isLoggedIn ? "Download Now" : "Get Started"}
+                  {isLoggedIn ? "Access Your Dashboard" : "Join VenturLoop Today"}
                 </Button>
               </div>
             </div>
@@ -594,11 +606,7 @@ export default function HomeClient() {
                 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-10 animate-on-scroll"
                 data-animation="animate-slide-in-left"
               >
-                Some{" "}
-                <span className="text-blue-600 dark:text-blue-400">
-                  Excellent Features
-                </span>{" "}
-                For You
+                Powerful AI Tools & Verified Investor Access
               </h2>
 
               <div className="space-y-6">
@@ -616,9 +624,7 @@ export default function HomeClient() {
                       AI Matchmaking Dashboard
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Connect instantly with like-minded co-founders, investors,
-                      and collaborators. Intelligent filters make discovery
-                      effortless.
+                      Our AI Matchmaking Dashboard helps you `find cofounder for startup` opportunities and connect instantly with investors and collaborators. Intelligent filters make discovery effortless.
                     </p>
                   </div>
                 </div>
@@ -637,9 +643,7 @@ export default function HomeClient() {
                       One-Click Investor Pitching
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Upload your deck, tap your vertical, and instantly pitch
-                      to relevant investors. Built-in tracking and feedback
-                      tools included.
+                      Experience the `best platform to pitch your startup`. Upload your deck, define your vertical, and instantly `pitch startup idea to investors`. Includes built-in tracking and feedback tools.
                     </p>
                   </div>
                 </div>
@@ -658,8 +662,7 @@ export default function HomeClient() {
                       Incubator Access Gateway
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Apply to top-tier incubators and accelerators in one
-                      place. No more endless forms and scattered applications.
+                      Seamlessly `apply to incubator India online` through our gateway. Connect with top-tier programs in one place, eliminating endless forms and scattered applications.
                     </p>
                   </div>
                 </div>
@@ -680,7 +683,7 @@ export default function HomeClient() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 animate-on-scroll">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Connect With Verified Investors On The Platform
+              Connect With Verified Startup Investors
             </h2>
           </div>
 
@@ -696,7 +699,7 @@ export default function HomeClient() {
                   <div className="flex items-center space-x-3">
                     <img
                       src={item?.image}
-                      alt={`${item?.name} Logo`}
+                      alt={`Logo of ${item?.name} - Verified Investor on VenturLoop`}
                       className="w-8 h-8 object-contain rounded-lg"
                     />
                     <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
@@ -722,7 +725,7 @@ export default function HomeClient() {
                       <div className="flex items-center space-x-3">
                         <img
                           src={item?.image}
-                          alt={`${item?.name} Logo`}
+                          alt={`Logo of ${item?.name} - Verified Investor on VenturLoop`}
                           className="w-8 h-8 object-contain rounded-lg"
                         />
                         <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">
