@@ -31,6 +31,15 @@ const mockPosts = [
         commentText: "Interesting take on the Parler situation. The implications for free speech online are huge.",
         commentTimestamp: '2h ago',
         isTrending: true,
+        replies: [
+          {
+            replyId: 'parler-c1-r1',
+            replierName: 'Devon Lane', // Original poster
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=devonlane123',
+            replyText: "Thanks for engaging, Charlie!",
+            replyTimestamp: '1h 55m ago'
+          }
+        ]
       },
       {
         commentId: 'parler-c2',
@@ -39,6 +48,15 @@ const mockPosts = [
         commentText: "I agree with Charlie. It's a complex issue with no easy answers.",
         commentTimestamp: '1h ago',
         isTrending: false,
+        replies: [
+          {
+            replyId: 'parler-c2-r1',
+            replierName: 'John Doe',
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=JohnDoeReply',
+            replyText: "Well said, Alice.",
+            replyTimestamp: '45m ago'
+          }
+        ]
       },
       {
         commentId: 'parler-c3',
@@ -69,6 +87,15 @@ const mockPosts = [
         commentText: "Maybe Tom is late for something important!",
         commentTimestamp: '10s ago',
         isTrending: true,
+        replies: [
+          {
+            replyId: 'tom-c1-r1',
+            replierName: 'Darlene Robertson',
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=darlenerobertson456',
+            replyText: "He usually is! 😂",
+            replyTimestamp: '8s ago'
+          }
+        ]
       },
       {
         commentId: 'tom-c2',
@@ -99,6 +126,22 @@ const mockPosts = [
         commentText: "The future of AI is both exciting and terrifying. Great post!",
         commentTimestamp: '1h ago',
         isTrending: true,
+        replies: [
+          {
+            replyId: 'ai-c1-r1',
+            replierName: 'John Doe',
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=johndoe789',
+            replyText: "Indeed, Sarah. The dual nature of advanced tech.",
+            replyTimestamp: '50m ago'
+          },
+          {
+            replyId: 'ai-c1-r2',
+            replierName: 'Kyle Reese',
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=KyleReese',
+            replyText: "Listen, and understand! That terminator is out there!",
+            replyTimestamp: '48m ago'
+          }
+        ]
       },
       {
         commentId: 'ai-c2',
@@ -107,6 +150,7 @@ const mockPosts = [
         commentText: "I'm sorry, Dave. I'm afraid I can't let you do that.",
         commentTimestamp: '45m ago',
         isTrending: false,
+        // No replies for HAL for now
       },
       {
         commentId: 'ai-c3',
@@ -137,6 +181,15 @@ const mockPosts = [
         commentText: "Glad you're enjoying the park! Please remember to keep it clean.",
         commentTimestamp: '2m ago',
         isTrending: true,
+        replies: [
+          {
+            replyId: 'park-c1-r1',
+            replierName: 'Jane Smith',
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=janesmith101',
+            replyText: "Will do, thanks Ranger!",
+            replyTimestamp: '1m ago'
+          }
+        ]
       },
       {
         commentId: 'park-c2',
@@ -167,6 +220,15 @@ const mockPosts = [
         commentText: "Can't wait to hear more about it, Alex!",
         commentTimestamp: '23h ago',
         isTrending: true,
+        replies: [
+          {
+            replyId: 'project-c1-r1',
+            replierName: 'Alex Johnson',
+            replierAvatarUrl: 'https://i.pravatar.cc/24?u=alexjohnson202',
+            replyText: "Details coming next week! Stay tuned.",
+            replyTimestamp: '22h ago'
+          }
+        ]
       },
       {
         commentId: 'project-c2',
@@ -175,6 +237,7 @@ const mockPosts = [
         commentText: "My algorithms detect a high probability of success. Interested in seed funding?",
         commentTimestamp: '20h ago',
         isTrending: false,
+        // No replies for the bot
       },
       {
         commentId: 'project-c3',
@@ -264,6 +327,7 @@ const Feed = () => {
   const [opinionSortOrder, setOpinionSortOrder] = useState({}); // To store sort order for each post
   const DEFAULT_AVATAR_URL = 'https://i.pravatar.cc/32?u=defaultUserIcon';
   const [currentUserAvatar, setCurrentUserAvatar] = useState(DEFAULT_AVATAR_URL); // New state
+  const [replyingToOpinionId, setReplyingToOpinionId] = useState(null); // null or the ID of the opinion being replied to
 
   const toggleComments = (articleId) => {
     setExpandedComments(prev => ({
@@ -466,7 +530,74 @@ const Feed = () => {
                             <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{opinion.commenterName}</span>
                             <span className="text-xs text-gray-400 dark:text-gray-500">{opinion.commentTimestamp}</span>
                           </div>
-                          <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{opinion.commentText}</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap mb-2">{opinion.commentText}</p> {/* Added mb-2 for spacing */}
+
+                          {/* New "Reply" Button */}
+                          <button
+                            onClick={() => setReplyingToOpinionId(prevId => prevId === opinion.commentId ? null : opinion.commentId)}
+                            className="text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                          >
+                            Reply
+                          </button>
+                          {/* Display Replies if they exist */}
+                          {opinion.replies && opinion.replies.length > 0 && (
+                            <div className="mt-3 ml-8 pl-4 border-l-2 border-gray-200 dark:border-gray-500 space-y-3"> {/* Adjusted indentation: ml-8, pl-4 */}
+                              {opinion.replies.map((reply) => (
+                                <div key={reply.replyId} className="flex items-start space-x-2"> {/* space-x-2 for tighter packing */}
+                                  <img
+                                    src={reply.replierAvatarUrl}
+                                    alt={reply.replierName}
+                                    className="w-6 h-6 rounded-full flex-shrink-0 mt-1" // Smaller avatar for replies (w-6 h-6)
+                                  />
+                                  <div className="flex-grow bg-gray-100 dark:bg-gray-700/60 p-2 rounded-md shadow-sm"> {/* Slightly different bg, padding, shadow */}
+                                    <div className="flex items-center justify-between mb-0.5"> {/* Reduced mb */}
+                                      <span className="font-semibold text-xs text-gray-700 dark:text-gray-200">{reply.replierName}</span>
+                                      <span className="text-xs text-gray-400 dark:text-gray-500">{reply.replyTimestamp}</span>
+                                    </div>
+                                    <p className="text-xs text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{reply.replyText}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Conditionally Rendered Reply Input Area */}
+                          {replyingToOpinionId === opinion.commentId && (
+                            <div className="mt-3 ml-5 pl-3 border-l-2 border-gray-200 dark:border-gray-600"> {/* Indent and add left border */}
+                              <div className="flex items-start space-x-3">
+                                <img
+                                  src={currentUserAvatar} // Assumes currentUserAvatar state is available from Feed component
+                                  alt="Your avatar"
+                                  className="w-7 h-7 rounded-full flex-shrink-0 mt-1" // Slightly smaller avatar for reply input
+                                />
+                                <div className="flex-grow">
+                                  <textarea
+                                    className="w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                                    rows="2" // Shorter text area for replies
+                                    placeholder={`Replying to ${opinion.commenterName}...`}
+                                  ></textarea>
+                                  <div className="mt-2 flex items-center justify-end space-x-2">
+                                    <button
+                                      onClick={() => setReplyingToOpinionId(null)} // Cancel button
+                                      className="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
+                                    >
+                                      Cancel
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        console.log(`Post reply to opinionId: ${opinion.commentId}`);
+                                        // Potentially clear textarea and close input here
+                                        setReplyingToOpinionId(null);
+                                      }}
+                                      className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-md transition-colors"
+                                    >
+                                      Post Reply
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ));
