@@ -4,7 +4,7 @@ import { Navigation } from "@/components/navigation";
 import { useRouter } from 'next/navigation'; // Import useRouter
 // Assuming lucide-react is already a project dependency.
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Added useEffect
 import Link from 'next/link'; // Make sure this import is added
 import CreateArticleModal from '@/components/CreateArticleModal';
 import CreateArticleCard from '@/components/CreateArticleCard'; // New import
@@ -262,6 +262,8 @@ const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // A
 const Feed = () => {
   const [expandedComments, setExpandedComments] = useState({}); // To store expanded state for each post
   const [opinionSortOrder, setOpinionSortOrder] = useState({}); // To store sort order for each post
+  const DEFAULT_AVATAR_URL = 'https://i.pravatar.cc/32?u=defaultUserIcon';
+  const [currentUserAvatar, setCurrentUserAvatar] = useState(DEFAULT_AVATAR_URL); // New state
 
   const toggleComments = (articleId) => {
     setExpandedComments(prev => ({
@@ -276,6 +278,22 @@ const Feed = () => {
       [articleId]: newSortOrder
     }));
   };
+
+  useEffect(() => {
+    // This code runs on the client-side after component mounts
+    try {
+      const storedUserDataString = localStorage.getItem('userData'); // Assuming 'userData' is the key
+      if (storedUserDataString) {
+        const storedUserData = JSON.parse(storedUserDataString);
+        if (storedUserData && storedUserData.avatarUrl) { // Assuming avatar URL is stored as 'avatarUrl'
+          setCurrentUserAvatar(storedUserData.avatarUrl);
+        }
+      }
+    } catch (error) {
+      console.error('Error reading user data from local storage:', error);
+      // Keep default avatar in case of error
+    }
+  }, []); // Empty dependency array ensures this runs only once on mount
 
   return (
     <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto hide-scrollbar">
@@ -377,7 +395,7 @@ const Feed = () => {
             <div className="mb-4 flex items-start space-x-3"> {/* Added flex and spacing for layout */}
               {/* User avatar (optional, but good for context) - using a generic one for now */}
               <img
-                src={`https://i.pravatar.cc/32?u=currentUser`} // Placeholder for current user avatar
+                src={currentUserAvatar} // Use state variable
                 alt="Your avatar"
                 className="w-8 h-8 rounded-full flex-shrink-0 mt-1" // Small avatar
               />
@@ -385,14 +403,14 @@ const Feed = () => {
                 <textarea
                   className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   rows="3" // Start with 3 rows, can expand if needed or use auto-resizing JS later
-                  placeholder="Write a comment..."
+                  placeholder="Add up your opinion..." /* Changed placeholder */
                 ></textarea>
                 <div className="mt-2 flex justify-end">
                   <button
-                    onClick={() => console.log('Post comment clicked for post:', post.articleId)} // Placeholder action
+                    onClick={() => console.log('Post opinion clicked for post:', post.articleId)} // Also updated console.log for consistency
                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                   >
-                    Post Comment
+                    Post Opinion {/* Changed text */}
                   </button>
                 </div>
               </div>
