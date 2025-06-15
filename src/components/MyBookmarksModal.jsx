@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.jsx";
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog.jsx";
 import { cn } from "@/lib/utils.js";
 import { useUser } from "@/context/UserContext.js";
-import { getListData } from "@/lib/backendApi"; // your custom API call function
+import {
+  getSavedCofounder,
+  getSavedInvestor,
+  getSaveProject,
+} from "@/lib/backendApi";
 
 const MyBookmarksModal = ({ isOpen, onClose }) => {
   const { currentUser, isLoggedIn } = useUser();
@@ -12,9 +21,9 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
   const [bookmarksData, setBookmarksData] = useState([]);
 
   const tabs = [
-    { id: "founder", label: "Founder Profiles", endpoint: "getSavedCofounder" },
-    { id: "investor", label: "Investor Profiles", endpoint: "getSavedInvestor" },
-    { id: "projects", label: "Saved Projects", endpoint: "getSaveProject" },
+    { id: "founder", label: "Founder Profiles", function: getSavedCofounder },
+    { id: "investor", label: "Investor Profiles", function: getSavedInvestor },
+    { id: "projects", label: "Saved Projects", function: getSaveProject },
   ];
 
   useEffect(() => {
@@ -23,9 +32,11 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const tab = tabs.find(t => t.id === activeTab);
-        const apiCallFunction = tab.endpoint 
-        const result = await apiCallFunction(currentUser?._id); // API: getListData("founderBookmarks"), etc.
+        const tab = tabs.find((t) => t.id === activeTab);
+        if (!tab?.function) return;
+
+        const result = await tab.function(currentUser?._id);
+        console.log("BookMark Result", result);
         setBookmarksData(result?.data || []);
       } catch (err) {
         console.error("Failed to fetch bookmarks:", err);
@@ -36,14 +47,14 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
     };
 
     fetchData();
-  }, [activeTab, isLoggedIn]);
+  }, [activeTab, isLoggedIn, currentUser?._id]);
 
-  const renderContent = () => {
-    const contentBaseClass = "p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto";
-
+  const renderEmptyOrLoading = (label) => {
+    const base =
+      "p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto flex items-center justify-center";
     if (!isLoggedIn) {
       return (
-        <div className={`${contentBaseClass} flex flex-col items-center justify-center`}>
+        <div className={base}>
           <p className="text-gray-600 dark:text-gray-400 text-center">
             Please log in to see your bookmarks.
           </p>
@@ -53,35 +64,90 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
 
     if (loading) {
       return (
-        <div className={`${contentBaseClass} flex items-center justify-center`}>
-          <p className="text-gray-600 dark:text-gray-400">Loading {activeTab}...</p>
+        <div className={base}>
+          <p className="text-gray-600 dark:text-gray-400">Loading {label}...</p>
         </div>
       );
     }
 
     if (!bookmarksData.length) {
       return (
-        <div className={`${contentBaseClass} flex items-center justify-center`}>
-          <p className="text-gray-600 dark:text-gray-400">No bookmarks found for {activeTab}.</p>
+        <div className={base}>
+          <p className="text-gray-600 dark:text-gray-400">
+            No bookmarks found for {label}.
+          </p>
         </div>
       );
     }
 
+    return null;
+  };
+
+  const renderFounderTab = () => {
+    const fallback = renderEmptyOrLoading("founder profiles");
+    if (fallback) return fallback;
+
     return (
-      <div className={`${contentBaseClass}`}>
-        <h2 className="text-lg font-medium mb-4">
-          {tabs.find(t => t.id === activeTab)?.label}
-        </h2>
+      <div className="p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto">
+        <h2 className="text-lg font-medium mb-4">Founder Profiles</h2>
         {bookmarksData.map((item, idx) => (
           <div
             key={idx}
             className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4"
           >
             <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
-              {item.title || item.name || "Untitled"}
+              {item.name || "Untitled"}
             </h3>
             <p className="text-xs text-gray-600 dark:text-gray-400">
-              {item.description || item.about || "No description available."}
+              {item.about || "No description available."}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderInvestorTab = () => {
+    const fallback = renderEmptyOrLoading("investor profiles");
+    if (fallback) return fallback;
+
+    return (
+      <div className="p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto">
+        <h2 className="text-lg font-medium mb-4">Investor Profiles</h2>
+        {bookmarksData.map((item, idx) => (
+          <div
+            key={idx}
+            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4"
+          >
+            <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
+              {item.name || "Untitled"}
+            </h3>
+            <p className="text-xs text-gray-600 dark:text-gray-400">
+              {item.about || "No description available."}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderProjectTab = () => {
+    const fallback = renderEmptyOrLoading("saved projects");
+    if (fallback) return fallback;
+
+    return (
+      <div className="p-4 min-h-[60vh] max-h-[65vh] overflow-y-auto">
+        <h2 className="text-lg font-medium mb-4">Saved Projects</h2>
+        {bookmarksData.map((item, idx) => (
+          <div
+            key={idx}
+            className="bg-gray-100 dark:bg-zinc-800 rounded-md p-4 shadow-sm mb-4"
+          >
+            <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">
+              {item.title || "Untitled"}
+            </h3>
+            <p className="text-xs text-gray-600 dark:text-gray-400">
+              {item.description || "No description available."}
             </p>
           </div>
         ))}
@@ -90,11 +156,13 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="w-[calc(100%-2rem)] max-w-xl mx-auto sm:w-full p-0 bg-white dark:bg-gray-900 rounded-lg shadow-xl overflow-hidden">
         <DialogHeader className="px-4 py-3 sm:px-6 sm:py-4 border-b border-gray-200 dark:border-zinc-700">
           <DialogTitle className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
-            {isLoggedIn && currentUser?.name ? `${currentUser.name}'s Bookmarks` : 'My Bookmarks'}
+            {isLoggedIn && currentUser?.name
+              ? `${currentUser.name}'s Bookmarks`
+              : "My Bookmarks"}
           </DialogTitle>
         </DialogHeader>
 
@@ -115,7 +183,11 @@ const MyBookmarksModal = ({ isOpen, onClose }) => {
           ))}
         </div>
 
-        <div className="p-4 sm:p-6">{renderContent()}</div>
+        <div className="p-4 sm:p-6">
+          {activeTab === "founder" && renderFounderTab()}
+          {activeTab === "investor" && renderInvestorTab()}
+          {activeTab === "projects" && renderProjectTab()}
+        </div>
       </DialogContent>
     </Dialog>
   );
