@@ -20,4 +20,24 @@
     <lastmod>2025-06-09</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://venturloop.com/privacy-policy</loc>
+    <lastmod>2025-06-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://venturloop.com/terms-conditions</loc>
+    <lastmod>2025-06-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://venturloop.com/community-guidelines</loc>
+    <lastmod>2025-06-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://venturloop.com/refund-policy</loc>
+    <lastmod>2025-06-09</lastmod>
+    <priority>0.5</priority>
+  </url>
 </urlset>

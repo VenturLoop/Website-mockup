@@ -79,8 +79,8 @@ const faqPageJsonLd = {
 };
 
 export const metadata = {
-  title: "VenturLoop FAQs | Find Co-Founders, Investors & Learn About Pricing",
-  description: "Explore answers to frequently asked questions about VenturLoop. Learn how to connect with co-founders and investors, and understand our pricing, Founder Pass, and micro-transactions.",
+  title: "VenturLoop FAQ: Cofounder Matching, Loop AI, Pricing & Support",
+  description: "Find answers to VenturLoop questions: cofounder matching, Loop AI, investor connections, pricing, and startup platform features. Get help on your journey.",
   alternates: {
     canonical: "https://venturloop.com/faq",
   },
