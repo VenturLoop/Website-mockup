@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react'; // Import useState
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useUser } from '@/context/UserContext';
 import { Mail, ShieldCheck, Lock, UserCircle, ListChecks, LogOut, Trash2, ChevronRight } from 'lucide-react';
 
 const SettingsModal = ({ isOpen, onClose }) => {
   const { currentUser, logoutUser } = useUser();
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // State for logout loader
+
+  // Define handleLogout inside the component
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    // Call the logoutUser function from context
+    // Assuming logoutUser will trigger a re-render or unmount.
+    logoutUser();
+    // No setIsLoggingOut(false) needed if component unmounts or context change handles it.
+  };
 
   if (!currentUser) {
     return null; // Or some loading state
@@ -32,7 +42,10 @@ const SettingsModal = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 px-1">Password</h3>
             <div className="space-y-1 sm:space-y-2">
-              <button className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200">
+              <button
+                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+                disabled={isLoggingOut} // Disable when logging out
+              >
                 <div className="flex items-center">
                   <Lock className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
                   <span className="text-sm sm:text-base">Change Password</span>
@@ -46,14 +59,20 @@ const SettingsModal = ({ isOpen, onClose }) => {
           <section>
             <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 px-1">Account</h3>
             <div className="space-y-1 sm:space-y-2">
-              <button className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200">
+              <button
+                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+                disabled={isLoggingOut} // Disable when logging out
+              >
                 <div className="flex items-center">
                   <UserCircle className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
                   <span className="text-sm sm:text-base">Founder Pass</span>
                 </div>
                 <ChevronRight className="h-5 w-5 text-gray-400 dark:text-gray-500" />
               </button>
-              <button className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200">
+              <button
+                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+                disabled={isLoggingOut} // Disable when logging out
+              >
                 <div className="flex items-center">
                   <ListChecks className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
                   <span className="text-sm sm:text-base">My Subscription</span>
@@ -66,13 +85,18 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
         <div className="p-4 sm:p-6 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-3 sm:space-y-4 sticky bottom-0 bg-white dark:bg-gray-900 z-10">
           <button
-            onClick={logoutUser}
+            onClick={handleLogout} // Use the new handler
+            disabled={isLoggingOut} // Disable button when logging out
             className="w-full flex items-center justify-center p-3 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors font-medium text-gray-700 dark:text-gray-200 text-sm sm:text-base"
           >
-            <LogOut className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-            Logout
+            {isLoggingOut ? (
+              "Logging out..."
+            ) : (
+              <><LogOut className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Logout</>
+            )}
           </button>
           <button
+            disabled={isLoggingOut} // Disable when logging out
             className="w-full flex items-center justify-center p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors font-medium dark:bg-red-600 dark:hover:bg-red-700 text-sm sm:text-base"
           >
             <Trash2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />

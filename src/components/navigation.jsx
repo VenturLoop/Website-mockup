@@ -43,6 +43,7 @@ export function Navigation() {
   const [isUpdatesModalOpen, setIsUpdatesModalOpen] = useState(false); // State for Updates modal
   const [isMyStartupProfileModalOpen, setIsMyStartupProfileModalOpen] =
     useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // Added state for logout loader
 
   const router = useRouter();
   const pathname = usePathname();
@@ -113,9 +114,11 @@ export function Navigation() {
     setIsMyStartupProfileModalOpen(!isMyStartupProfileModalOpen);
 
   const handleLogout = () => {
+    setIsLoggingOut(true); // Set loading state
     logoutUser();
     setIsProfileDropdownOpen(false);
     setIsMenuOpen(false);
+    // setIsLoggingOut(false) // Not setting to false, relying on re-render
   };
 
   useEffect(() => {
@@ -325,14 +328,15 @@ export function Navigation() {
                   <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-950 shadow-lg rounded-md py-1 z-20 border dark:border-gray-700">
                     <button
                       onClick={() => {
-                        if (currentUser && currentUser.userId) {
+                        if (currentUser && currentUser.userId && !isLoggingOut) { // Disable if logging out
                           router.push(`/profile/${currentUser.userId}`);
                         }
                         setIsProfileDropdownOpen(false);
                       }}
-                      className="w-full text-left px-4 py-3 flex items-center gap-3 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                      className={`w-full text-left px-4 py-3 flex items-center gap-3 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                       role="button"
                       tabIndex="0"
+                      disabled={isLoggingOut}
                     >
                       <img
                         src={
@@ -355,9 +359,9 @@ export function Navigation() {
                     {profileMenuItems.map((item) => {
                       const commonProps = {
                         key: item.label,
-                        className:
-                          "flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
+                        className: `flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`,
                         onClick: (e) => {
+                          if (isLoggingOut) return; // Prevent action if logging out
                           if (item.onClick) {
                             if (item.href) e.preventDefault();
                             item.onClick();
@@ -365,11 +369,17 @@ export function Navigation() {
                             setIsProfileDropdownOpen(false);
                           }
                         },
+                        disabled: isLoggingOut, // Disable button
                       };
 
                       if (item.href && !item.onClick) {
+                        // For Link components, we can't directly disable. We'll prevent click and style it.
                         return (
-                          <Link href={item.href} {...commonProps}>
+                          <Link
+                            href={isLoggingOut ? "#" : item.href} // Prevent navigation if logging out
+                            {...commonProps}
+                            aria-disabled={isLoggingOut}
+                          >
                             <item.icon className="h-4 w-4 mr-2" />
                             {item.label}
                           </Link>
@@ -386,10 +396,14 @@ export function Navigation() {
                     <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      disabled={isLoggingOut}
+                      className={`flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Logout
+                      {isLoggingOut ? (
+                        "Logging out..."
+                      ) : (
+                        <><LogOut className="h-4 w-4 mr-2" /> Logout</>
+                      )}
                     </button>
                   </div>
                 )}
@@ -452,13 +466,14 @@ export function Navigation() {
 
               <div className="px-2 space-y-1">
                 <Link
-                  href="/"
+                  href={isLoggingOut ? "#" : "/"} // Prevent navigation
                   className={`flex items-center px-4 py-3 rounded-xl font-medium transition-colors ${
                     pathname === "/"
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      : `text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => { if (!isLoggingOut) setIsMenuOpen(false); }}
+                  aria-disabled={isLoggingOut}
                 >
                   <Home className="h-5 w-5 mr-3" />
                   Home
@@ -466,10 +481,9 @@ export function Navigation() {
 
                 <div>
                   <button
-                    onClick={() =>
-                      setIsMobileFoundersOpen(!isMobileFoundersOpen)
-                    }
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
+                    onClick={() => { if (!isLoggingOut) setIsMobileFoundersOpen(!isMobileFoundersOpen); }}
+                    disabled={isLoggingOut}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     <div className="flex items-center">
                       <Users className="h-5 w-5 mr-3" />
@@ -478,24 +492,22 @@ export function Navigation() {
                     <ChevronDown
                       className={`h-5 w-5 transition-transform duration-200 ${
                         isMobileFoundersOpen ? "rotate-180" : ""
-                      }`}
+                      } ${isLoggingOut ? "opacity-50" : ""}`}
                     />
                   </button>
                   {isMobileFoundersOpen && (
                     <div className="pl-8 pr-4 py-1 space-y-1">
                       <button
-                        onClick={() => {
-                          openLoopAgentModal();
-                        }}
-                        className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
+                        onClick={() => { if (!isLoggingOut) openLoopAgentModal(); }}
+                        disabled={isLoggingOut}
+                        className={`block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                       >
                         Loop AI Agent
                       </button>
                       <button
-                        onClick={() => {
-                          handleScrollToOurOfferings();
-                        }}
-                        className="block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400"
+                        onClick={() => { if (!isLoggingOut) handleScrollToOurOfferings(); }}
+                        disabled={isLoggingOut}
+                        className={`block w-full text-left px-4 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 dark:hover:text-blue-400 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                       >
                         Our Offerings
                       </button>
@@ -504,26 +516,28 @@ export function Navigation() {
                 </div>
 
                 <Link
-                  href="/community"
+                  href={isLoggingOut ? "#" : "/community"} // Prevent navigation
                   className={`flex items-center px-4 py-3 rounded-xl font-medium transition-colors ${
                     pathname === "/community"
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      : `text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => { if (!isLoggingOut) setIsMenuOpen(false); }}
+                  aria-disabled={isLoggingOut}
                 >
                   <Users className="h-5 w-5 mr-3" />
                   Community
                 </Link>
 
                 <Link
-                  href="/pricing"
+                  href={isLoggingOut ? "#" : "/pricing"} // Prevent navigation
                   className={`flex items-center px-4 py-3 rounded-xl font-medium transition-colors ${
                     pathname === "/pricing"
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      : `text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => { if (!isLoggingOut) setIsMenuOpen(false); }}
+                  aria-disabled={isLoggingOut}
                 >
                   <DollarSign className="h-5 w-5 mr-3" />
                   Pricing
@@ -535,20 +549,25 @@ export function Navigation() {
                     {profileMenuItems.map((item) => {
                       const commonProps = {
                         key: item.label,
-                        className:
-                          "flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
+                        className: `flex items-center px-4 py-3 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`,
                         onClick: (e) => {
+                          if (isLoggingOut) return;
                           if (item.onClick) {
                             if (item.href) e.preventDefault();
                             item.onClick();
                           }
                           setIsMenuOpen(false);
                         },
+                        disabled: isLoggingOut, // Disable button
                       };
 
                       if (item.href && !item.onClick) {
                         return (
-                          <Link href={item.href} {...commonProps}>
+                          <Link
+                            href={isLoggingOut ? "#" : item.href} // Prevent navigation
+                            {...commonProps}
+                            aria-disabled={isLoggingOut}
+                          >
                             <item.icon className="h-5 w-5 mr-3" />
                             {item.label}
                           </Link>
@@ -570,10 +589,9 @@ export function Navigation() {
 
               <div className="px-2 space-y-2">
                 <Button
-                  onClick={() => {
-                    openAppDownloadModal();
-                  }}
-                  className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium rounded-xl py-3 flex items-center justify-center"
+                  onClick={() => { if (!isLoggingOut) openAppDownloadModal(); }}
+                  disabled={isLoggingOut}
+                  className={`w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium rounded-xl py-3 flex items-center justify-center ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Download App
@@ -581,19 +599,22 @@ export function Navigation() {
                 {isLoggedIn ? (
                   <Button
                     onClick={handleLogout}
+                    disabled={isLoggingOut}
                     variant="outline"
-                    className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
+                    className={`w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
+                    {isLoggingOut ? (
+                      "Logging out..."
+                    ) : (
+                      <><LogOut className="h-4 w-4 mr-2" /> Logout</>
+                    )}
                   </Button>
                 ) : (
                   <Button
-                    onClick={() => {
-                      openLoginModal();
-                    }}
+                    onClick={() => { if (!isLoggingOut) openLoginModal(); }}
+                    disabled={isLoggingOut} // Also disable login button if logging out, though unlikely scenario
                     variant="outline"
-                    className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center"
+                    className={`w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl py-3 flex items-center justify-center ${isLoggingOut ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     <LogIn className="h-4 w-4 mr-2" />
                     Login
