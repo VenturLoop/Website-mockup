@@ -145,9 +145,12 @@ const FeedArticleCard = (props) => {
             />
             <div className="flex-grow">
               <textarea
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                rows="3"
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                rows="1"
                 placeholder="Add up your opinion..."
+                onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = (e.target.scrollHeight) + 'px'; }}
+                data-gramm="false"
+                data-gramm_editor="false"
               ></textarea>
               <div className="mt-2 flex justify-end">
                 <button
@@ -204,32 +207,36 @@ const FeedArticleCard = (props) => {
                         <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap mb-2">{opinion.commentText}</p>
                         <button
                           onClick={() => setCardReplyingToOpinionId(prevId => prevId === opinion.commentId ? null : opinion.commentId)}
-                          className="text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                          className="inline-flex items-center gap-x-1 text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-1 rounded-md"
                         >
-                          Reply
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M9 10L4 15l5 5"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg>
+                          <span className="hidden sm:inline">Reply</span>
                         </button>
                         {opinion.replies && opinion.replies.length > 0 && (
-                          <div className="mt-3 ml-8 pl-4 border-l-2 border-gray-200 dark:border-gray-500 space-y-3">
+  <div className="mt-3 ml-8 space-y-4">
                             {opinion.replies.map((reply) => (
-                              <div key={reply.replyId} className="flex items-start space-x-2">
-                                <img
-                                  src={reply.replierAvatarUrl}
-                                  alt={reply.replierName}
-                                  className="w-6 h-6 rounded-full flex-shrink-0 mt-1"
-                                />
-                                <div className="flex-grow bg-gray-100 dark:bg-gray-700/60 p-2 rounded-md shadow-sm">
-                                  <div className="flex items-center justify-between mb-0.5">
-                                    <span className="font-semibold text-xs text-gray-700 dark:text-gray-200">{reply.replierName}</span>
-                                    <span className="text-xs text-gray-400 dark:text-gray-500">{reply.replyTimestamp}</span>
+      <div key={reply.replyId} className="flex items-start">
+        <div className="w-px bg-gray-300 dark:bg-gray-600 mr-2 self-stretch"></div>
+        <div className="flex items-start space-x-2">
+          <img
+            src={reply.replierAvatarUrl}
+            alt={reply.replierName}
+            className="w-6 h-6 rounded-full flex-shrink-0 mt-1"
+          />
+          <div className="flex-grow pt-0.5 pb-1">
+            <div className="flex items-center justify-between mb-0.5">
+              <span className="font-semibold text-xs text-gray-700 dark:text-gray-200">{reply.replierName}</span>
+              <span className="text-xs text-gray-400 dark:text-gray-500">{reply.replyTimestamp}</span>
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{reply.replyText}</p>
                                   </div>
-                                  <p className="text-xs text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{reply.replyText}</p>
                                 </div>
                               </div>
                             ))}
                           </div>
                         )}
                         {cardReplyingToOpinionId === opinion.commentId && (
-                          <div className="mt-3 ml-5 pl-3 border-l-2 border-gray-200 dark:border-gray-600">
+                          <div className="mt-3 ml-5">
                             <div className="flex items-start space-x-3">
                               <img
                                 src={cardCurrentUserAvatar}
@@ -238,9 +245,12 @@ const FeedArticleCard = (props) => {
                               />
                               <div className="flex-grow">
                                 <textarea
-                                  className="w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                                  rows="2"
+                                  className="w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                                  rows="1"
                                   placeholder={`Replying to ${opinion.commenterName}...`}
+                                  onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = (e.target.scrollHeight) + 'px'; }}
+                                  data-gramm="false"
+                                  data-gramm_editor="false"
                                 ></textarea>
                                 <div className="mt-2 flex items-center justify-end space-x-2">
                                   <button
