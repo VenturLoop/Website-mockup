@@ -30,7 +30,7 @@ export function LoopAgentModal({ isOpen, onClose }) {
              </div>
              <div>
                 <ShadcnDialogTitle className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-indigo-400 leading-tight">
-                    Meet Loop Agent Mini o1
+                    Meet Loop AI Agent
                 </ShadcnDialogTitle>
                 <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
                     Your AI Co-pilot for Startup Success & Innovation.
@@ -43,7 +43,7 @@ export function LoopAgentModal({ isOpen, onClose }) {
         {/* Added px-6 sm:px-8 for horizontal padding, py-4 sm:py-6 for vertical padding */}
         <div className="flex-grow overflow-y-auto px-6 sm:px-8 py-4 sm:py-6 space-y-4 text-gray-700 dark:text-slate-300 text-sm sm:text-base">
           <p className="leading-relaxed">
-            Loop Agent Mini o1 is an AI-powered assistant designed to help startup founders and entrepreneurs with a variety of tasks, streamlining your journey from idea to impact.
+            Loop  AI Agent is an AI-powered assistant designed to help startup founders and entrepreneurs with a variety of tasks, streamlining your journey from idea to impact.
           </p>
           <ul className="space-y-3 pt-2">
             <li className="flex items-start">
@@ -75,12 +75,12 @@ export function LoopAgentModal({ isOpen, onClose }) {
               </div>
               <Button
                   onClick={() => {
-                  window.open("https://loop.venturloop.com/", "_blank", "noopener,noreferrer");
+                  window.open("https://docs.google.com/forms/d/e/1FAIpQLSfLKcb1N5Ipki-xDBAT5n3Wy6H08R2m7qzBPnFJwL-iw8EDbA/viewform?usp=header", "_blank", "noopener,noreferrer");
                   onClose();
                   }}
                   className="w-full sm:w-auto rounded-full px-7 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 dark:from-blue-500 dark:to-indigo-600 dark:hover:from-blue-600 dark:hover:to-indigo-700 text-white font-semibold shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center order-1 sm:order-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-offset-slate-900"
               >
-                  Try Loop Mini o1 Now
+                  Get Early Access
                   <ArrowRight className="h-4 w-4 ml-2.5 flex-shrink-0" />
               </Button>
           </div>

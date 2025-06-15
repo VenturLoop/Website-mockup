@@ -1,14 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChevronDown, ChevronUp } from "lucide-react"
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
-export default function FaqSection({ title, faqData, showContactCard = true }) { // Changed default to true
-  const [openFaq, setOpenFaq] = useState(null)
+export default function FaqSection({ title, faqData, showContactCard = true }) {
+  // Changed default to true
+  const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
   if (!faqData || faqData.length === 0) {
     return null; // Don't render anything if there's no FAQ data
@@ -20,7 +21,9 @@ export default function FaqSection({ title, faqData, showContactCard = true }) {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Left side - FAQ List */}
           {/* Adjusted width class based on showContactCard */}
-          <div className={`w-full ${showContactCard ? 'lg:w-2/3' : 'lg:w-full'}`}>
+          <div
+            className={`w-full ${showContactCard ? "lg:w-2/3" : "lg:w-full"}`}
+          >
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
               {title}
             </h2>
@@ -37,7 +40,9 @@ export default function FaqSection({ title, faqData, showContactCard = true }) {
                     aria-expanded={openFaq === index}
                     aria-controls={`faq-answer-${index}`}
                   >
-                    <h3 className="font-medium text-gray-900 dark:text-white pr-4">{faq.question}</h3>
+                    <h3 className="font-medium text-gray-900 dark:text-white pr-4">
+                      {faq.question}
+                    </h3>
                     {openFaq === index ? (
                       <ChevronUp className="h-5 w-5 text-gray-500 dark:text-gray-400 flex-shrink-0 transition-transform duration-300" />
                     ) : (
@@ -49,11 +54,15 @@ export default function FaqSection({ title, faqData, showContactCard = true }) {
                     role="region"
                     aria-labelledby={`faq-question-${index}`}
                     className={`overflow-hidden transition-all duration-300 ${
-                      openFaq === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                      openFaq === index
+                        ? "max-h-96 opacity-100"
+                        : "max-h-0 opacity-0"
                     }`}
                   >
                     <div className="px-4 sm:px-6 pb-4">
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{faq.answer}</p>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {faq.answer}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -67,7 +76,12 @@ export default function FaqSection({ title, faqData, showContactCard = true }) {
               <div className="bg-blue-600 dark:bg-blue-700 rounded-2xl p-6 sm:p-8 text-white sticky top-8 hover-lift">
                 <div className="mb-6">
                   <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4 animate-pulse-slow">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-8 h-8 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -76,19 +90,25 @@ export default function FaqSection({ title, faqData, showContactCard = true }) {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">Do you have any questions?</h3>
+                  <h3 className="text-2xl font-bold mb-3">
+                    Do you have any questions?
+                  </h3>
                   <p className="text-blue-100 leading-relaxed">
-                    Can't find the answer you're looking for? Please chat to our friendly team.
+                    Can't find the answer you're looking for? Please chat to our
+                    friendly team.
                   </p>
                 </div>
-                <button className="w-full bg-white text-blue-600 dark:text-blue-700 hover:bg-gray-100 font-semibold py-3 rounded-lg transition-colors btn-hover">
+                <a
+                  href="mailto:we.venturloop@gmail.com"
+                  className="w-full inline-block text-center bg-white text-blue-600 dark:text-blue-700 hover:bg-gray-100 font-semibold py-3 rounded-lg transition-colors btn-hover"
+                >
                   Contact Us
-                </button>
+                </a>
               </div>
             </div>
           )}
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -34,6 +34,8 @@ export default function HomeClient() {
 
   const [investorLogos, setInvestorLogos] = useState([]);
   const [investorLogos2, setInvestorLogos2] = useState([]);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const generalFaqData = [
     {
@@ -119,6 +121,30 @@ export default function HomeClient() {
     } else {
       openLoginModal();
     }
+  };
+
+  const handleSubscribe = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email.trim()) {
+      setMessage({ text: "Please enter your email.", type: "error" });
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setMessage({
+        text: "Please enter a valid email address.",
+        type: "error",
+      });
+      return;
+    }
+
+    // Display success message
+    setMessage({ text: "Subscribed successfully!", type: "success" });
+    setEmail("");
+
+    // Clear the message after 3 seconds
+    setTimeout(() => setMessage({ text: "", type: "" }), 3000);
   };
 
   // Scroll animation observer
@@ -906,22 +932,39 @@ export default function HomeClient() {
                 Stay updated with the latest startup trends, investor insights,
                 and platform updates delivered directly to your inbox.
               </p>
-
               {/* Email Subscription Form */}
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-6 py-4 rounded-xl border-0 bg-white/20 backdrop-blur-sm text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
-                />
-                <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition-colors btn-hover">
-                  Subscribe
-                </Button>
-              </div>
-
-              <p className="text-blue-200 text-sm mt-4">
+              <p className="text-blue-200 text-sm mb-2">
                 No spam, unsubscribe at any time.
               </p>
+              <div className="flex flex-col gap-2 max-w-md mx-auto lg:mx-0">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="flex-1 px-6 py-3 rounded-xl border-0 bg-white/20 backdrop-blur-sm text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
+                  />
+                  <Button
+                    onClick={handleSubscribe}
+                    className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-6 rounded-xl font-semibold transition-colors btn-hover"
+                  >
+                    Subscribe
+                  </Button>
+                </div>
+
+                {message.text && (
+                  <div
+                    className={`text-sm px-4 py-2 rounded-md ${
+                      message.type === "success"
+                        ? "text-green-600 -green-100"
+                        : "text-red-600 -red-100"
+                    }`}
+                  >
+                    {message.text}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
