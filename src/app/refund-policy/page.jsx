@@ -1,10 +1,10 @@
 import PrivacyPolicyCompo from "@/components/PrivacyPolicyCompo";
 
 export const metadata = {
-  title: "Privacy Policy",
-  description: "Read our Privacy Policy to understand how we handle your data.",
+  title: "Refund Policy | VenturLoop SaaS Subscription Refunds | Startup",
+  description: "Understand VenturLoop's refund policy for SaaS subscriptions. Clear terms for requesting refunds on our cofounder matching platform.",
 };
 
-export default function RefundPolicy() {
-  return <PrivacyPolicyCompo title="Payment Policy" />;
+export default function RefundPolicyPage() {
+  return <PrivacyPolicyCompo title="Refund Policy" />;
 }

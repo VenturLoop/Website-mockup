@@ -1,10 +1,10 @@
 import PrivacyPolicyCompo from "@/components/PrivacyPolicyCompo";
 
 export const metadata = {
-  title: "Privacy Policy",
-  description: "Read our Privacy Policy to understand how we handle your data.",
+  title: "Community Guidelines | VenturLoop Platform Conduct | Startup Network",
+  description: "Our Community Guidelines ensure a safe and productive environment on VenturLoop. Learn about acceptable conduct for our startup and cofounder network.",
 };
 
-export default function CommunityGuidelines() {
+export default function CommunityGuidelinesPage() {
   return <PrivacyPolicyCompo title="Community Guidelines" />;
 }
