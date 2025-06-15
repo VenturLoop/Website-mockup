@@ -12,6 +12,7 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
   const searchParams = useSearchParams();
   // const router = useRouter(); // Router might not be needed if not clearing params
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // Add isLoading state
 
   useEffect(() => {
     // Only process if the modal is open and searchParams is available
@@ -36,10 +37,18 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
 
   // Event handlers for modal actions
   const handleLogin = () => {
-    window.location.href = 'https://auth.venturloop.com/login';
+    setIsLoading(true);
+    setTimeout(() => {
+      window.location.href = 'https://auth.venturloop.com/login';
+      setIsLoading(false);
+    }, 2000);
   };
   const handleCreateAccount = () => {
-    window.location.href = 'https://auth.venturloop.com/auth/signup';
+    setIsLoading(true);
+    setTimeout(() => {
+      window.location.href = 'https://auth.venturloop.com/auth/signup';
+      setIsLoading(false);
+    }, 2000);
   };
   const handleDownloadApp = () => {
     console.log("Download App action triggered");
@@ -68,24 +77,31 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
             </div>
           )}
         </DialogHeader>
-        <div className="space-y-4">
-          <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin}>
-            <LogIn className="mr-2 h-5 w-5" /> Login
-          </Button>
-          <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount}>
-            <UserPlus className="mr-2 h-5 w-5" /> Create Account
-          </Button>
-          <Button
-            variant='ghost'
-            className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
-            size="lg"
-            onClick={handleDownloadApp}
-          >
-            <Download className="mr-2 h-5 w-5" /> Download VenturLoop App
-          </Button>
-        </div>
+        {isLoading ? (
+          <div className="text-center">
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white' size="lg" onClick={handleLogin} disabled={isLoading}>
+              <LogIn className="mr-2 h-5 w-5" /> Login
+            </Button>
+            <Button variant='outline' className='w-full border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700' size="lg" onClick={handleCreateAccount} disabled={isLoading}>
+              <UserPlus className="mr-2 h-5 w-5" /> Create Account
+            </Button>
+            <Button
+              variant='ghost'
+              disabled={isLoading}
+              className='w-full text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
+              size="lg"
+              onClick={handleDownloadApp}
+            >
+              <Download className="mr-2 h-5 w-5" /> Download VenturLoop App
+            </Button>
+          </div>
+        )}
         <div className="mt-8 text-center">
-          <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500">
+          <Button variant="link" onClick={onClose} className="text-sm text-gray-500 dark:text-gray-500" disabled={isLoading}>
             Maybe Later
           </Button>
         </div>
