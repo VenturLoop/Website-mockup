@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'; // Import useRouter
 // import { Moon, Sun } from 'lucide-react'; // Not needed if ThemeToggle is in Navigation
 import { useState, useEffect } from 'react'; // Added useEffect
 import Link from 'next/link'; // Make sure this import is added
+import FeedArticleCard from '@/components/FeedArticleCard'; // Import the new component
 import CreateArticleModal from '@/components/CreateArticleModal';
 import CreateArticleCard from '@/components/CreateArticleCard'; // New import
 import { AppDownloadModal } from '@/components/AppDownloadModal'; // Changed to named import
@@ -17,7 +18,7 @@ const mockPosts = [
     userId: 'devonlane123',
     articleId: 'parler-offline-article',
     time: '1 Month ago',
-    content: 'Parler may go offline following suspensions by Amazon, Apple and Google.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=Image+Post+Large',
     likes: '6.2K',
     comments: 3, // Updated count
@@ -73,7 +74,7 @@ const mockPosts = [
     userId: 'darlenerobertson456',
     articleId: 'tom-hurry-article',
     time: '22s',
-    content: 'Tom is in a big hurry.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=Room+View+Wide',
     likes: '6.2K',
     comments: 2, // Updated count
@@ -112,7 +113,7 @@ const mockPosts = [
     userId: 'johndoe789',
     articleId: 'future-of-ai-blog-post',
     time: '2 hours ago',
-    content: 'Just shared a new blog post about the future of AI. Check it out!',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=AI+Future',
     likes: '1.5K',
     comments: 3, // Updated count
@@ -167,7 +168,7 @@ const mockPosts = [
     userId: 'janesmith101',
     articleId: 'park-day-post',
     time: '5 minutes ago',
-    content: 'Enjoying a beautiful day at the park. #nature #sunnyday',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=Park+Scene',
     likes: '300',
     comments: 2, // Updated count
@@ -206,7 +207,7 @@ const mockPosts = [
     userId: 'alexjohnson202',
     articleId: 'new-project-announcement',
     time: 'Yesterday',
-    content: 'Excited to announce my new project. More details coming soon!',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     // No image for this one to test variability
     likes: '2.1K',
     comments: 3, // Updated count
@@ -323,41 +324,7 @@ const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // A
 };
 
 const Feed = () => {
-  const [expandedComments, setExpandedComments] = useState({}); // To store expanded state for each post
-  const [opinionSortOrder, setOpinionSortOrder] = useState({}); // To store sort order for each post
-  const DEFAULT_AVATAR_URL = 'https://i.pravatar.cc/32?u=defaultUserIcon';
-  const [currentUserAvatar, setCurrentUserAvatar] = useState(DEFAULT_AVATAR_URL); // New state
-  const [replyingToOpinionId, setReplyingToOpinionId] = useState(null); // null or the ID of the opinion being replied to
-
-  const toggleComments = (articleId) => {
-    setExpandedComments(prev => ({
-      ...prev,
-      [articleId]: !prev[articleId]
-    }));
-  };
-
-  const handleSortChange = (articleId, newSortOrder) => {
-    setOpinionSortOrder(prev => ({
-      ...prev,
-      [articleId]: newSortOrder
-    }));
-  };
-
-  useEffect(() => {
-    // This code runs on the client-side after component mounts
-    try {
-      const storedUserDataString = localStorage.getItem('userData'); // Assuming 'userData' is the key
-      if (storedUserDataString) {
-        const storedUserData = JSON.parse(storedUserDataString);
-        if (storedUserData && storedUserData.avatarUrl) { // Assuming avatar URL is stored as 'avatarUrl'
-          setCurrentUserAvatar(storedUserData.avatarUrl);
-        }
-      }
-    } catch (error) {
-      console.error('Error reading user data from local storage:', error);
-      // Keep default avatar in case of error
-    }
-  }, []); // Empty dependency array ensures this runs only once on mount
+  // State and handlers for comments, sorting, avatar, reply are now moved to FeedArticleCard.jsx
 
   return (
     <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto hide-scrollbar">
@@ -368,256 +335,17 @@ const Feed = () => {
 
       {/* mockPosts mapping starts here, the old "What's on your mind" box is removed */}
       {mockPosts.map((post, i) => {
-        // Retrieve the expansion state for the current post
-        const isExpanded = expandedComments[post.articleId] || false;
+        // Retrieve the expansion state for the current post - This is now handled by FeedArticleCard
+        // const isExpanded = expandedComments[post.articleId] || false;
 
         return (
           // Inside the map function:
-          <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6"> {/* Added mb-6 */}
-            {/* Top Section */}
-        <div className="flex items-start justify-between mb-4"> {/* Increased mb-3 to mb-4 */}
-          <div className="flex items-center">
-            <Link href={`/profile/${post.userId}`} passHref>
-              <a className="group"> {/* Added group class for potential hover effects on children */}
-                <img
-                  src={`https://i.pravatar.cc/40?u=${post.userId}`}
-                  alt={post.name}
-                  className="w-10 h-10 rounded-full mr-3 cursor-pointer group-hover:ring-2 group-hover:ring-blue-500 transition-all" // Added hover effect
-                />
-              </a>
-            </Link>
-            <div>
-              <Link href={`/profile/${post.userId}`} passHref>
-                <a className="font-semibold text-gray-900 dark:text-white hover:underline cursor-pointer text-sm"> {/* Added text-sm */}
-                  {post.name}
-                </a>
-              </Link>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Posted an article.</p> {/* Added mt-0.5 */}
-            </div>
+          // The outer div for the entire card, including FeedArticleCard content and the Bottom/Comments sections
+          <div key={post.articleId || i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6">
+            {/* FeedArticleCard now handles Top, Middle, Bottom, and Comments sections, including their state */}
+            <FeedArticleCard post={post} />
+            {/* The Bottom Section and Comments Section JSX previously here has been moved to FeedArticleCard.jsx */}
           </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{post.time}</span> {/* Added whitespace-nowrap */}
-        </div>
-
-        {/* Middle Section */}
-        <div className="mb-4 flex items-start"> {/* Changed to mb-4, added items-start */}
-          <div className="flex-grow pr-4">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm line-clamp-3"> {/* Added text-sm and line-clamp-3 (will need plugin for actual effect) */}
-              <span className="font-medium">Posted an article:</span> {post.content} {/* Kept original content structure, truncation will be visual via line-clamp if plugin was active */}
-            </p>
-            {/* Basic JS truncation with "see more" as fallback if line-clamp isn't set up */}
-            {post.content.length > 150 && ( /* Adjusted length for a bit more preview before "see more" */
-              <Link href={`/article/${post.articleId}`} passHref>
-                <a className="text-blue-600 dark:text-blue-400 hover:underline ml-1 text-sm font-medium">
-                  see more
-                </a>
-              </Link>
-            )}
-          </div>
-          {post.image && (
-            <div className="w-28 h-28 flex-shrink-0 ml-2"> {/* Increased size, added ml-2 for spacing */}
-              <img
-                src={post.image}
-                alt="Article image"
-                className="w-full h-full object-cover rounded-lg border border-gray-200 dark:border-gray-700"
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Bottom Section */}
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* Main container - unchanged for now */}
-          {/* Left group - REMOVED flex-shrink-1 */}
-          <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 min-w-0">
-            <div className="flex -space-x-2 flex-shrink-0"> {/* Avatars - flex-shrink-0 to prevent them from shrinking */}
-              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
-              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
-              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
-            </div>
-            {/* Opinion text - added whitespace-nowrap and min-w-0 */}
-            <button
-              onClick={() => toggleComments(post.articleId)} // Updated onClick
-              aria-expanded={isExpanded} // For accessibility
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap min-w-0"
-            >
-              {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
-            </button>
-            {/* Upvote text - added whitespace-nowrap and min-w-0 */}
-            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium whitespace-nowrap min-w-0">
-              {post.upvotes} Upvote{post.upvotes !== 1 ? 's' : ''}
-            </span>
-          </div>
-          {/* Right Upvote button - largely unchanged, ensure it has flex-shrink-0 if it shouldn't shrink */}
-          <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150 flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" /></svg>
-            <span className="whitespace-nowrap">Upvote</span> {/* Added whitespace-nowrap to the text part of the button too */}
-          </button>
-        </div>
-        {/* Comments Section - Conditionally Rendered */}
-        {isExpanded && (
-          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
-            {/* Comment Input Area */}
-            <div className="mb-4 flex items-start space-x-3"> {/* Added flex and spacing for layout */}
-              {/* User avatar (optional, but good for context) - using a generic one for now */}
-              <img
-                src={currentUserAvatar} // Use state variable
-                alt="Your avatar"
-                className="w-8 h-8 rounded-full flex-shrink-0 mt-1" // Small avatar
-              />
-              <div className="flex-grow">
-                <textarea
-                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                  rows="3" // Start with 3 rows, can expand if needed or use auto-resizing JS later
-                  placeholder="Add up your opinion..." /* Changed placeholder */
-                ></textarea>
-                <div className="mt-2 flex justify-end">
-                  <button
-                    onClick={() => console.log('Post opinion clicked for post:', post.articleId)} // Also updated console.log for consistency
-                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-                  >
-                    Post Opinion {/* Changed text */}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Comment List Area */}
-            <div className="mt-6"> {/* Assuming this is the main container for lists that was there */}
-              {/* New Main Header for Opinions */}
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
-                </h3>
-                {/* Sort Dropdown */}
-                <div className="relative"> {/* Container for select and potentially a custom arrow later */}
-                  <select
-                    value={opinionSortOrder[post.articleId] || 'latest'} // Default to 'latest'
-                    onChange={(e) => handleSortChange(post.articleId, e.target.value)}
-                    className="text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-8" // Basic styling, appearance-none to help with custom arrow if added
-                  >
-                    <option value="latest">Latest Opinions</option>
-                    <option value="trending">Trending Opinions</option>
-                  </select>
-                  {/* Basic dropdown arrow using SVG - for better appearance than default browser arrow */}
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* The actual list of opinions will go below this header,
-                  replacing the old separate "Recent" and "Trending" list structures.
-              */}
-              <div className="space-y-4">
-                {(() => { // IIFE for cleaner logic separation
-                  const currentSortOrder = opinionSortOrder[post.articleId] || 'latest';
-                  let opinionsToDisplay = [];
-
-                  if (post.commentsArray && post.commentsArray.length > 0) {
-                    if (currentSortOrder === 'latest') {
-                      opinionsToDisplay = [...post.commentsArray].reverse(); // Show all, newest first by reversing
-                    } else if (currentSortOrder === 'trending') {
-                      opinionsToDisplay = post.commentsArray.filter(opinion => opinion.isTrending);
-                    }
-                  }
-
-                  if (opinionsToDisplay.length > 0) {
-                    return opinionsToDisplay.map((opinion) => (
-                      // Re-using the individual opinion item structure from previous steps
-                      <div key={opinion.commentId} className="flex items-start space-x-3">
-                        <img src={opinion.commenterAvatarUrl} alt={opinion.commenterName} className="w-8 h-8 rounded-full flex-shrink-0 mt-1" />
-                        <div className="flex-grow bg-gray-50 dark:bg-gray-700 p-3 rounded-lg shadow">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{opinion.commenterName}</span>
-                            <span className="text-xs text-gray-400 dark:text-gray-500">{opinion.commentTimestamp}</span>
-                          </div>
-                          <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap mb-2">{opinion.commentText}</p> {/* Added mb-2 for spacing */}
-
-                          {/* New "Reply" Button */}
-                          <button
-                            onClick={() => setReplyingToOpinionId(prevId => prevId === opinion.commentId ? null : opinion.commentId)}
-                            className="text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-                          >
-                            Reply
-                          </button>
-                          {/* Display Replies if they exist */}
-                          {opinion.replies && opinion.replies.length > 0 && (
-                            <div className="mt-3 ml-8 pl-4 border-l-2 border-gray-200 dark:border-gray-500 space-y-3"> {/* Adjusted indentation: ml-8, pl-4 */}
-                              {opinion.replies.map((reply) => (
-                                <div key={reply.replyId} className="flex items-start space-x-2"> {/* space-x-2 for tighter packing */}
-                                  <img
-                                    src={reply.replierAvatarUrl}
-                                    alt={reply.replierName}
-                                    className="w-6 h-6 rounded-full flex-shrink-0 mt-1" // Smaller avatar for replies (w-6 h-6)
-                                  />
-                                  <div className="flex-grow bg-gray-100 dark:bg-gray-700/60 p-2 rounded-md shadow-sm"> {/* Slightly different bg, padding, shadow */}
-                                    <div className="flex items-center justify-between mb-0.5"> {/* Reduced mb */}
-                                      <span className="font-semibold text-xs text-gray-700 dark:text-gray-200">{reply.replierName}</span>
-                                      <span className="text-xs text-gray-400 dark:text-gray-500">{reply.replyTimestamp}</span>
-                                    </div>
-                                    <p className="text-xs text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{reply.replyText}</p>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* Conditionally Rendered Reply Input Area */}
-                          {replyingToOpinionId === opinion.commentId && (
-                            <div className="mt-3 ml-5 pl-3 border-l-2 border-gray-200 dark:border-gray-600"> {/* Indent and add left border */}
-                              <div className="flex items-start space-x-3">
-                                <img
-                                  src={currentUserAvatar} // Assumes currentUserAvatar state is available from Feed component
-                                  alt="Your avatar"
-                                  className="w-7 h-7 rounded-full flex-shrink-0 mt-1" // Slightly smaller avatar for reply input
-                                />
-                                <div className="flex-grow">
-                                  <textarea
-                                    className="w-full p-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                                    rows="2" // Shorter text area for replies
-                                    placeholder={`Replying to ${opinion.commenterName}...`}
-                                  ></textarea>
-                                  <div className="mt-2 flex items-center justify-end space-x-2">
-                                    <button
-                                      onClick={() => setReplyingToOpinionId(null)} // Cancel button
-                                      className="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
-                                    >
-                                      Cancel
-                                    </button>
-                                    <button
-                                      onClick={() => {
-                                        console.log(`Post reply to opinionId: ${opinion.commentId}`);
-                                        // Potentially clear textarea and close input here
-                                        setReplyingToOpinionId(null);
-                                      }}
-                                      className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-md transition-colors"
-                                    >
-                                      Post Reply
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ));
-                  } else {
-                    // Display a message based on why the list might be empty
-                    if (currentSortOrder === 'trending') {
-                      return <p className="text-sm text-gray-500 dark:text-gray-400">No trending opinions at the moment.</p>;
-                    } else if (!post.commentsArray || post.commentsArray.length === 0) {
-                       return <p className="text-sm text-gray-500 dark:text-gray-400">No opinions yet. Be the first to share!</p>;
-                    } else {
-                       // This case should ideally not be hit if logic is correct, but as a fallback:
-                       return <p className="text-sm text-gray-500 dark:text-gray-400">No opinions to display for this filter.</p>;
-                    }
-                  }
-                })()}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
         );
       })}
     </section>
