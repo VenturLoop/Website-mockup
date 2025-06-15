@@ -17,7 +17,7 @@ const mockPosts = [
     userId: 'devonlane123',
     articleId: 'parler-offline-article',
     time: '1 Month ago',
-    content: 'Parler may go offline following suspensions by Amazon, Apple and Google.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=Image+Post+Large',
     likes: '6.2K',
     comments: 3, // Updated count
@@ -73,7 +73,7 @@ const mockPosts = [
     userId: 'darlenerobertson456',
     articleId: 'tom-hurry-article',
     time: '22s',
-    content: 'Tom is in a big hurry.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=Room+View+Wide',
     likes: '6.2K',
     comments: 2, // Updated count
@@ -112,7 +112,7 @@ const mockPosts = [
     userId: 'johndoe789',
     articleId: 'future-of-ai-blog-post',
     time: '2 hours ago',
-    content: 'Just shared a new blog post about the future of AI. Check it out!',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=AI+Future',
     likes: '1.5K',
     comments: 3, // Updated count
@@ -167,7 +167,7 @@ const mockPosts = [
     userId: 'janesmith101',
     articleId: 'park-day-post',
     time: '5 minutes ago',
-    content: 'Enjoying a beautiful day at the park. #nature #sunnyday',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: 'https://via.placeholder.com/800x400?text=Park+Scene',
     likes: '300',
     comments: 2, // Updated count
@@ -206,7 +206,7 @@ const mockPosts = [
     userId: 'alexjohnson202',
     articleId: 'new-project-announcement',
     time: 'Yesterday',
-    content: 'Excited to announce my new project. More details coming soon!',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     // No image for this one to test variability
     likes: '2.1K',
     comments: 3, // Updated count
@@ -371,6 +371,11 @@ const Feed = () => {
         // Retrieve the expansion state for the current post
         const isExpanded = expandedComments[post.articleId] || false;
 
+        // Text truncation logic
+        const words = post.content.split(' ');
+        const isLongText = words.length > 30;
+        const truncatedText = isLongText ? words.slice(0, 30).join(' ') + '...' : post.content;
+
         return (
           // Inside the map function:
           <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6"> {/* Added mb-6 */}
@@ -399,13 +404,12 @@ const Feed = () => {
         </div>
 
         {/* Middle Section */}
-        <div className="mb-4 flex items-start"> {/* Changed to mb-4, added items-start */}
-          <div className="flex-grow pr-4">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm line-clamp-3"> {/* Added text-sm and line-clamp-3 (will need plugin for actual effect) */}
-              <span className="font-medium">Posted an article:</span> {post.content} {/* Kept original content structure, truncation will be visual via line-clamp if plugin was active */}
+        <div className="mb-4 flex flex-col"> {/* Changed to flex-col and removed items-start */}
+          <div className="flex-grow mb-3"> {/* Removed pr-4, added mb-3 */}
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+              <span className="font-medium">Posted an article:</span> {truncatedText}
             </p>
-            {/* Basic JS truncation with "see more" as fallback if line-clamp isn't set up */}
-            {post.content.length > 150 && ( /* Adjusted length for a bit more preview before "see more" */
+            {isLongText && (
               <Link href={`/article/${post.articleId}`} passHref>
                 <a className="text-blue-600 dark:text-blue-400 hover:underline ml-1 text-sm font-medium">
                   see more
@@ -414,7 +418,7 @@ const Feed = () => {
             )}
           </div>
           {post.image && (
-            <div className="w-28 h-28 flex-shrink-0 ml-2"> {/* Increased size, added ml-2 for spacing */}
+            <div className="w-full h-auto flex-shrink-0"> {/* Changed to w-full, h-auto, removed ml-2 */}
               <img
                 src={post.image}
                 alt="Article image"
