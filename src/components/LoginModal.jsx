@@ -1,11 +1,12 @@
 // LoginModal.jsx
 "use client";
 
-import React, { useEffect, useState, Suspense } from 'react'; // Import Suspense
-import { useSearchParams, useRouter } from 'next/navigation';
+import React, { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation'; // useRouter removed as it's not used
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { Users, LogIn, UserPlus, Download, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner'; // Import toast
 
 // Inner component that uses useSearchParams
 const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
@@ -40,6 +41,7 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
   const handleLogin = () => {
     setIsLoading(true);
     setLoadingButton('login');
+    toast.success("Logged in successfully!"); // Show toast
     setTimeout(() => {
       window.location.href = 'https://auth.venturloop.com/login';
       setIsLoading(false);
@@ -49,6 +51,7 @@ const LoginModalContent = ({ isOpen, onClose, onOpenAppDownloadModal }) => {
   const handleCreateAccount = () => {
     setIsLoading(true);
     setLoadingButton('createAccount');
+    toast.success("Logged in successfully!"); // Show toast (as per instruction, could be "Account created...")
     setTimeout(() => {
       window.location.href = 'https://auth.venturloop.com/auth/signup';
       setIsLoading(false);

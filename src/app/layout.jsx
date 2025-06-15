@@ -2,6 +2,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { UserProvider } from "@/context/UserContext"; // Import UserProvider
+import { Toaster } from 'sonner'; // Import Toaster
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
           <UserProvider> {/* Wrap children with UserProvider */}
             {children}
+            <Toaster richColors closeButton theme='system' />
           </UserProvider>
         </ThemeProvider>
       </body>

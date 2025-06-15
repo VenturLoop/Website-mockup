@@ -1,7 +1,8 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useUser } from '@/context/UserContext';
 import { Mail, ShieldCheck, Lock, UserCircle, ListChecks, LogOut, Trash2, ChevronRight } from 'lucide-react';
+import { toast } from 'sonner'; // Import toast
 
 const SettingsModal = ({ isOpen, onClose }) => {
   const { currentUser, logoutUser } = useUser();
@@ -13,6 +14,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
     // Call the logoutUser function from context
     // Assuming logoutUser will trigger a re-render or unmount.
     logoutUser();
+    toast.success("Logged out successfully!"); // Show toast
     // No setIsLoggingOut(false) needed if component unmounts or context change handles it.
   };
 

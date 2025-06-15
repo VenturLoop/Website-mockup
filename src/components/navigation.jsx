@@ -29,6 +29,7 @@ import { useUser } from "@/context/UserContext"; // Import useUser
 import MyUpdatesModal from "./MyUpdatesModal.jsx"; // Import MyUpdatesModal
 import MyStartupProfileModal from "./MyStartupProfileModal";
 import SettingsModal from "./SettingsModal"; // Import SettingsModal
+import { toast } from 'sonner'; // Import toast
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -116,6 +117,7 @@ export function Navigation() {
   const handleLogout = () => {
     setIsLoggingOut(true); // Set loading state
     logoutUser();
+    toast.success("Logged out successfully!"); // Show toast
     setIsProfileDropdownOpen(false);
     setIsMenuOpen(false);
     // setIsLoggingOut(false) // Not setting to false, relying on re-render
