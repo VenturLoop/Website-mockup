@@ -38,10 +38,9 @@ const FeedArticleCard = (props) => {
   }, []);
 
   return (
-    <div> {/* New Root div - removed pt-1 and flex from previous root */}
+    <div> {/* Root div */}
       {/* Section 1: Poster Information */}
       <div className="flex items-start mb-3">
-        {/* Avatar Container */}
         <div className="flex-shrink-0 w-12 mr-3 text-center">
           <Link href={`/profile/${post.userId}`} passHref>
             <a className="group">
@@ -53,8 +52,7 @@ const FeedArticleCard = (props) => {
             </a>
           </Link>
         </div>
-        {/* Name/Time Container */}
-        <div className="flex-grow min-w-0 pt-1"> {/* pt-1 to align text slightly with avatar center */}
+        <div className="flex-grow min-w-0 pt-1">
           <div className="flex items-start justify-between">
             <div>
               <Link href={`/profile/${post.userId}`} passHref>
@@ -69,16 +67,16 @@ const FeedArticleCard = (props) => {
         </div>
       </div>
 
-      {/* Section 2: Line and Content-Above-Comments (as a Flex Container) */}
+      {/* Section 2: Line and Content-Above-Engagement-Bar Wrapper */}
       <div className="flex">
-        {/* Line Column */}
-        <div className="flex-shrink-0 w-12 mr-3 flex justify-center"> {/* Width matches Avatar Container */}
+        {/* Line Column: Only contains the line element, ensures line stretches to height of sibling content */}
+        <div className="flex-shrink-0 w-12 mr-3 flex justify-center">
           <div className="w-px bg-gray-300 dark:bg-gray-700 h-full"></div>
         </div>
-        {/* Content-Beside-Line Column */}
+        {/* Content-Beside-Line Column: Contains only Article Text & Image */}
         <div className="flex-grow min-w-0 flex flex-col">
-          {/* Article Text & Image (Old "Middle Section") */}
-          <div className="mb-4 flex flex-col"> {/* This div could be optional if no margin needed before image if text is short */}
+          {/* Article Text & Image */}
+          <div className="mb-4 flex flex-col"> {/* Potentially remove mb-4 if spacing handled by Bottom Engagement Bar's mt-4 */}
             <div className="flex-grow mb-3">
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
                 <span className="font-medium">Posted an article:</span> {truncatedText}
@@ -101,44 +99,49 @@ const FeedArticleCard = (props) => {
               </div>
             )}
           </div>
-
-          {/* Bottom Engagement Bar */}
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
-            <div className="flex items-center gap-x-1 sm:gap-x-2"> {/* Adjusted gap */}
-              {/* 3 Small Avatars - MOVED HERE */}
-              <div className="flex -space-x-2 flex-shrink-0">
-                <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
-                <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
-                <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
-              </div>
-              <button
-                onClick={toggleCardComments}
-                aria-expanded={isCommentsExpanded}
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap min-w-0"
-              >
-                {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
-              </button>
-              <span className="text-sm text-gray-600 dark:text-gray-400 font-medium whitespace-nowrap min-w-0">
-                {post.upvotes} Upvote{post.upvotes !== 1 ? 's' : ''}
-              </span>
-            </div>
-            <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150 flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" /></svg>
-              <span className="hidden sm:inline whitespace-nowrap">Upvote</span>
-            </button>
-          </div>
         </div>
       </div>
 
-      {/* Section 3: Comments (Conditionally Rendered) - Direct child of root div */}
+      {/* Bottom Engagement Bar - New Sibling to Section 1 and Section 2, now full width relative to card root */}
+      <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
+        {/* Spacer for Avatars (aligns with Line Column) & Avatars */}
+        <div className="flex-shrink-0 w-12 mr-3 flex justify-center">
+          <div className="flex -space-x-2 flex-shrink-0">
+            <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
+            <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
+            <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
+          </div>
+        </div>
+        {/* Counts and Upvote Button Wrapper (takes remaining width) */}
+        <div className="flex-grow min-w-0 flex items-center justify-between">
+          <div className="flex items-center gap-x-1 sm:gap-x-2">
+            <button
+              onClick={toggleCardComments}
+              aria-expanded={isCommentsExpanded}
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap min-w-0"
+            >
+              {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
+            </button>
+            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium whitespace-nowrap min-w-0">
+              {post.upvotes} Upvote{post.upvotes !== 1 ? 's' : ''}
+            </span>
+          </div>
+          <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" /></svg>
+            <span className="hidden sm:inline whitespace-nowrap">Upvote</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Section 3: Comments (Conditionally Rendered) - Sibling to Section 1 & 2, and Bottom Engagement Bar */}
       {isCommentsExpanded && (
-        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* This border-t might be redundant if Section 2's Bottom Bar already has one. Let's keep for now. */}
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
           {/* Comment Input Area */}
           <div className="mb-4 flex items-start space-x-3">
             <img
               src={cardCurrentUserAvatar}
               alt="Your avatar"
-              className="w-8 h-8 rounded-full flex-shrink-0 mt-1" // Standard size for comment input avatar
+              className="w-8 h-8 rounded-full flex-shrink-0 mt-1"
             />
             <div className="flex-grow">
               <textarea
