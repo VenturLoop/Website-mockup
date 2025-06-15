@@ -20,9 +20,35 @@ const mockPosts = [
     content: 'Parler may go offline following suspensions by Amazon, Apple and Google.',
     image: 'https://via.placeholder.com/800x400?text=Image+Post+Large',
     likes: '6.2K',
-    comments: 12,
+    comments: 3, // Updated count
     shares: 6, // This will be used for "Opinions"
-    upvotes: 24
+    upvotes: 24,
+    commentsArray: [
+      {
+        commentId: 'parler-c1',
+        commenterName: 'Charlie Puth',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=CharliePuth',
+        commentText: "Interesting take on the Parler situation. The implications for free speech online are huge.",
+        commentTimestamp: '2h ago',
+        isTrending: true,
+      },
+      {
+        commentId: 'parler-c2',
+        commenterName: 'Alice Wonderland',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=AliceWonderland',
+        commentText: "I agree with Charlie. It's a complex issue with no easy answers.",
+        commentTimestamp: '1h ago',
+        isTrending: false,
+      },
+      {
+        commentId: 'parler-c3',
+        commenterName: 'Bob The Builder',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=BobTheBuilder',
+        commentText: "From a technical standpoint, the infrastructure challenges are also worth noting.",
+        commentTimestamp: '30m ago',
+        isTrending: false,
+      }
+    ]
   },
   {
     name: 'Darlene Robertson',
@@ -32,9 +58,27 @@ const mockPosts = [
     content: 'Tom is in a big hurry.',
     image: 'https://via.placeholder.com/800x400?text=Room+View+Wide',
     likes: '6.2K',
-    comments: 12,
+    comments: 2, // Updated count
     shares: 6,
-    upvotes: 10
+    upvotes: 10,
+    commentsArray: [
+      {
+        commentId: 'tom-c1',
+        commenterName: 'Speedy Gonzales',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=SpeedyGonzales',
+        commentText: "Maybe Tom is late for something important!",
+        commentTimestamp: '10s ago',
+        isTrending: true,
+      },
+      {
+        commentId: 'tom-c2',
+        commenterName: 'Road Runner',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=RoadRunner',
+        commentText: "Meep meep!",
+        commentTimestamp: '5s ago',
+        isTrending: false,
+      }
+    ]
   },
   {
     name: 'John Doe',
@@ -44,9 +88,35 @@ const mockPosts = [
     content: 'Just shared a new blog post about the future of AI. Check it out!',
     image: 'https://via.placeholder.com/800x400?text=AI+Future',
     likes: '1.5K',
-    comments: 45,
+    comments: 3, // Updated count
     shares: 10,
-    upvotes: 150
+    upvotes: 150,
+    commentsArray: [
+      {
+        commentId: 'ai-c1',
+        commenterName: 'Sarah Connor',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=SarahConnor',
+        commentText: "The future of AI is both exciting and terrifying. Great post!",
+        commentTimestamp: '1h ago',
+        isTrending: true,
+      },
+      {
+        commentId: 'ai-c2',
+        commenterName: 'HAL 9000',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=HAL9000',
+        commentText: "I'm sorry, Dave. I'm afraid I can't let you do that.",
+        commentTimestamp: '45m ago',
+        isTrending: false,
+      },
+      {
+        commentId: 'ai-c3',
+        commenterName: 'GPT User',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=GPTUser',
+        commentText: "Very insightful. I'm particularly interested in the ethical considerations.",
+        commentTimestamp: '15m ago',
+        isTrending: true,
+      }
+    ]
   },
   {
     name: 'Jane Smith',
@@ -56,9 +126,27 @@ const mockPosts = [
     content: 'Enjoying a beautiful day at the park. #nature #sunnyday',
     image: 'https://via.placeholder.com/800x400?text=Park+Scene',
     likes: '300',
-    comments: 5,
+    comments: 2, // Updated count
     shares: 2,
-    upvotes: 20
+    upvotes: 20,
+    commentsArray: [
+      {
+        commentId: 'park-c1',
+        commenterName: 'Park Ranger',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=ParkRanger',
+        commentText: "Glad you're enjoying the park! Please remember to keep it clean.",
+        commentTimestamp: '2m ago',
+        isTrending: true,
+      },
+      {
+        commentId: 'park-c2',
+        commenterName: 'Squirrel',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=Squirrel',
+        commentText: "Nuts, nuts, nuts!",
+        commentTimestamp: '1m ago',
+        isTrending: false,
+      }
+    ]
   },
   {
     name: 'Alex Johnson',
@@ -68,9 +156,35 @@ const mockPosts = [
     content: 'Excited to announce my new project. More details coming soon!',
     // No image for this one to test variability
     likes: '2.1K',
-    comments: 102,
+    comments: 3, // Updated count
     shares: 25,
-    upvotes: 55
+    upvotes: 55,
+    commentsArray: [
+      {
+        commentId: 'project-c1',
+        commenterName: 'Curious George',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=CuriousGeorge',
+        commentText: "Can't wait to hear more about it, Alex!",
+        commentTimestamp: '23h ago',
+        isTrending: true,
+      },
+      {
+        commentId: 'project-c2',
+        commenterName: 'Investor Bot',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=InvestorBot',
+        commentText: "My algorithms detect a high probability of success. Interested in seed funding?",
+        commentTimestamp: '20h ago',
+        isTrending: false,
+      },
+      {
+        commentId: 'project-c3',
+        commenterName: 'Supportive Sam',
+        commenterAvatarUrl: 'https://i.pravatar.cc/24?u=SupportiveSam',
+        commentText: "Sounds amazing! Let me know if you need any beta testers.",
+        commentTimestamp: '15h ago',
+        isTrending: true,
+      }
+    ]
   }
 ];
 
@@ -145,18 +259,32 @@ const SidebarLeft = ({ onSeeAllClick, onConnectClick, onTryNowClick }) => { // A
   );
 };
 
-const Feed = () => (
-  <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto hide-scrollbar">
-    {/* NEW: Add the CreateArticleCard component here */}
-    <div className="hidden md:block"> {/* Ensures it's hidden on mobile */}
-      <CreateArticleCard />
-    </div>
+const Feed = () => {
+  const [expandedComments, setExpandedComments] = useState({}); // To store expanded state for each post
 
-    {/* mockPosts mapping starts here, the old "What's on your mind" box is removed */}
-    {mockPosts.map((post, i) => (
-      // Inside the map function:
-      <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6"> {/* Added mb-6 */}
-        {/* Top Section */}
+  const toggleComments = (articleId) => {
+    setExpandedComments(prev => ({
+      ...prev,
+      [articleId]: !prev[articleId]
+    }));
+  };
+
+  return (
+    <section className="col-span-12 md:col-span-8 lg:col-span-6 space-y-6 h-full overflow-y-auto hide-scrollbar">
+      {/* NEW: Add the CreateArticleCard component here */}
+      <div className="hidden md:block"> {/* Ensures it's hidden on mobile */}
+        <CreateArticleCard />
+      </div>
+
+      {/* mockPosts mapping starts here, the old "What's on your mind" box is removed */}
+      {mockPosts.map((post, i) => {
+        // Retrieve the expansion state for the current post
+        const isExpanded = expandedComments[post.articleId] || false;
+
+        return (
+          // Inside the map function:
+          <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6"> {/* Added mb-6 */}
+            {/* Top Section */}
         <div className="flex items-start justify-between mb-4"> {/* Increased mb-3 to mb-4 */}
           <div className="flex items-center">
             <Link href={`/profile/${post.userId}`} passHref>
@@ -215,7 +343,11 @@ const Feed = () => (
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
               <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
             </div>
-            <button className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <button
+              onClick={() => toggleComments(post.articleId)} // Updated onClick
+              aria-expanded={isExpanded} // For accessibility
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
               {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
             </button>
             <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
@@ -230,10 +362,93 @@ const Feed = () => (
             Upvote
           </button>
         </div>
+        {/* Comments Section - Conditionally Rendered */}
+        {isExpanded && (
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50">
+            {/* Comment Input Area */}
+            <div className="mb-4 flex items-start space-x-3"> {/* Added flex and spacing for layout */}
+              {/* User avatar (optional, but good for context) - using a generic one for now */}
+              <img
+                src={`https://i.pravatar.cc/32?u=currentUser`} // Placeholder for current user avatar
+                alt="Your avatar"
+                className="w-8 h-8 rounded-full flex-shrink-0 mt-1" // Small avatar
+              />
+              <div className="flex-grow">
+                <textarea
+                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                  rows="3" // Start with 3 rows, can expand if needed or use auto-resizing JS later
+                  placeholder="Write a comment..."
+                ></textarea>
+                <div className="mt-2 flex justify-end">
+                  <button
+                    onClick={() => console.log('Post comment clicked for post:', post.articleId)} // Placeholder action
+                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  >
+                    Post Comment
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Comment List Area */}
+            <div className="mt-6"> {/* Added top margin for separation from input area */}
+              {/* Recent Comments Section */}
+              <div className="mb-6">
+                <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">Recent Comments</h4>
+                <div className="space-y-4">
+                  {post.commentsArray && post.commentsArray.length > 0 ? (
+                    [...post.commentsArray].reverse().map((comment) => ( // Create a reversed copy for rendering
+                      <div key={comment.commentId} className="flex items-start space-x-3">
+                        <img src={comment.commenterAvatarUrl} alt={comment.commenterName} className="w-8 h-8 rounded-full flex-shrink-0 mt-1" />
+                        <div className="flex-grow bg-gray-50 dark:bg-gray-700 p-3 rounded-lg shadow"> {/* Changed dark:bg-gray-700/30 to dark:bg-gray-700 */}
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{comment.commenterName}</span>
+                            <span className="text-xs text-gray-400 dark:text-gray-500">{comment.commentTimestamp}</span>
+                          </div>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{comment.commentText}</p> {/* Added whitespace-pre-wrap */}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500 dark:text-gray-400">No recent comments yet.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Trending Comments Section */}
+              <div>
+                <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">Trending Comments</h4>
+                <div className="space-y-4">
+                  {(() => { // IIFE to handle filtering and conditional rendering
+                    const trendingComments = post.commentsArray ? post.commentsArray.filter(comment => comment.isTrending) : [];
+                    if (trendingComments.length > 0) {
+                      return trendingComments.map((comment) => (
+                        <div key={comment.commentId} className="flex items-start space-x-3">
+                          <img src={comment.commenterAvatarUrl} alt={comment.commenterName} className="w-8 h-8 rounded-full flex-shrink-0 mt-1" />
+                          <div className="flex-grow bg-gray-50 dark:bg-gray-700 p-3 rounded-lg shadow"> {/* Changed dark:bg-gray-700/30 to dark:bg-gray-700 */}
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="font-semibold text-sm text-gray-800 dark:text-gray-100">{comment.commenterName}</span>
+                              <span className="text-xs text-gray-400 dark:text-gray-500">{comment.commentTimestamp}</span>
+                            </div>
+                            <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{comment.commentText}</p> {/* Added whitespace-pre-wrap */}
+                          </div>
+                        </div>
+                      ));
+                    } else {
+                      return <p className="text-sm text-gray-500 dark:text-gray-400">No trending comments at the moment.</p>;
+                    }
+                  })()}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    ))}
-  </section>
-);
+        );
+      })}
+    </section>
+  );
+};
 
 const mockArticles = [
   { id: 1, title: "Omicron: Most dangerous time of the pandemic", postedDate: "Oct 20, 2023", image: "https://via.placeholder.com/40x40" },
