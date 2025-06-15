@@ -14,48 +14,63 @@ import LoginModal from '@/components/LoginModal'; // Added import
 const mockPosts = [
   {
     name: 'Devon Lane',
+    userId: 'devonlane123',
+    articleId: 'parler-offline-article',
     time: '1 Month ago',
-    content: 'Posted an article: Parler may go offline following suspensions by Amazon, Apple and Google.',
+    content: 'Parler may go offline following suspensions by Amazon, Apple and Google.',
     image: 'https://via.placeholder.com/800x400?text=Image+Post+Large',
     likes: '6.2K',
     comments: 12,
-    shares: 6,
+    shares: 6, // This will be used for "Opinions"
+    upvotes: 24
   },
   {
     name: 'Darlene Robertson',
+    userId: 'darlenerobertson456',
+    articleId: 'tom-hurry-article',
     time: '22s',
     content: 'Tom is in a big hurry.',
     image: 'https://via.placeholder.com/800x400?text=Room+View+Wide',
     likes: '6.2K',
     comments: 12,
     shares: 6,
+    upvotes: 10
   },
   {
     name: 'John Doe',
+    userId: 'johndoe789',
+    articleId: 'future-of-ai-blog-post',
     time: '2 hours ago',
     content: 'Just shared a new blog post about the future of AI. Check it out!',
     image: 'https://via.placeholder.com/800x400?text=AI+Future',
     likes: '1.5K',
     comments: 45,
     shares: 10,
+    upvotes: 150
   },
   {
     name: 'Jane Smith',
+    userId: 'janesmith101',
+    articleId: 'park-day-post',
     time: '5 minutes ago',
     content: 'Enjoying a beautiful day at the park. #nature #sunnyday',
     image: 'https://via.placeholder.com/800x400?text=Park+Scene',
     likes: '300',
     comments: 5,
     shares: 2,
+    upvotes: 20
   },
   {
     name: 'Alex Johnson',
+    userId: 'alexjohnson202',
+    articleId: 'new-project-announcement',
     time: 'Yesterday',
     content: 'Excited to announce my new project. More details coming soon!',
     // No image for this one to test variability
     likes: '2.1K',
     comments: 102,
     shares: 25,
+    upvotes: 55
   }
 ];
 
@@ -139,38 +154,80 @@ const Feed = () => (
 
     {/* mockPosts mapping starts here, the old "What's on your mind" box is removed */}
     {mockPosts.map((post, i) => (
-      <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg">
-        <div className="flex items-start justify-between mb-3">
+      // Inside the map function:
+      <div key={i} className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-lg mb-6"> {/* Added mb-6 */}
+        {/* Top Section */}
+        <div className="flex items-start justify-between mb-4"> {/* Increased mb-3 to mb-4 */}
           <div className="flex items-center">
-            <img src={`https://i.pravatar.cc/40?u=${post.name.replace(/\s/g, '')}`} alt={post.name} className="w-10 h-10 rounded-full mr-3" />
+            <Link href={`/profile/${post.userId}`} passHref>
+              <a className="group"> {/* Added group class for potential hover effects on children */}
+                <img
+                  src={`https://i.pravatar.cc/40?u=${post.userId}`}
+                  alt={post.name}
+                  className="w-10 h-10 rounded-full mr-3 cursor-pointer group-hover:ring-2 group-hover:ring-blue-500 transition-all" // Added hover effect
+                />
+              </a>
+            </Link>
             <div>
-              <span className="font-semibold text-gray-900 dark:text-white">{post.name}</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 block">{post.time}</span>
+              <Link href={`/profile/${post.userId}`} passHref>
+                <a className="font-semibold text-gray-900 dark:text-white hover:underline cursor-pointer text-sm"> {/* Added text-sm */}
+                  {post.name}
+                </a>
+              </Link>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Posted an article.</p> {/* Added mt-0.5 */}
             </div>
           </div>
-          <button className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-          </button>
+          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{post.time}</span> {/* Added whitespace-nowrap */}
         </div>
-        <p className="text-gray-700 dark:text-gray-300 mb-3 leading-relaxed">{post.content}</p>
-        {post.image && <img src={post.image} alt="Post image" className="w-full h-auto mt-3 rounded-lg border border-gray-200 dark:border-gray-700" />}
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-200 dark:border-gray-700/50">
-          <div className="flex gap-x-5 text-sm text-gray-600 dark:text-gray-400">
-            <button className="flex items-center gap-1.5 hover:text-red-500 dark:hover:text-red-400 transition-colors group">
-              <svg className="group-hover:fill-red-100 dark:group-hover:fill-red-900/30 transition-colors" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              {post.likes}
-            </button>
-            <button className="flex items-center gap-1.5 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
-             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              {post.comments} <span className="hidden sm:inline">Comments</span>
-            </button>
-            <button className="flex items-center gap-1.5 hover:text-green-500 dark:hover:text-green-400 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-              {post.shares} <span className="hidden sm:inline">Shares</span>
-            </button>
+
+        {/* Middle Section */}
+        <div className="mb-4 flex items-start"> {/* Changed to mb-4, added items-start */}
+          <div className="flex-grow pr-4">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm line-clamp-3"> {/* Added text-sm and line-clamp-3 (will need plugin for actual effect) */}
+              <span className="font-medium">Posted an article:</span> {post.content} {/* Kept original content structure, truncation will be visual via line-clamp if plugin was active */}
+            </p>
+            {/* Basic JS truncation with "see more" as fallback if line-clamp isn't set up */}
+            {post.content.length > 150 && ( /* Adjusted length for a bit more preview before "see more" */
+              <Link href={`/article/${post.articleId}`} passHref>
+                <a className="text-blue-600 dark:text-blue-400 hover:underline ml-1 text-sm font-medium">
+                  see more
+                </a>
+              </Link>
+            )}
           </div>
-           <button className="text-gray-500 hover:text-yellow-500 dark:text-gray-400 dark:hover:text-yellow-400 transition-colors group">
-            <svg className="group-hover:fill-yellow-100 dark:group-hover:fill-yellow-700/30 transition-colors" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
+          {post.image && (
+            <div className="w-28 h-28 flex-shrink-0 ml-2"> {/* Increased size, added ml-2 for spacing */}
+              <img
+                src={post.image}
+                alt="Article image"
+                className="w-full h-full object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Bottom Section */}
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50"> {/* Increased mt and pt */}
+          <div className="flex items-center gap-x-4"> {/* Increased gap */}
+            {/* Overlapping avatars (placeholders) */}
+            <div className="flex -space-x-2">
+              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar1" alt="User 1" />
+              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar2" alt="User 2" />
+              <img className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-800 ring-1 ring-gray-300 dark:ring-gray-600" src="https://i.pravatar.cc/24?u=avatar3" alt="User 3" />
+            </div>
+            <button className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              {post.comments} Opinion{post.comments !== 1 ? 's' : ''}
+            </button>
+            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+              {post.upvotes} Upvote{post.upvotes !== 1 ? 's' : ''}
+            </span>
+          </div>
+          <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> {/* Icon size is fine */}
+              <path d="M7 10v12" />
+              <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 18.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h3Z" />
+            </svg>
+            Upvote
           </button>
         </div>
       </div>
